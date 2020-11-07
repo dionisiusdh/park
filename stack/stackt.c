@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include "stackt.h"
-#include "boolean.h"
+#include "../boolean.h"
 
 /* deklarasi stack yang diimplementasi dengan tabel kontigu dan ukuran sama */
 /* TOP adalah alamat elemen puncak */
