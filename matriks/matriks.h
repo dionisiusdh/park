@@ -5,15 +5,16 @@
 #define MATRIKS_H
 
 #include "../boolean.h"
+#include "../point/point.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 0
-#define BrsMax 6
+#define BrsMax 10
 #define KolMin 0
-#define KolMax 6
+#define KolMax 20
 
 typedef int indeks; /* indeks baris, kolom */
-typedef int ElType; 
+typedef char ElType; 
 typedef struct { 
 	ElType Mem[BrsMax+1][KolMax+1];
    int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
@@ -68,6 +69,7 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK);
 4 5 6
 8 9 10 
 */
+void BacaMATRIKSTxt (MATRIKS * M, int NB, int NK, char* filename);
 void TulisMATRIKS (MATRIKS M);
 /* I.S. M terdefinisi */
 /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
@@ -79,36 +81,51 @@ void TulisMATRIKS (MATRIKS M);
 8 9 10
 */
 
-/* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */                                  
-MATRIKS TambahMATRIKS (MATRIKS M1, MATRIKS M2);
-/* Prekondisi : M1  berukuran sama dengan M2 */
-/* Mengirim hasil penjumlahan matriks: M1 + M2 */ 
-MATRIKS KurangMATRIKS (MATRIKS M1, MATRIKS M2);
-/* Prekondisi : M berukuran sama dengan M */
-/* Mengirim hasil pengurangan matriks: salinan M1 – M2 */ 
-MATRIKS KaliMATRIKS (MATRIKS M1, MATRIKS M2);
-/* Prekondisi : Ukuran kolom efektif M1 = ukuran baris efektif M2 */
-/* Mengirim hasil perkalian matriks: salinan M1 * M2 */
-MATRIKS KaliKons (MATRIKS M, ElType X);
-/* Mengirim hasil perkalian setiap elemen M dengan X */
-void PKaliKons (MATRIKS * M, ElType K);
-/* I.S. M terdefinisi, K terdefinisi */
-/* F.S. Mengalikan setiap elemen M dengan K */
-
-/* ********** KELOMPOK OPERASI RELASIONAL TERHADAP MATRIKS ********** */
-boolean EQ (MATRIKS M1, MATRIKS M2);
-/* Mengirimkan true jika M1 = M2, yaitu NBElmt(M1) = NBElmt(M2) dan */
-/* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
-/* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2) 
-   dan GetLastIdxKol(M1) = GetLastIdxKol(M2) */
-boolean NEQ (MATRIKS M1, MATRIKS M2);
-/* Mengirimkan true jika M1 tidak sama dengan M2 */
-boolean EQSize (MATRIKS M1, MATRIKS M2);
-/* Mengirimkan true jika ukuran efektif matriks M1 sama dengan ukuran efektif M2 */
-/* yaitu GetBrsEff(M1) = GetNBrsEff (M2) dan GetNKolEff (M1) = GetNKolEff (M2) */
-
 /* ********** Operasi lain ********** */
 int NBElmt (MATRIKS M);
 /* Mengirimkan banyaknya elemen M */
+
+/* ********** Posisi ********** */
+POINT getPlayer (MATRIKS M);
+/* Mengirimkan posisi player */
+/* Posisi dihitung mulai dari 0,0 */
+
+POINT getOffice (MATRIKS M);
+/* Mengirimkan posisi office */
+/* Posisi dihitung mulai dari 0,0 */
+
+POINT getAntrian (MATRIKS M);
+/* Mengirimkan posisi antrian */
+/* Posisi dihitung mulai dari 0,0 */
+
+POINT getGerbang (MATRIKS M);
+/* Mengirimkan posisi gerbang */
+/* Posisi dihitung mulai dari 0,0 */
+
+/* ********** Movement Player ********** */
+void moveUp (MATRIKS *M);
+/* Menggerakan player ke atas 1 tile */
+
+void moveDown (MATRIKS *M);
+/* Menggerakan player ke bawah 1 tile */
+
+void moveLeft (MATRIKS *M);
+/* Menggerakan player ke kiri 1 tile */
+
+void moveRight (MATRIKS *M);
+/* Menggerakan player ke kanan 1 tile */
+
+boolean hitWall (MATRIKS *M, int xNew, int yNew);
+/* Cek apakah player menabrak dinding, wahana, atau objek lainnya (Kecuali office) */
+
+/* ********** Checker posisi pemain ********** */
+boolean isNearWahana (MATRIKS M, POINT P);
+/* Cek apakah ada wahana di posisi sekitar player */
+
+boolean isNearAntrian (MATRIKS M, POINT P);
+/* Cek apakah ada antrian di posisi sekitar player */
+
+boolean isInOffice (POINT PPlayer, POINT POffice);
+/* Cek apakah player sedang berada di titik office */
 
 #endif
