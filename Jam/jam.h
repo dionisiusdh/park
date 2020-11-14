@@ -88,10 +88,22 @@ JAM NextDetik (JAM J);
 /* Mengirim 1 detik setelah J dalam bentuk JAM */
 JAM NextNDetik (JAM J, int N);
 /* Mengirim N detik setelah J dalam bentuk JAM */
+JAM NextNMenit (JAM J, int N);
+/* Mengirim N detik setelah J dalam bentuk JAM */
+void IncrementNDetik (JAM *J, int N);
+/* Mengirim N detik setelah J dalam bentuk JAM */
+void IncrementNMenit (JAM *J, int N);
+/* Mengirim N detik setelah J dalam bentuk JAM */
 JAM PrevDetik (JAM J);
 /* Mengirim 1 detik sebelum J dalam bentuk JAM */
 JAM PrevNDetik (JAM J, int N);
 /* Mengirim N detik sebelum J dalam bentuk JAM */
+/* *** Kelompok Operator Aritmetika *** */
+JAM PrevNMenit (JAM J, int N);
+/* Mengirim N detik sebelum J dalam bentuk JAM */
+void DecrementNDetik (JAM *J, int N);
+/* Mengirim N detik setelah J dalam bentuk JAM */
+void DecrementNMenit (JAM *J, int N);
 /* *** Kelompok Operator Aritmetika *** */
 long Durasi (JAM JAw, JAM JAkh);
 /* Mengirim JAkh-JAw dlm Detik, dengan kalkulasi */

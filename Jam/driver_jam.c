@@ -7,11 +7,16 @@ int main()
     /* ALGORITMA */
     BacaJAM(&J1);
     printf("Jam sekarang: ");
-    TulisJAM(J1); printf("\n");
-    printf("Konversi menjadi detik: %d\n",JAMToDetik(J1));
-    J2 = DetikToJAM(5000);
-    printf("5000 detik sama dengan jam : ");
-    TulisJAM(J2);
-    printf("/n");
+    TulisJAM(J1);
+    printf("\n");
+    IncrementNMenit(&J1,2);
+    TulisJAM(J1);
+    printf("\n");
+    DecrementNMenit(&J1,23);
+    TulisJAM(J1);
+    printf("\n");
+    DecrementNDetik(&J1,36);
+    TulisJAM(J1);
+    printf("\n");
     return 0;
 }
