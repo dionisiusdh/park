@@ -68,6 +68,11 @@ JAM DetikToJAM (long N)
     return JOut;
 }
 
+/* ***************************************************************** */
+/* KELOMPOK OPERASI TERHADAP TYPE                                    */
+/* ***************************************************************** */
+
+/* *** Kelompok Operator Relational *** */
 boolean JEQ (JAM J1, JAM J2)
 {
     return (JAMToDetik(J1)==JAMToDetik(J2));
@@ -88,6 +93,33 @@ boolean JGT (JAM J1, JAM J2)
     return (JAMToDetik(J1)>JAMToDetik(J2));
 }
 
+/* *** Operator aritmatika JAM *** */
+JAM TambahJAM (JAM J1, JAM J2)
+{
+    /* KAMUS */
+    long D1, D2, DHasil;
+
+    /* ALGORITMA */
+    D1 = JAMToDetik(J1);
+    D2 = JAMToDetik(J2);
+    DHasil = D1 + D2;
+
+    return (DetikToJAM(DHasil));
+}
+
+JAM KurangJAM (JAM J1, JAM J2)
+{
+    /* KAMUS */
+    long D1, D2, DHasil;
+
+    /* ALGORITMA */
+    D1 = JAMToDetik(J1);
+    D2 = JAMToDetik(J2);
+    DHasil = D1 - D2;
+
+    return (DetikToJAM(DHasil));
+}
+
 JAM NextDetik (JAM J)
 {/* Mengirim 1 detik setelah J dalam bentuk JAM */
     return (DetikToJAM(JAMToDetik(J)+1));
@@ -96,6 +128,24 @@ JAM NextDetik (JAM J)
 JAM NextNDetik (JAM J, int N)
 {/* Mengirim N detik setelah J dalam bentuk JAM */
     return (DetikToJAM(JAMToDetik(J)+N));
+}
+
+JAM NextNMenit (JAM J, int N)
+/* Mengirim N detik setelah J dalam bentuk JAM */
+{
+    return (DetikToJAM(JAMToDetik(J)+N*60));
+}
+
+void IncrementNDetik (JAM *J, int N)
+/* Mengirim N detik setelah J dalam bentuk JAM */
+{
+    *J = DetikToJAM(JAMToDetik(*J)+N);
+}
+
+void IncrementNMenit (JAM *J, int N)
+/* Mengirim N detik setelah J dalam bentuk JAM */
+{
+    *J = DetikToJAM(JAMToDetik(*J)+N*60);
 }
 
 JAM PrevDetik (JAM J)
@@ -108,7 +158,25 @@ JAM PrevNDetik (JAM J, int N)
     return (DetikToJAM(JAMToDetik(J)-N));
 }
 
-long Durasi (JAM JAw, JAM JAkh)
+JAM PrevNMenit (JAM J, int N)
+/* Mengirim N detik sebelum J dalam bentuk JAM */
+{
+    return (DetikToJAM(JAMToDetik(J)-N*60));
+}
+
+void DecrementNDetik (JAM *J, int N)
+/* *** Kelompok Operator Aritmetika *** */
+{
+    *J = DetikToJAM(JAMToDetik(*J)-N);
+}
+
+void DecrementNMenit (JAM *J, int N)
+/* *** Kelompok Operator Aritmetika *** */
+{
+    *J = DetikToJAM(JAMToDetik(*J)-N*60);
+}
+
+long getDurasi (JAM JAw, JAM JAkh)
 {
     if(JAMToDetik(JAw)>JAMToDetik(JAkh))
     {

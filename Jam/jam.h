@@ -74,6 +74,7 @@ JAM DetikToJAM (long N);
 /* ***************************************************************** */
 /* KELOMPOK OPERASI TERHADAP TYPE                                    */
 /* ***************************************************************** */
+
 /* *** Kelompok Operator Relational *** */
 boolean JEQ (JAM J1, JAM J2);
 /* Mengirimkan true jika J1=J2, false jika tidak */
@@ -83,17 +84,34 @@ boolean JLT (JAM J1, JAM J2);
 /* Mengirimkan true jika J1<J2, false jika tidak */
 boolean JGT (JAM J1, JAM J2);
 /* Mengirimkan true jika J1>J2, false jika tidak */
+
 /* *** Operator aritmatika JAM *** */
+JAM TambahJAM (JAM J1, JAM J2);
+/* Menambahkan jam J1 dan jam J2 */
+JAM KurangJAM (JAM J1, JAM J2);
+/* Mengurangkan jam J1 dan jam J2 */
 JAM NextDetik (JAM J);
 /* Mengirim 1 detik setelah J dalam bentuk JAM */
 JAM NextNDetik (JAM J, int N);
+/* Mengirim N detik setelah J dalam bentuk JAM */
+JAM NextNMenit (JAM J, int N);
+/* Mengirim N detik setelah J dalam bentuk JAM */
+void IncrementNDetik (JAM *J, int N);
+/* Mengirim N detik setelah J dalam bentuk JAM */
+void IncrementNMenit (JAM *J, int N);
 /* Mengirim N detik setelah J dalam bentuk JAM */
 JAM PrevDetik (JAM J);
 /* Mengirim 1 detik sebelum J dalam bentuk JAM */
 JAM PrevNDetik (JAM J, int N);
 /* Mengirim N detik sebelum J dalam bentuk JAM */
 /* *** Kelompok Operator Aritmetika *** */
-long Durasi (JAM JAw, JAM JAkh);
+JAM PrevNMenit (JAM J, int N);
+/* Mengirim N detik sebelum J dalam bentuk JAM */
+void DecrementNDetik (JAM *J, int N);
+/* Mengirim N detik setelah J dalam bentuk JAM */
+void DecrementNMenit (JAM *J, int N);
+/* *** Kelompok Operator Aritmetika *** */
+long getDurasi (JAM JAw, JAM JAkh);
 /* Mengirim JAkh-JAw dlm Detik, dengan kalkulasi */
 /* Jika JAw > JAkh, maka JAkh adalah 1 hari setelah JAw */
 
