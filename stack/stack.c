@@ -27,14 +27,14 @@ void CreateEmpty (Stack *S, JAM MaxDuration){
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty (Stack S){
+boolean IsEmptyStack (Stack S){
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
     return (Top(S) == Nil && JEQ(CurrentDuration(S), MakeJAM(0,0,0)));
 }
-boolean IsFull (Stack S){
+boolean IsFullStack (Stack S){
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
     /* KAMUS LOKAL */
 
@@ -71,7 +71,7 @@ void Undo (Stack * S, aksitype *X) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    if (!IsEmpty(*S)) {
+    if (!IsEmptyStack(*S)) {
         Pop(S, X);
         CurrentDuration(*S) = KurangJAM(CurrentDuration(*S), Durasi(*X));
         printf("Berhasil undo.");
@@ -85,7 +85,7 @@ void AddAksi (Stack *S, aksitype X) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    if (!IsFull(*S)) {
+    if (!IsFullStack(*S)) {
         Push(S, X);
         CurrentDuration(*S) = TambahJAM(CurrentDuration(*S), Durasi(X));
         printf("Berhasil menambahkan aksi.");

@@ -54,9 +54,9 @@ void CreateEmpty (Stack *S, JAM MaxDuration);
 /* Ciri stack kosong : TOP bernilai Nil, CurrentDuration bernilai JAM(0,0,0) */
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty (Stack S);
+boolean IsEmptyStack (Stack S);
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
-boolean IsFull (Stack S);
+boolean IsFullStack (Stack S);
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */

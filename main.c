@@ -9,11 +9,12 @@
 #include "./point/point.c"
 #include "./jam/jam.c"
 #include "./stack/stack.c"
+#include "./array/array.c"
 
 /******* FUNGSI MAIN *******/
 int main() {
   /* *********** KAMUS UTAMA ********** */
-  /* Map */
+  /* *********** Map ********** */
   // Map 1 > <  Map 2
   //  V          V
   //  ^          ^
@@ -23,7 +24,7 @@ int main() {
   MATRIKS Map3;
   MATRIKS Map4;
 
-  /* Posisi */
+  /* *********** Posisi *********** */
   POINT PPlayer;
   POINT POffice;
   POINT PAntrian;
@@ -36,8 +37,17 @@ int main() {
   POINT PGerbang_Map4_Atas;
   POINT PGerbang_Map4_Kanan;
 
-  /* Stack Aksi */
+  /* *********** Stack Aksi *********** */
   Stack S;
+
+  /* *********** Informasi Aksi dan Harga Barang *********** */
+  /* NamaAksi[i] durasinya Durasi[i] */
+  TabInt NamaAksi;
+  TabInt DurasiAksi;
+
+  /* NamaBarang[i] harganya HargaBarang[i] */
+  TabInt NamaBarang;
+  TabInt HargaBarang;
 
   /* *********** ALGORITMA UTAMA ********** */
   //showMap(Map1);
