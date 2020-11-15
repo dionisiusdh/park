@@ -54,7 +54,13 @@ void initGame() {
         ADVKATA();  
     }
 
-    if (CKata.TabKata[0] == 'e') {
+    if (CKata.TabKata[0] == 'n' || CKata.TabKata[0] == 'N') {
+        printf("Memulai permainan baru...\n");
+        printf("Masukkan nama: \n$ ");
+        concatNama();
+    }
+
+    if (CKata.TabKata[0] == 'e' || CKata.TabKata[0] == 'E') {
         printf("// Thanks for playing!!! //");
     }
 }
