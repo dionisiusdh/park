@@ -102,3 +102,27 @@ void AddAksi (Stack *S, aksitype X) {
     /* ALGORITMA */
     //Pop(S, &CAksi);
 //}
+
+int JumlahAksi(Stack S){
+    //KAMUS
+    int jumlah = 0;
+    aksitype X;
+    //ALGORITMA
+    while (!IsEmptyStack(S)){
+        Pop(&S,&X);
+        jumlah += 1;
+    }
+    return jumlah;
+}
+
+int JumlahBiaya (Stack S) {
+    //KAMUS
+    int biaya = 0;
+    aksitype X;
+    //ALGORITMA
+    while (!IsEmptyStack(S)){
+        biaya += Harga(InfoTop(S));
+        Pop(&S,&X);
+    }
+    return biaya;
+}

@@ -45,5 +45,8 @@ void SalinKata();
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
+void PrintKata (Kata K);
+/* Mencetak Kata K sebagai String ke Layar */
+
 #endif
 

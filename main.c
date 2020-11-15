@@ -26,6 +26,13 @@ int main() {
   MATRIKS Map3;
   MATRIKS Map4;
 
+  /* *********** JAM ************** */
+  JAM JOpen;
+  JAM JClose;
+  JAM MaxDuration;
+  JAM JCurrent;
+  JAM Remaining;
+
   /* *********** Posisi *********** */
   POINT PPlayer;
   POINT POffice;
@@ -51,18 +58,32 @@ int main() {
   TabInt NamaBarang;
   TabInt HargaBarang;
 
-  /* *********** ALGORITMA UTAMA ********** */
-  //showMap(Map1);
-  initGame();
-  initMap(&Map1);
+  /* Nama Pemain dan Saldonya (Money) */
+  Kata Nama;
+  int money = 1000;
+  boolean prep = true;
 
+
+  /* *********** ALGORITMA UTAMA ********** */
+  //Inisialisasi
+  initMap(&Map1);
+  initJam(&JOpen,&JClose);
+  MaxDuration = KurangJAM(JOpen,JClose);
+  CreateEmpty(&S,MaxDuration);
+  //showMap(Map1);
+  initGame(&Nama);
+  if (prep) {
+    JCurrent = TambahJAM(JClose, CurrentDuration(S));
+    Remaining = KurangJAM(JOpen,JCurrent);
+    prepDescription(Map1, Nama, money, JCurrent, JOpen, Remaining, S);
+  }
   return 0;
 }
 
 /******* REALISASI FUNGSI-FUNGSI UTAMA *******/
 /*********************************************/
-/* *************** INISIASI **************** */
-void initGame() {
+    /**** MAIN MENU ****/
+void initGame(Kata * Nama) {
     /**** MAIN MENU ****/
     printf("// Welcome to Willy wangky's fum factory!!//\n// New game / load game / exit? //\n$ ");
 
@@ -75,16 +96,16 @@ void initGame() {
     if (CKata.TabKata[0] == 'n' || CKata.TabKata[0] == 'N') {
         printf("Memulai permainan baru...\n");
         printf("Masukkan nama: \n$ ");
-        concatNama();
+        *Nama = concatNama();
     }
 
-    if (CKata.TabKata[0] == 'e' || CKata.TabKata[0] == 'E') {
+     if (CKata.TabKata[0] == 'e' || CKata.TabKata[0] == 'E') {
         printf("// Thanks for playing!!! //");
     }
 }
 
 void initMap(MATRIKS *Map) {
-  BacaMATRIKSTxt(Map, 10, 20, "../map1.txt");
+  BacaMATRIKSTxt(Map, 10, 20, "./map1.txt");
 }
 
 void initPosisi (MATRIKS *MAP, POINT *PPlayer, POINT *POffice, POINT *PAntrian) {
@@ -93,25 +114,28 @@ void initPosisi (MATRIKS *MAP, POINT *PPlayer, POINT *POffice, POINT *PAntrian) 
   *PAntrian = getAntrian(*MAP);
 }
 
-void initJam (JAM *J) {
-  *J = MakeJAM(21,0,0);
+void initJam (JAM *JOpen, JAM *JClose) {
+  /* ALGORITMA */
+  *JOpen = MakeJAM(10, 0, 0);
+  *JClose = MakeJAM(22, 0, 0);
 }
 
 /* *************** yang lain **************** */
-char kata[50];
 
-void concatNama() {
+Kata concatNama () {
+  Kata K;
   STARTKATA();
   int j=0; int i;
   while (!EndKata) {
     for (i=0; i<CKata.Length; i++) {
-      kata[i+j] = CKata.TabKata[i];
+      K.TabKata[i+j] = CKata.TabKata[i];
     }
-    kata[i+j] = ' ';
+    K.TabKata[i+j] = ' ';
     j+=CKata.Length+1;
     ADVKATA();
   }
-  printf("%s",kata);
+  K.Length = j;
+  return K;
 }
 
 /* *************** MAP **************** */
@@ -128,4 +152,32 @@ void printMap (MATRIKS M) {
     printf("P = Player\n");
     printf("W = Wahana\n");
     printf("O = Office\n");
+}
+
+/* *************** DESCRIPTION **************** */
+void prepDescription (MATRIKS Map, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S) {
+    //KAMUS LOKAL
+    //ALGORITMA
+    printMap(Map);
+    printf("\n");
+    printf("Name: ");
+    PrintKata(Nama);
+    printf("\n");
+    printf("Money: %d \n", saldo);
+    printf("Current Time: ");
+    TulisJAM(JCurrent);
+    printf("\n");
+    printf("Opening Time: ");
+    TulisJAM(JOpen);
+    printf("\n");
+    printf("Time Remaining: ");
+    printf("%d Hour(s) %d Minute(s)", Hour(Remaining), Minute(Remaining));
+    printf("\n");
+    printf("Total aksi yang dilakukan: %d", JumlahAksi(S));
+    printf("\n");
+    printf("Total waktu yang dibutuhkan: ");
+    printf("%d Hour(s) %d Minute(s)", Hour(CurrentDuration(S)), Minute(CurrentDuration(S)));
+    printf("\n");
+    printf("Total uang yang dibutuhkan: %d", JumlahBiaya(S));
+    printf("\n");
 }
