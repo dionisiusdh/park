@@ -74,6 +74,7 @@ JAM DetikToJAM (long N);
 /* ***************************************************************** */
 /* KELOMPOK OPERASI TERHADAP TYPE                                    */
 /* ***************************************************************** */
+
 /* *** Kelompok Operator Relational *** */
 boolean JEQ (JAM J1, JAM J2);
 /* Mengirimkan true jika J1=J2, false jika tidak */
@@ -83,6 +84,7 @@ boolean JLT (JAM J1, JAM J2);
 /* Mengirimkan true jika J1<J2, false jika tidak */
 boolean JGT (JAM J1, JAM J2);
 /* Mengirimkan true jika J1>J2, false jika tidak */
+
 /* *** Operator aritmatika JAM *** */
 JAM NextDetik (JAM J);
 /* Mengirim 1 detik setelah J dalam bentuk JAM */

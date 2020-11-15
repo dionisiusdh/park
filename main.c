@@ -3,10 +3,11 @@
 #include <math.h>
 #include "boolean.h"
 #include "main.h"
-#include "mesin/mesinkar.h"
-#include "mesin/mesinkata.h"
-#include "matriks/matriks.h"
-#include "point/point.h"
+#include "./mesin/mesinkar.c"
+#include "./mesin/mesinkata.c"
+#include "./matriks/matriks.c"
+#include "./point/point.c"
+#include "./Jam/jam.c"
 
 /******* FUNGSI MAIN *******/
 int main() {
@@ -35,7 +36,7 @@ int main() {
   POINT PGerbang_Map4_Kanan;
 
   /* Algoritma */
-  showMap(Map1);
+  //showMap(Map1);
   initGame();
   initMap(&Map1);
 
@@ -53,9 +54,8 @@ void initGame() {
         ADVKATA();  
     }
 
-    if (CKata.TabKata=='e') {
+    if (CKata.TabKata[0] == 'e') {
         printf("// Thanks for playing!!! //");
-        return 0;
     }
 }
 
@@ -67,6 +67,10 @@ void initPosisi (MATRIKS *MAP, POINT *PPlayer, POINT *POffice, POINT *PAntrian) 
   *PPlayer = getPlayer(*MAP);
   *POffice = getOffice(*MAP);
   *PAntrian = getAntrian(*MAP);
+}
+
+void initJam (JAM *J) {
+  *J = MakeJAM(21,0,0);
 }
 
 char kata[50];
