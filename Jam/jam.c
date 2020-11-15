@@ -68,6 +68,11 @@ JAM DetikToJAM (long N)
     return JOut;
 }
 
+/* ***************************************************************** */
+/* KELOMPOK OPERASI TERHADAP TYPE                                    */
+/* ***************************************************************** */
+
+/* *** Kelompok Operator Relational *** */
 boolean JEQ (JAM J1, JAM J2)
 {
     return (JAMToDetik(J1)==JAMToDetik(J2));
@@ -86,6 +91,33 @@ boolean JLT (JAM J1, JAM J2)
 boolean JGT (JAM J1, JAM J2)
 {
     return (JAMToDetik(J1)>JAMToDetik(J2));
+}
+
+/* *** Operator aritmatika JAM *** */
+JAM TambahJAM (JAM J1, JAM J2)
+{
+    /* KAMUS */
+    long D1, D2, DHasil;
+
+    /* ALGORITMA */
+    D1 = JAMToDetik(J1);
+    D2 = JAMToDetik(J2);
+    DHasil = D1 + D2;
+
+    return (DetikToJAM(DHasil));
+}
+
+JAM KurangJAM (JAM J1, JAM J2)
+{
+    /* KAMUS */
+    long D1, D2, DHasil;
+
+    /* ALGORITMA */
+    D1 = JAMToDetik(J1);
+    D2 = JAMToDetik(J2);
+    DHasil = D1 - D2;
+
+    return (DetikToJAM(DHasil));
 }
 
 JAM NextDetik (JAM J)
@@ -144,7 +176,7 @@ void DecrementNMenit (JAM *J, int N)
     *J = DetikToJAM(JAMToDetik(*J)-N*60);
 }
 
-long Durasi (JAM JAw, JAM JAkh)
+long getDurasi (JAM JAw, JAM JAkh)
 {
     if(JAMToDetik(JAw)>JAMToDetik(JAkh))
     {

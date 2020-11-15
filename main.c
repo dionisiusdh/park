@@ -7,11 +7,12 @@
 #include "./mesin/mesinkata.c"
 #include "./matriks/matriks.c"
 #include "./point/point.c"
-#include "./Jam/jam.c"
+#include "./jam/jam.c"
+#include "./stack/stack.c"
 
 /******* FUNGSI MAIN *******/
 int main() {
-  /* *********** VARIABEL UTAMA ********** */
+  /* *********** KAMUS UTAMA ********** */
   /* Map */
   // Map 1 > <  Map 2
   //  V          V
@@ -35,7 +36,10 @@ int main() {
   POINT PGerbang_Map4_Atas;
   POINT PGerbang_Map4_Kanan;
 
-  /* Algoritma */
+  /* Stack Aksi */
+  Stack S;
+
+  /* *********** ALGORITMA UTAMA ********** */
   //showMap(Map1);
   initGame();
   initMap(&Map1);
@@ -44,6 +48,8 @@ int main() {
 }
 
 /******* REALISASI FUNGSI-FUNGSI UTAMA *******/
+/*********************************************/
+/******* INISIASI *******/
 void initGame() {
     /**** MAIN MENU ****/
     printf("// Welcome to Willy wangky's fum factory!!//\n// New game / load game / exit? //\n$ ");
@@ -80,6 +86,7 @@ void initJam (JAM *J) {
 }
 
 char kata[50];
+
 void concatNama() {
   STARTKATA();
   int j=0; int i;
