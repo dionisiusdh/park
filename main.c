@@ -3,13 +3,15 @@
 #include <math.h>
 #include "boolean.h"
 #include "main.h"
-#include "./mesin/mesinkar.c"
-#include "./mesin/mesinkata.c"
-#include "./matriks/matriks.c"
-#include "./point/point.c"
-#include "./jam/jam.c"
-#include "./stack/stack.c"
-#include "./array/array.c"
+#include "./mesin/mesinkar.h"
+#include "./mesin/mesinkata.h"
+#include "./matriks/matriks.h"
+#include "./point/point.h"
+#include "./jam/jam.h"
+#include "./stack/stack.h"
+#include "./array/array.h"
+
+// gcc -std=c99 -o main main.c ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
 
 /******* FUNGSI MAIN *******/
 int main() {
@@ -59,7 +61,7 @@ int main() {
 
 /******* REALISASI FUNGSI-FUNGSI UTAMA *******/
 /*********************************************/
-/******* INISIASI *******/
+/* *************** INISIASI **************** */
 void initGame() {
     /**** MAIN MENU ****/
     printf("// Welcome to Willy wangky's fum factory!!//\n// New game / load game / exit? //\n$ ");
@@ -95,6 +97,7 @@ void initJam (JAM *J) {
   *J = MakeJAM(21,0,0);
 }
 
+/* *************** yang lain **************** */
 char kata[50];
 
 void concatNama() {
@@ -111,6 +114,7 @@ void concatNama() {
   printf("%s",kata);
 }
 
+/* *************** MAP **************** */
 void printMap (MATRIKS M) {
 /* Mencetak Map dan Legenda */
 

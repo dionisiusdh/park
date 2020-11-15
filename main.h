@@ -8,10 +8,13 @@
 #include <stdlib.h>
 #include <math.h>
 #include "boolean.h"
-#include "mesin/mesinkar.h"
-#include "mesin/mesinkata.h"
-#include "matriks/matriks.h"
-#include "point/point.h"
+#include "./mesin/mesinkar.h"
+#include "./mesin/mesinkata.h"
+#include "./matriks/matriks.h"
+#include "./point/point.h"
+#include "./jam/jam.h"
+#include "./stack/stack.h"
+#include "./array/array.h"
 
 /******* DEKLARASI FUNGSI-FUNGSI UTAMA *******/
 void initGame();

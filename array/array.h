@@ -34,7 +34,7 @@ typedef struct {
    Definisi elemen pertama : T[i] dengan i=1 */
   
 /* ********** SELEKTOR ********** */
-#define Elmt(T,i) (T).TI[(i)]
+#define ElmtArray(T,i) (T).TI[(i)]
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
@@ -60,19 +60,19 @@ IdxType GetLastIdx (TabInt T);
 /* Mengirimkan indeks elemen T terakhir */
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid (TabInt T, IdxType i);
+boolean IsIdxValidArray (TabInt T, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
-boolean IsIdxEff (TabInt T, IdxType i);
+boolean IsIdxEffArray (TabInt T, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
-boolean IsEmpty (TabInt T);
+boolean IsEmptyArray (TabInt T);
 /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
 /* *** Test tabel penuh *** */
-boolean IsFull (TabInt T);
+boolean IsFullArray (TabInt T);
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
@@ -95,18 +95,6 @@ void TulisIsiTab (TabInt T);
 /* F.S. Jika T tidak kosong: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika tabel kosong : menulis [] */
-
-/* ********** OPERATOR ARITMATIKA ********** */
-/* *** Aritmatika tabel : Penjumlahan, pengurangan, perkalian, ... *** */
-TabInt PlusMinusTab (TabInt T1, TabInt T2, boolean plus);
-/* Prekondisi : T1 dan T2 berukuran sama dan tidak kosong */
-/* Jika plus = true, mengirimkan  T1+T2, yaitu setiap elemen T1 dan T2 pada indeks yang sama dijumlahkan */
-/* Jika plus = false, mengirimkan T1-T2, yaitu setiap elemen T1 dikurangi elemen T2 pada indeks yang sama */
-
-/* ********** OPERATOR RELASIONAL ********** */
-/* *** Operasi pembandingan tabel : < =, > *** */
-boolean IsEQ (TabInt T1, TabInt T2);
-/* Mengirimkan true jika T1 sama dengan T2 yaitu jika ukuran T1 = T2 dan semua elemennya sama */
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : Tabel boleh kosong!! *** */
@@ -134,16 +122,6 @@ ElArrayType SumTab (TabInt T);
 int CountX (TabInt T, ElArrayType X);
 /* Menghasilkan berapa banyak kemunculan X di T */
 /* Jika T kosong menghasilkan 0 */
-boolean IsAllGenap (TabInt T);
-/* Menghailkan true jika semua elemen T genap */
-
-/* ********** SORTING ********** */
-void Sort (TabInt * T, boolean asc);
-/* I.S. T boleh kosong */
-/* F.S. Jika asc = true, T terurut membesar */
-/*      Jika asc = false, T terurut mengecil */
-/* Proses : Mengurutkan T dengan salah satu algoritma sorting,
-   algoritma bebas */
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */

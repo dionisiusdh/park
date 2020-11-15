@@ -2,8 +2,8 @@
 /* *** Body ADT Arraypos *** */
 
 #include <stdio.h>
-#include "boolean.h"
-#include "../array.h"
+#include "../boolean.h"
+#include "./array.h"
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
@@ -16,7 +16,7 @@ void MakeEmpty (TabInt * T){
 
    /*ALGORITMA*/
    for(i=IdxMin; i<=IdxMax; i++){
-      Elmt(*T,i) = ValUndef;
+      ElmtArray(*T,i) = ValUndef;
    }
 }
 
@@ -30,7 +30,7 @@ int NbElmt (TabInt T){
    int n=0;
 
    /*ALGORITMA*/
-   while((Elmt(T,i) != ValUndef) && (i <= IdxMax)){
+   while((ElmtArray(T,i) != ValUndef) && (i <= IdxMax)){
       n += 1;
       i += 1;
    }
@@ -64,7 +64,7 @@ IdxType GetLastIdx (TabInt T){
 }
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid (TabInt T, IdxType i){
+boolean IsIdxValidArray (TabInt T, IdxType i){
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
    /*KAMUS LOKAL*/
@@ -72,7 +72,7 @@ boolean IsIdxValid (TabInt T, IdxType i){
    /*ALGORITMA*/
    return ((i >= IdxMin) && (i <= IdxMax));
 }
-boolean IsIdxEff (TabInt T, IdxType i){
+boolean IsIdxEffArray (TabInt T, IdxType i){
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
    /*KAMUS LOKAL*/
@@ -83,7 +83,7 @@ boolean IsIdxEff (TabInt T, IdxType i){
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
-boolean IsEmpty (TabInt T){
+boolean IsEmptyArray (TabInt T){
 /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
    /*KAMUS LOKAL*/
 
@@ -91,7 +91,7 @@ boolean IsEmpty (TabInt T){
    return (NbElmt(T) == 0);
 }
 /* *** Test tabel penuh *** */
-boolean IsFull (TabInt T){
+boolean IsFullArray (TabInt T){
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
    /*KAMUS LOKAL*/
 
@@ -126,7 +126,7 @@ void BacaIsi (TabInt * T){
    if (N!=0) {
       for (i=IdxMin; i<N; i++){
          scanf("%d", &el);
-         Elmt(*T,i) = el;
+         ElmtArray(*T,i) = el;
       }
    }
 }
@@ -142,68 +142,21 @@ void TulisIsiTab (TabInt T){
    IdxType i=0;
 
    /*ALGORITMA*/
-   if(IsEmpty(T)){
+   if(IsEmptyArray(T)){
       printf("[]");
    } else {
       printf("[");
       for(i=IdxMin; i<=GetLastIdx(T);i++){
          if (i == GetLastIdx(T)){
-            printf("%d",Elmt(T,i));
+            printf("%d",ElmtArray(T,i));
          } else {
-            printf("%d,",Elmt(T,i));
+            printf("%d,",ElmtArray(T,i));
          }
       }
       printf("]");
    }
 }
 
-/* ********** OPERATOR ARITMATIKA ********** */
-/* *** Aritmatika tabel : Penjumlahan, pengurangan, perkalian, ... *** */
-TabInt PlusMinusTab (TabInt T1, TabInt T2, boolean plus){
-/* Prekondisi : T1 dan T2 berukuran sama dan tidak kosong */
-/* Jika plus = true, mengirimkan  T1+T2, yaitu setiap elemen T1 dan T2 pada indeks yang sama dijumlahkan */
-/* Jika plus = false, mengirimkan T1-T2, yaitu setiap elemen T1 dikurangi elemen T2 pada indeks yang sama */
-   /*KAMUS LOKAL*/
-   IdxType i;
-   TabInt T3;
-   MakeEmpty(&T3);
-
-   /*ALGORITMA*/
-   if(plus == true){
-      for(i=IdxMin; i<NbElmt(T1); i++){
-         Elmt(T3,i) = Elmt(T1,i) + Elmt(T2,i);
-      }
-   } else {
-      for(i=IdxMin; i<NbElmt(T1); i++){
-         Elmt(T3,i) = Elmt(T1,i) - Elmt(T2,i);
-      }
-   }
-
-   return T3;
-}
-/* ********** OPERATOR RELASIONAL ********** */
-/* *** Operasi pembandingan tabel : < =, > *** */
-boolean IsEQ (TabInt T1, TabInt T2){
-/* Mengirimkan true jika T1 sama dengan T2 yaitu jika ukuran T1 = T2 dan semua elemennya sama */
-   /*KAMUS LOKAL*/
-   IdxType i=0;
-   boolean equal;
-
-   equal = true;
-
-   /*ALGORITMA*/
-   if(NbElmt(T1) == NbElmt(T2)){
-      while((equal == true) && (i<NbElmt(T1))){
-            if(Elmt(T1,i) != Elmt(T2,i)){
-               equal = false;
-            }
-         i += 1;
-      }
-   } else {
-      equal = false;
-   }
-   return equal;
-}
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : Tabel boleh kosong!! *** */
 IdxType Search1 (TabInt T, ElArrayType X){
@@ -219,11 +172,11 @@ IdxType Search1 (TabInt T, ElArrayType X){
    i = IdxMin;
 
    /*ALGORITMA*/
-   if(IsEmpty(T)){
+   if(IsEmptyArray(T)){
       return IdxUndef;
    } else {
       while((found == false) && (i<NbElmt(T))){
-         if(Elmt(T,i) == X){
+         if(ElmtArray(T,i) == X){
             found = true;
             idx = i;
          }
@@ -247,11 +200,11 @@ boolean SearchB (TabInt T, ElArrayType X){
    boolean found = false;
    i = IdxMin;
    /*ALGORITMA*/
-   if(IsEmpty(T)){
+   if(IsEmptyArray(T)){
       return false;
    } else {
       while((found == false) && (i<NbElmt(T))){
-         if(Elmt(T,i) == X){
+         if(ElmtArray(T,i) == X){
             found = true;
          }
          i += 1;
@@ -259,27 +212,6 @@ boolean SearchB (TabInt T, ElArrayType X){
    }
    return found;
 
-}
-
-/* ********** NILAI EKSTREM ********** */
-void MaxMin (TabInt T, ElArrayType * Max, ElArrayType * Min){
-/* I.S. Tabel T tidak kosong */
-/* F.S. Max berisi nilai maksimum T;
-        Min berisi nilai minimum T */
-   /*KAMUS LOKAL*/
-   IdxType i;
-   *Max = Elmt(T,0);
-   *Min = Elmt(T,0);
-   
-   /*ALGORITMA*/
-   for(i=IdxMin; i<NbElmt(T); i++){
-      if(Elmt(T,i) > *Max){
-         *Max = Elmt(T,i);
-      }
-      if(Elmt(T,i) < *Min){
-         *Min = Elmt(T,i);
-      }
-   }
 }
 
 /* ********** OPERASI LAIN ********** */
@@ -291,11 +223,11 @@ ElArrayType SumTab (TabInt T){
    int sum=0;
 
    /*ALGORITMA*/
-   if(IsEmpty(T)){
+   if(IsEmptyArray(T)){
       return 0;
    } else {
       for(i=IdxMin; i<NbElmt(T); i++){
-         sum += Elmt(T,i);
+         sum += ElmtArray(T,i);
          }
       }
    return sum;
@@ -308,76 +240,16 @@ int CountX (TabInt T, ElArrayType X){
    int n = 0;
    
    /*ALGORITMA*/
-   if(IsEmpty(T)){
+   if(IsEmptyArray(T)){
       return 0;
    } else {
       for(i=IdxMin; i<NbElmt(T); i++){
-         if(Elmt(T,i) == X){
+         if(ElmtArray(T,i) == X){
             n += 1;
             }
          }
       }
    return n;
-}
-boolean IsAllGenap (TabInt T){
-/* Menghailkan true jika semua elemen T genap */
-   /*KAMUS LOKAL*/
-   IdxType i;
-   boolean genap;
-
-   i = IdxMin;
-   genap = true;
-
-   /*ALGORITMA*/
-   if(IsEmpty(T)){
-      return false;
-   } else {
-      while((genap == true) && (i<NbElmt(T))){
-         if(Elmt(T,i)%2 != 0){
-            genap=false;
-            }
-         i += 1;
-         }
-      }
-   return genap;
-}
-
-/* ********** SORTING ********** */
-void Sort (TabInt * T, boolean asc){
-/* I.S. T boleh kosong */
-/* F.S. Jika asc = true, T terurut membesar */
-/*      Jika asc = false, T terurut mengecil */
-/* Proses : Mengurutkan T dengan salah satu algoritma sorting,
-   algoritma bebas */
-   /*KAMUS LOKAL*/
-   IdxType i, j;
-   IdxType n;
-   ElArrayType temp;
-   /*ALGORITMA*/
-   n = GetLastIdx(*T);
-
-   if(asc == true){
-      for(i=IdxMin; i<=n; i++){
-         for(j=i+1; j<=n;j++){
-            if(T->TI[i] > T->TI[j]){
-               temp = T->TI[i];
-               T->TI[i] = T->TI[j];
-               T->TI[j] = temp;
-            }
-         }
-      }
-   } else {
-      for(i=IdxMin; i<=n; i++){
-         for(j=i+1; j<=n;j++){
-            if(T->TI[i] < T->TI[j]){
-               temp = T->TI[i];
-               T->TI[i] = T->TI[j];
-               T->TI[j] = temp;
-            }
-         }
-      }
-   }
-
 }
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
@@ -389,10 +261,10 @@ void AddAsLastEl (TabInt * T, ElArrayType X){
    /*KAMUS LOKAL*/
    
    /*ALGORITMA*/
-   if(IsEmpty(*T)){
-      Elmt(*T,0) = X;
+   if(IsEmptyArray(*T)){
+      ElmtArray(*T,0) = X;
    } else {
-      Elmt(*T, GetLastIdx(*T)+1) = X;
+      ElmtArray(*T, GetLastIdx(*T)+1) = X;
    }
 }
 /* ********** MENGHAPUS ELEMEN ********** */
@@ -405,6 +277,6 @@ void DelLastEl (TabInt * T, ElArrayType * X){
    /*KAMUS LOKAL*/
    
    /*ALGORITMA*/
-   *X = Elmt(*T, GetLastIdx(*T));
-   Elmt(*T, GetLastIdx(*T)) = ValUndef;
+   *X = ElmtArray(*T, GetLastIdx(*T));
+   ElmtArray(*T, GetLastIdx(*T)) = ValUndef;
 }
