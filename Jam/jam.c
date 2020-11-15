@@ -115,6 +115,9 @@ JAM KurangJAM (JAM J1, JAM J2)
     /* ALGORITMA */
     D1 = JAMToDetik(J1);
     D2 = JAMToDetik(J2);
+    if (D2 > D1){
+        D1 += 86400;
+    }
     DHasil = D1 - D2;
 
     return (DetikToJAM(DHasil));

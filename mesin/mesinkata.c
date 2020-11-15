@@ -63,3 +63,11 @@ void SalinKata(){
   } /* CC = MARK or CC = BLANK */
   CKata.Length = i;
 }
+
+void PrintKata (Kata K) {
+  int i=0;
+  while (i<K.Length){
+    printf("%c",K.TabKata[i]);
+    i++;
+  }
+}

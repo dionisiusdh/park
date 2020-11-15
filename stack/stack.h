@@ -81,4 +81,10 @@ void AddAksi (Stack *S, aksitype X);
 void Execute (Stack *S);
 /* Eksekusi aksi-aksi di dalam stack */
 
+int JumlahAksi(Stack S);
+/* Mengembalikan jumlah aksi di dalam stack */
+
+int JumlahBiaya(Stack S);
+/*Mengembalikan jumlah dari biaya di dalam stack*/
+
 #endif
