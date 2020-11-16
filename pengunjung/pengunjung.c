@@ -6,12 +6,13 @@
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 /* *** Konstruktor membuat PENGUNJUNG *** */
-void MakePENGUNJUNG (int JE, int SB, PENGUNJUNG *P){
+void MakePENGUNJUNG (int Neff, PENGUNJUNG *P){
 /* Membuat data dengan tipe PENGUNJUNG dengan wahana yang ingin dinaiki kosong */
 /* I.S. JE jumlah elemen efektif, SB kesabaran awal */
 /* F.S. PENGUNJUNG terbentuk */
-    ElmtEff(*P) = JE;
-    SB = 5;
+    NeffPengunjung(*P) = Neff;
+    Kesabaran(*P) = 5;
+    Prioritas(*P) = 0;
 }
 
 // BELUM SELESAI

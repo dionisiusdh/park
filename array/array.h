@@ -1,94 +1,109 @@
-/* Berisi definisi dan semua primitif pemrosesan tabel integer dengan elemen positif */
+/* MODUL TABEL INTEGER */
+/* Berisi definisi dan semua primitif pemrosesan tabel integer */
 /* Penempatan elemen selalu rapat kiri */
-/* Banyaknya elemen didefinisikan secara implisit, memori tabel statik */
+/* Versi II : dengan banyaknya elemen didefinisikan secara eksplisit,
+   memori tabel dinamik */
 
-#ifndef ARRAYPOS_H
-#define ARRAYPOS_H
+#ifndef ARRAY_H
+#define ARRAY_H
 
-#include "../boolean.h"
+#include "boolean.h"
+#include "../mesin/mesinkata.h"
 
 /*  Kamus Umum */
-#define IdxMax 99
-/* Indeks maksimum array */
 #define IdxMin 0
 /* Indeks minimum array */
-#define IdxUndef -999 
+#define IdxUndef -1
 /* Indeks tak terdefinisi*/
-#define ValUndef -1
-/* Nilai elemen tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
-typedef int IdxType;  /* type indeks */
-typedef int ElArrayType;   /* type elemen tabel */
-typedef struct { 
-  ElArrayType TI[IdxMax+1]; /* memori tempat penyimpan elemen (container) */
+typedef int IdxType; /* type indeks */
+typedef struct {
+    Kata nama;  /* Nama material / aksi */
+    int value;  /* Harga material / durasi aksi*/
+} ElArrayType;
+typedef struct
+{
+  ElArrayType *TI; /* memori tempat penyimpan elemen (container) */
+  int Neff;   /* >=0, banyaknya elemen efektif */
+  int MaxEl;  /* ukuran elemen */
 } TabInt;
-/* Indeks yang digunakan [IdxMin..IdxMax] */
-/* Indeks ke-0 tidak digunakan */
+/* Indeks yang digunakan [IdxMin..MaxEl-1] */
 /* Jika T adalah TabInt, cara deklarasi dan akses: */
 /* Deklarasi : T : TabInt */
-/* Maka cara akses: 
-   T[i] untuk mengakses elemen ke-i */
-/* Definisi : 
-   Tabel kosong: semua elemen bernilai ValUndef
-   Definisi elemen pertama : T[i] dengan i=1 */
-  
+/* Maka cara akses:
+   T.Neff  untuk mengetahui banyaknya elemen
+   T.TI    untuk mengakses seluruh nilai elemen tabel
+   T.TI[i] untuk mengakses elemen ke-i */
+/* Definisi :
+  Tabel kosong: T.Neff = 0
+  Definisi elemen pertama : T.TI[i] dengan i=0
+  Definisi elemen terakhir yang terdefinisi: T.TI[i] dengan i=T.Neff */
+
 /* ********** SELEKTOR ********** */
-#define ElmtArray(T,i) (T).TI[(i)]
+#define NeffArray(T) (T).Neff
+#define TI(T) (T).TI
+#define ElmtArray(T, i) (T).TI[(i)]
+#define MaxElArray(T) (T).MaxEl
+#define Nama(E) (E).nama
+#define Value(E) (E).value
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
-void MakeEmpty (TabInt * T);
-/* I.S. T sembarang */
-/* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
-/* Proses: Inisialisasi semua elemen tabel T dengan ValUndef */
+void MakeEmpty(TabInt *T, int maxel);
+/* I.S. T sembarang, maxel > 0 */
+/* F.S. Terbentuk tabel T kosong dengan kapasitas maxel */
+
+void Dealokasi(TabInt *T);
+/* I.S. T terdefinisi; */
+/* F.S. TI(T) dikembalikan ke system, MaxEl(T)=0; Neff(T)=0 */
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int NbElmt (TabInt T);
+int NbElmtArray(TabInt T);
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
 /* *** Daya tampung container *** */
-int MaxNbEl (TabInt T);
+int MaxElement(TabInt T);
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 /* *** Selektor INDEKS *** */
-IdxType GetFirstIdx (TabInt T);
+IdxType GetFirstIdx(TabInt T);
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T pertama */
-IdxType GetLastIdx (TabInt T);
+IdxType GetLastIdx(TabInt T);
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxValidArray (TabInt T, IdxType i);
+boolean IsIdxValid(TabInt T, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
-boolean IsIdxEffArray (TabInt T, IdxType i);
+boolean IsIdxEff(TabInt T, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
-boolean IsEmptyArray (TabInt T);
+boolean IsEmpty(TabInt T);
 /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
 /* *** Test tabel penuh *** */
-boolean IsFullArray (TabInt T);
+boolean IsFull(TabInt T);
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 /* *** Mendefinisikan isi tabel dari pembacaan *** */
-void BacaIsi (TabInt * T);
-/* I.S. T sembarang */
+void BacaIsi(TabInt *T);
+/* I.S. T sembarang dan sudah dialokasikan sebelumnya */
 /* F.S. Tabel T terdefinisi */
 /* Proses : membaca banyaknya elemen T dan mengisi nilainya */
 /* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
-/*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= MaxNbEl(T) */
+/*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= MaxElement(T) */
 /*    Jika N tidak valid, tidak diberikan pesan kesalahan */
-/* 2. Jika 0 < N <= MaxNbEl(T); Lakukan N kali: Baca elemen mulai dari indeks 
+/* 2. Jika 0 < N <= MaxElement(T); Lakukan N kali: Baca elemen mulai dari indeks
       IdxMin satu per satu diakhiri enter */
 /*    Jika N = 0; hanya terbentuk T kosong */
-void TulisIsiTab (TabInt T);
-/* Proses : Menuliskan isi tabel dengan traversal, tabel ditulis di antara kurung siku; 
+void TulisIsiTab(TabInt T);
+/* Proses : Menuliskan isi tabel dengan traversal, tabel ditulis di antara kurung siku;
    antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
    di tengah, atau di belakang, termasuk spasi dan enter */
 /* I.S. T boleh kosong */
@@ -98,43 +113,32 @@ void TulisIsiTab (TabInt T);
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : Tabel boleh kosong!! *** */
-IdxType Search1 (TabInt T, ElArrayType X);
+IdxType Search1(TabInt T, Kata X);
 /* Search apakah ada elemen tabel T yang bernilai X */
 /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = X */
 /* Jika tidak ada, mengirimkan IdxUndef */
 /* Menghasilkan indeks tak terdefinisi (IdxUndef) jika tabel T kosong */
 /* Skema Searching yang digunakan bebas */
-boolean SearchB (TabInt T, ElArrayType X);
+boolean SearchB(TabInt T, Kata X);
 /* Search apakah ada elemen tabel T yang bernilai X */
 /* Jika ada, menghasilkan true, jika tidak ada menghasilkan false */
 /* Skema searching yang digunakan bebas */
 
-/* ********** NILAI EKSTREM ********** */
-void MaxMin (TabInt T, ElArrayType * Max, ElArrayType * Min);
-/* I.S. Tabel T tidak kosong */
-/* F.S. Max berisi nilai maksimum T;
-        Min berisi nilai minimum T */
-
 /* ********** OPERASI LAIN ********** */
-ElArrayType SumTab (TabInt T);
+int SumTab(TabInt T);
 /* Menghasilkan hasil penjumlahan semua elemen T */
-/* Jika T kosong menghasilkan 0 */
-int CountX (TabInt T, ElArrayType X);
-/* Menghasilkan berapa banyak kemunculan X di T */
-/* Jika T kosong menghasilkan 0 */
+/* Proses : Menambahkan max element sebanyak num */
+/* I.S. Tabetl sudah terdefinisi */
+/* F.S. Ukuran tabel bertambah sebanyak num */
 
-/* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
-/* *** Menambahkan elemen terakhir *** */
-void AddAsLastEl (TabInt * T, ElArrayType X);
-/* Proses: Menambahkan X sebagai elemen terakhir tabel */
-/* I.S. Tabel T boleh kosong, tetapi tidak penuh */
-/* F.S. X adalah elemen terakhir T yang baru */
-/* ********** MENGHAPUS ELEMEN ********** */
-void DelLastEl (TabInt * T, ElArrayType * X);
-/* Proses : Menghapus elemen terakhir tabel */
+void ShrinkTab(TabInt *T, int num);
+/* Proses : Mengurangi max element sebanyak num */
+/* I.S. Tabel sudah terdefinisi, ukuran MaxEl > num, dan Neff < MaxEl - num. */
+/* F.S. Ukuran tabel berkurang sebanyak num. */
+
+void CompactTab(TabInt *T);
+/* Proses : Mengurangi max element sehingga Neff = MaxEl */
 /* I.S. Tabel tidak kosong */
-/* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */
-/*      Banyaknya elemen tabel berkurang satu */
-/*      Tabel T mungkin menjadi kosong */
+/* F.S. Ukuran MaxEl = Neff */
 
 #endif

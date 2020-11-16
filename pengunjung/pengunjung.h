@@ -5,29 +5,37 @@
 #define PENGUNJUNG_H
 
 #include "../boolean.h"
+#include "../mesin/mesinkata.h"
 
+#define MaxElmt 5
 /* Maksimum wahana yang ingin dikunjungi pengunjung */
-#define MaxElmt 25
+#define KesabaranAwal 5
+/* Nilai kesabaran awal */
+#define PrioritasAwal 0
+/* Nilai priorias awal */
 
-typedef int ElType;
+typedef Kata ElPengunjungType;
 typedef struct {
-    ElType Mem[MaxElmt+1];
-    int ElmtEff; /* Jumlah elemen efektif */
-	int Sabar; /* Tingkat kesabaran   */
+    ElPengunjungType Mem[MaxElmt+1];    /* Wahana yang ingin dinaiki pengunjung */
+    int NeffPengunjung;                 /* Jumlah elemen efektif wahana yang ingin dikunjungi pengunjung */
+    int Prioritas;                      /* Priority */
+	int Kesabaran;                      /* Tingkat kesabaran   */
 } PENGUNJUNG;
+
+/* *** Selektor *** */
+#define NeffPengunjung(P) (P).NeffPengunjung
+#define Prioritas(P) (P).Prioritas
+#define Kesabaran(P) (P).Kesabaran
+#define ElmtPengunjung(P,i) (P).Mem[(i)]
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 /* *** Konstruktor membuat PENGUNJUNG *** */
-void MakePENGUNJUNG (int JE, int SB, PENGUNJUNG *P);
+void MakePENGUNJUNG (int Neff, PENGUNJUNG *P);
 /* Membuat data dengan tipe PENGUNJUNG dengan wahana yang ingin dinaiki kosong */
 /* I.S. JE jumlah elemen efektif, SB kesabaran awal */
 /* F.S. PENGUNJUNG terbentuk */
 
-/* *** Selektor *** */
-#define ElmtEff(P) (P).ElmtEff
-#define Sabar(P) (P).Sabar
-#define Elmt(P,i) (P).Mem[(i)]
-
-// BELUM SELESAI
+void GetRandomWahana ();
+/* Menghasilkan wahana random */
 
 #endif

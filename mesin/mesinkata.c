@@ -2,7 +2,9 @@
 /* Realisasi Mesin Kata: Model Akuisisi Versi I */
 
 #include "../boolean.h"
+#include <stdio.h>
 #include "mesinkata.h"
+#include "../array/array.h"
 
 /* State Mesin Kata */
 boolean EndKata;
@@ -64,10 +66,126 @@ void SalinKata(){
   CKata.Length = i;
 }
 
+boolean IsEQKata(Kata K1, Kata K2)
+/* Menghasilkan apakah kata K1 dan K2 merupakan kata yang sama */
+{ //KAMUS
+  int i = 0;
+  boolean sama = false;
+  //ALGORITMA
+  if (K1.Length == K2.Length){
+    while (sama && i<K1.Length){
+      if (K1.TabKata[i] != K2.TabKata[i]){
+        sama = false;
+      }
+      i+= 1;
+    }
+    return sama;
+  }
+  else{
+    return false;
+  }
+}
+
+int KataToInteger (Kata K)
+/* Mengubah Kata ke dalam bentuk integer */
+{
+  int i;
+  int hasil = 0;
+  for(i=0;i<K.Length;i++){
+      if(K.TabKata[i] == '0'){
+        hasil = hasil*10+0;
+      }
+      else if(K.TabKata[i] == '1'){
+        hasil = hasil*10+1;
+      }
+      else if(K.TabKata[i] == '2'){
+        hasil = hasil*10+2;
+      }
+      else if(K.TabKata[i] == '3'){
+        hasil = hasil*10+3;
+      }
+      else if(K.TabKata[i] == '4'){
+        hasil = hasil*10+4;
+      }
+      else if(K.TabKata[i] == '5'){
+        hasil = hasil*10+5;
+      }
+      else if(K.TabKata[i] == '6'){
+        hasil = hasil*10+6;
+      }
+      else if(K.TabKata[i] == '7'){
+        hasil = hasil*10+7;
+      }
+      else if(K.TabKata[i] == '8'){
+        hasil = hasil*10+8;
+      }
+      else if(K.TabKata[i] == '9'){
+        hasil = hasil*10+9;
+      }
+      else{
+        hasil = hasil*10;
+      }
+  }
+  return hasil;
+}
+
+int KataToInteger(Kata K){
+  //KAMUS
+  int hasil;
+  //ALGORITMA
+  hasil = 0;
+  while ((CC != MARK) && (CC != BLANK)){
+    hasil= 10;
+    hasil += CC -'0';
+    ADV();    
+  }
+}
+
 void PrintKata (Kata K) {
   int i=0;
   while (i<K.Length){
     printf("%c",K.TabKata[i]);
     i++;
   }
+}
+
+void BacaMaterial (TabInt *ListMaterial)
+/* Membaca material dan harga material dari file material.txt */
+{
+  /* KAMUS */
+  FILE *PFile;
+  char nama[50];
+  int harga;
+  char val;
+  Kata tempharga;
+  int i,j,k;
+  ElArrayType element;
+
+  /* ALGORITMA */
+  PFile = fopen("../material.txt", "r");
+
+  int i = 0;
+  if (PFile != NULL){
+      val = fgetc(PFile);
+      i = 0;
+      j = 0;
+      while (val != BLANK) {
+        Nama(ElmtArray(*ListMaterial,i)).TabKata[j] = val;
+        j++;
+      }
+      k = 0;
+      while (val != MARK) {
+        tempharga.TabKata[k] = val;
+        k++;
+      }
+      Value(ElmtArray(*ListMaterial,i)) = KataToInteger(te)
+      /*while (fscanf(PFile, "%s %d", &nama, &harga)!= EOF) {
+        // ElmtArray(*ListHargaMaterial,i) = harga;
+        printf("%s %d",nama,harga);
+        Nama(element) = nama;
+        Value(element) = harga;
+        i++;
+      }*/
+  }
+  fclose(PFile);
 }
