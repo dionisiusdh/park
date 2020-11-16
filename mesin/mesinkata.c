@@ -168,17 +168,22 @@ void BacaMaterial (TabInt *ListMaterial)
   if (PFile != NULL){
       val = fgetc(PFile);
       i = 0;
-      j = 0;
-      while (val != BLANK) {
-        Nama(ElmtArray(*ListMaterial,i)).TabKata[j] = val;
-        j++;
+      while(val != '.'){
+        j = 0;
+        while (val != BLANK) {
+          Nama(ElmtArray(*ListMaterial,i)).TabKata[j] = val;
+          j++;
+          val = fgetc(PFile);
+        }
+        k = 0;
+        while (val != MARK) {
+          tempharga.TabKata[k] = val;
+          k++;
+          val = fgetc(PFile);
+        }
+        Value(ElmtArray(*ListMaterial,i)) = KataToInteger(tempharga);
+        i++;
       }
-      k = 0;
-      while (val != MARK) {
-        tempharga.TabKata[k] = val;
-        k++;
-      }
-      Value(ElmtArray(*ListMaterial,i)) = KataToInteger(te)
       /*while (fscanf(PFile, "%s %d", &nama, &harga)!= EOF) {
         // ElmtArray(*ListHargaMaterial,i) = harga;
         printf("%s %d",nama,harga);
