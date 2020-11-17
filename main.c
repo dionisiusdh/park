@@ -10,6 +10,7 @@
 #include "./jam/jam.h"
 #include "./stack/stack.h"
 #include "./array/array.h"
+#include "./array/array.h"
 
 // gcc -std=c99 -o main main.c ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
 
