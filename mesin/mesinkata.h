@@ -6,7 +6,7 @@
 
 #include "../boolean.h"
 #include "mesinkar.h"
-#include "../array/array.h"
+//#include "../array/array.h"
 
 #define NMax 50
 #define BLANK ' '
@@ -55,7 +55,7 @@ int KataToInteger (Kata K);
 void PrintKata (Kata K);
 /* Mencetak Kata K sebagai String ke Layar */
 
-void BacaMaterial (TabInt *ListMaterial);
+//void BacaMaterial (TabInt *ListMaterial);
 /* Membaca material dan harga material dari file material.txt */
 
 #endif

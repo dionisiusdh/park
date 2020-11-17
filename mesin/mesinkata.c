@@ -4,7 +4,7 @@
 #include "../boolean.h"
 #include <stdio.h>
 #include "mesinkata.h"
-#include "../array/array.h"
+//#include "../array/array.h"
 
 /* State Mesin Kata */
 boolean EndKata;
@@ -70,7 +70,7 @@ boolean IsEQKata(Kata K1, Kata K2)
 /* Menghasilkan apakah kata K1 dan K2 merupakan kata yang sama */
 { //KAMUS
   int i = 0;
-  boolean sama = false;
+  boolean sama = true;
   //ALGORITMA
   if (K1.Length == K2.Length){
     while (sama && i<K1.Length){
@@ -142,55 +142,55 @@ int KataToIntegerB(Kata K){
 }
 
 void PrintKata (Kata K) {
-  int i=0;
+  int i = 0;
   while (i<K.Length){
     printf("%c",K.TabKata[i]);
     i++;
   }
 }
 
-void BacaMaterial (TabInt *ListMaterial)
-/* Membaca material dan harga material dari file material.txt */
-{
-  /* KAMUS */
-  FILE *PFile;
-  char nama[50];
-  int harga;
-  char val;
-  Kata tempharga;
-  int i,j,k;
-  ElArrayType element;
+// void BacaMaterial (TabInt *ListMaterial)
+// /* Membaca material dan harga material dari file material.txt */
+// {
+//   /* KAMUS */
+//   FILE *PFile;
+//   char nama[50];
+//   int harga;
+//   char val;
+//   Kata tempharga;
+//   int i,j,k;
+//   ElArrayType element;
 
-  /* ALGORITMA */
-  PFile = fopen("../material.txt", "r");
+//   /* ALGORITMA */
+//   PFile = fopen("../material.txt", "r");
 
-  int i;
-  if (PFile != NULL){
-      val = fgetc(PFile);
-      i = 0;
-      while(val != '.'){
-        j = 0;
-        while (val != BLANK) {
-          Nama(ElmtArray(*ListMaterial,i)).TabKata[j] = val;
-          j++;
-          val = fgetc(PFile);
-        }
-        k = 0;
-        while (val != MARK) {
-          tempharga.TabKata[k] = val;
-          k++;
-          val = fgetc(PFile);
-        }
-        Value(ElmtArray(*ListMaterial,i)) = KataToInteger(tempharga);
-        i++;
-      }
-      /*while (fscanf(PFile, "%s %d", &nama, &harga)!= EOF) {
-        // ElmtArray(*ListHargaMaterial,i) = harga;
-        printf("%s %d",nama,harga);
-        Nama(element) = nama;
-        Value(element) = harga;
-        i++;
-      }*/
-  }
-  fclose(PFile);
-}
+//   int i;
+//   if (PFile != NULL){
+//       val = fgetc(PFile);
+//       i = 0;
+//       while(val != '.'){
+//         j = 0;
+//         while (val != BLANK) {
+//           Nama(ElmtArray(*ListMaterial,i)).TabKata[j] = val;
+//           j++;
+//           val = fgetc(PFile);
+//         }
+//         k = 0;
+//         while (val != MARK) {
+//           tempharga.TabKata[k] = val;
+//           k++;
+//           val = fgetc(PFile);
+//         }
+//         Value(ElmtArray(*ListMaterial,i)) = KataToInteger(tempharga);
+//         i++;
+//       }
+//       /*while (fscanf(PFile, "%s %d", &nama, &harga)!= EOF) {
+//         // ElmtArray(*ListHargaMaterial,i) = harga;
+//         printf("%s %d",nama,harga);
+//         Nama(element) = nama;
+//         Value(element) = harga;
+//         i++;
+//       }*/
+//   }
+//   fclose(PFile);
+// }
