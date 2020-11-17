@@ -129,7 +129,7 @@ int KataToInteger (Kata K)
   return hasil;
 }
 
-int KataToInteger(Kata K){
+int KataToIntegerB(Kata K){
   //KAMUS
   int hasil;
   //ALGORITMA
@@ -164,7 +164,7 @@ void BacaMaterial (TabInt *ListMaterial)
   /* ALGORITMA */
   PFile = fopen("../material.txt", "r");
 
-  int i = 0;
+  int i;
   if (PFile != NULL){
       val = fgetc(PFile);
       i = 0;

@@ -140,13 +140,13 @@ JAM NextNMenit (JAM J, int N)
 }
 
 void IncrementNDetik (JAM *J, int N)
-/* Mengirim N detik setelah J dalam bentuk JAM */
+/* Menambah N detik pada J dalam bentuk JAM */
 {
     *J = DetikToJAM(JAMToDetik(*J)+N);
 }
 
 void IncrementNMenit (JAM *J, int N)
-/* Mengirim N detik setelah J dalam bentuk JAM */
+/* Menambah N menit setelah J dalam bentuk JAM */
 {
     *J = DetikToJAM(JAMToDetik(*J)+N*60);
 }
@@ -168,13 +168,13 @@ JAM PrevNMenit (JAM J, int N)
 }
 
 void DecrementNDetik (JAM *J, int N)
-/* *** Kelompok Operator Aritmetika *** */
+/* Mengurangi N menit pada J dalam bentuk JAM */
 {
     *J = DetikToJAM(JAMToDetik(*J)-N);
 }
 
 void DecrementNMenit (JAM *J, int N)
-/* *** Kelompok Operator Aritmetika *** */
+/* Mengurangi N menit pada J dalam bentuk JAM */
 {
     *J = DetikToJAM(JAMToDetik(*J)-N*60);
 }

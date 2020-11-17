@@ -117,7 +117,7 @@ void initPosisi (MATRIKS *MAP, POINT *PPlayer, POINT *POffice, POINT *PAntrian) 
 
 void initJam (JAM *JOpen, JAM *JClose) {
   /* ALGORITMA */
-  *JOpen = MakeJAM(10, 0, 0);
+  *JOpen = MakeJAM(10, 1, 0);
   *JClose = MakeJAM(22, 0, 0);
 }
 
