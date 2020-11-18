@@ -54,6 +54,9 @@ int main() {
   TabInt ListAksi;
   TabInt ListMaterial;
 
+  /* *********** Trash *********** */
+  aksitype AksiTypeTrash;
+
   /* Nama Pemain dan Saldonya (Money) */
   Kata NamaPlayer;
   Kata CurrentPerintah;
@@ -70,24 +73,13 @@ int main() {
 
   //showMap(Map1);
   initGame(&NamaPlayer);
-  if (prep_status & !main_status) {
+  while (prep_status & !main_status) {
     JCurrent = TambahJAM(JClose, CurrentDuration(S));
-    Remaining = KurangJAM(JOpen,JCurrent);
+    Remaining = KurangJAM(JOpen, JCurrent);
     prepDescription(Map1, NamaPlayer, money, JCurrent, JOpen, Remaining, S);
     printf("Masukkan Perintah: \n$ ");
     inputPerintah(&CurrentPerintah);
-    if (IsEQKata(CurrentPerintah,StringToKata("w",1))){
-      moveUp(&Map1);
-    }
-    else if (IsEQKata(CurrentPerintah,StringToKata("a",1))){
-      moveLeft(&Map1);
-    }
-    else if (IsEQKata(CurrentPerintah,StringToKata("s",1))){
-      moveDown(&Map1);
-    }
-    else if (IsEQKata(CurrentPerintah,StringToKata("d",1))){
-      moveRight(&Map1);
-    }
+    cekPerintah(CurrentPerintah, &Map1, &S, &AksiTypeTrash);
   }
   return 0;
 }
@@ -105,7 +97,7 @@ Kata StringToKata (char *string, int lengthString){
 
 /******* REALISASI FUNGSI-FUNGSI UTAMA *******/
 /*********************************************/
-    /**** MAIN MENU ****/
+/******* INISIALISASI *******/
 void initGame(Kata * NamaPlayer) {
   /**** MAIN MENU ****/
   printf("// Welcome to Willy wangky's fum factory!!//\n// New game / load game / exit? //\n$ ");
@@ -127,6 +119,7 @@ void initGame(Kata * NamaPlayer) {
   }
 }
 
+/******* MENANGANI PERINTAH *******/
 void inputPerintah(Kata *Perintah){
   // Baca masukan 
   STARTKATA();
@@ -136,6 +129,37 @@ void inputPerintah(Kata *Perintah){
   *Perintah = CKata;
 }
 
+void cekPerintah(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash) {
+    if (IsEQKata(CurrentPerintah,StringToKata("w",1))){
+      moveUp(&Map);
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("a",1))){
+      moveLeft(&Map);
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("s",1))){
+      moveDown(&Map);
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("d",1))){
+      moveRight(&Map);
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("buy",3))){
+      //
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("build",5))){
+      //
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("upgrade",7))){
+      // 
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("undo",4))){
+      Undo(S, AksiTypeTrash);
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
+      //
+    }
+}
+
+/******* INISIALISASI *******/
 void initMap(MATRIKS *Map) {
   BacaMATRIKSTxt(Map, 10, 20, "./map1.txt");
 }
@@ -153,7 +177,6 @@ void initJam (JAM *JOpen, JAM *JClose) {
 }
 
 /* *************** yang lain **************** */
-
 Kata concatNama () {
   Kata K;
   STARTKATA();
@@ -202,12 +225,12 @@ void prepDescription (MATRIKS Map, Kata Nama, int saldo, JAM JCurrent, JAM JOpen
     TulisJAM(JOpen);
     printf("\n");
     printf("Time Remaining: ");
-    printf("%d Hour(s) %d Minute(s)", Hour(Remaining), Minute(Remaining));
+    printf("%02d Hour(s) %02d Minute(s)", Hour(Remaining), Minute(Remaining));
     printf("\n");
     printf("Total aksi yang dilakukan: %d", JumlahAksi(S));
     printf("\n");
     printf("Total waktu yang dibutuhkan: ");
-    printf("%d Hour(s) %d Minute(s)", Hour(CurrentDuration(S)), Minute(CurrentDuration(S)));
+    printf("%02d Hour(s) %02d Minute(s)", Hour(CurrentDuration(S)), Minute(CurrentDuration(S)));
     printf("\n");
     printf("Total uang yang dibutuhkan: %d", JumlahBiaya(S));
     printf("\n");

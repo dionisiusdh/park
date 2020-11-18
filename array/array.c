@@ -66,24 +66,6 @@ IdxType GetLastIdx(TabInt T){
     return (NbElmtArray(T)-1);
 }
 
-/* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid(TabInt T, IdxType i){
-/* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
-/* yaitu antara indeks yang terdefinisi utk container*/
-    /*KAMUS LOKAL*/
-    
-    /*ALGORITMA*/
-    return ((i >= IdxMin) && (i <= MaxElement(T)-1));
-}
-boolean IsIdxEff(TabInt T, IdxType i){
-/* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
-/* yaitu antara FirstIdx(T)..LastIdx(T) */
-    /*KAMUS LOKAL*/
-    
-    /*ALGORITMA*/
-    return ((i >= IdxMin) && (i <= NbElmtArray(T)-1));
-}
-
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
 boolean IsEmpty(TabInt T){

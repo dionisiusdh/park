@@ -148,3 +148,14 @@ void PrintKata (Kata K) {
     i++;
   }
 }
+
+void Bagi2Kata (Kata Kin, Kata *Kout1, Kata *Kout2){
+  //KAMUS
+  int i;
+  //ALGORITMA
+  i = 0;
+  SalinKata();
+  (*Kout1) = CKata;
+  SalinKata();
+  (*Kout2) = CKata;
+}

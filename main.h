@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include "boolean.h"
+
+/* ********* ADT ********* */
 #include "./mesin/mesinkar.h"
 #include "./mesin/mesinkata.h"
 #include "./matriks/matriks.h"
@@ -15,6 +17,9 @@
 #include "./jam/jam.h"
 #include "./stack/stack.h"
 #include "./array/array.h"
+
+/* ********* ADT ********* */
+#include "./aksi/prepaksi.h"
 
 /******* DEKLARASI FUNGSI-FUNGSI UTAMA *******/
 Kata StringToKata (char *string, int lengthString);
@@ -27,6 +32,9 @@ void initGame(Kata * Nama);
 
 void inputPerintah (Kata *Perintah);
 /* Membaca perintah dari user dalam bentuk kata */ 
+
+void cekPerintah(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash);
+/* Mengecek perintah dari user dalam bentuk kata */
 
 void initMap();
 /* Menginisiasi map awal permainan Willy Wangky's World.

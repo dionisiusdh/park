@@ -27,7 +27,7 @@ typedef struct
 {
   ElArrayType TI[100]; /* memori tempat penyimpan elemen (container) */
   int Neff;   /* >=0, banyaknya elemen efektif */
-  int MaxEl;  /* ukuran elemen */
+  int MaxElArray;  /* ukuran elemen */
 } TabInt;
 /* Indeks yang digunakan [IdxMin..MaxEl-1] */
 /* Jika T adalah TabInt, cara deklarasi dan akses: */
@@ -73,14 +73,6 @@ IdxType GetFirstIdx(TabInt T);
 IdxType GetLastIdx(TabInt T);
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
-
-/* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid(TabInt T, IdxType i);
-/* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
-/* yaitu antara indeks yang terdefinisi utk container*/
-boolean IsIdxEff(TabInt T, IdxType i);
-/* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
-/* yaitu antara FirstIdx(T)..LastIdx(T) */
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */

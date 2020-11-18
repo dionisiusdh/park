@@ -54,5 +54,8 @@ int KataToInteger (Kata K);
 void PrintKata (Kata K);
 /* Mencetak Kata K sebagai String ke Layar */
 
-#endif
+void Bagi2Kata (Kata Kin, Kata* Kout1, Kata* Kout2);
+/*Membagi Kata menjadi 2 bagian kata. 
+Misalnya: "serve Wangky's Universe" dibagi menjadi Kout1: "serve" dan Kout2: "Wangky's universe"*/
 
+#endif
