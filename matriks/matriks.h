@@ -6,6 +6,7 @@
 
 #include "../boolean.h"
 #include "../point/point.h"
+#include "../graph/graph.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 0
@@ -86,6 +87,9 @@ int NBElmt (MATRIKS M);
 /* Mengirimkan banyaknya elemen M */
 
 /* ********** Posisi ********** */
+POINT initializePlayerPosition (MATRIKS* M);
+/* Menentukan posisi Player pertama kali */
+
 POINT getPlayer (MATRIKS M);
 /* Mengirimkan posisi player */
 /* Posisi dihitung mulai dari 0,0 */
@@ -98,9 +102,22 @@ POINT getAntrian (MATRIKS M);
 /* Mengirimkan posisi antrian */
 /* Posisi dihitung mulai dari 0,0 */
 
-POINT getGerbang (MATRIKS M);
+POINT getGerbangUp (MATRIKS M);
 /* Mengirimkan posisi gerbang */
 /* Posisi dihitung mulai dari 0,0 */
+POINT getGerbangDown (MATRIKS M);
+/* Mengirimkan posisi gerbang */
+/* Posisi dihitung mulai dari 0,0 */
+POINT getGerbangLeft (MATRIKS M);
+/* Mengirimkan posisi gerbang */
+/* Posisi dihitung mulai dari 0,0 */
+POINT getGerbangRight (MATRIKS M);
+/* Mengirimkan posisi gerbang */
+/* Posisi dihitung mulai dari 0,0 */
+POINT getPlayerTransportedPosition (MATRIKS MDest, POINT GDest);
+/* Mengirimkan posisi Player setelah berindah Map berdasarkan
+   posisi Gerbang pada Map tujuan */
+
 
 /* ********** Movement Player ********** */
 void moveUp (MATRIKS *M);
@@ -118,12 +135,34 @@ void moveRight (MATRIKS *M);
 boolean hitWall (MATRIKS *M, int xNew, int yNew);
 /* Cek apakah player menabrak dinding, wahana, atau objek lainnya (Kecuali office) */
 
+void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* ActiveMap, POINT* Player, Graph G, char MoveCommand);
+/**
+ * I.S. Player bergerak menuju gerbang dan terdapat graf yang menghubungkan Map asal ke tujuan
+ * F.S. Jika Gagal, tidak ada yang berubah.
+ *      Jika berhasil:
+ *      Posisi Player pada Map lama dihapus
+ *      Map aktif MActive menjadi Map selanjutnya
+ *      Posisi Player pada Map baru bergantung dari posisi gerbang ia keluar
+ * Proses:
+ *      Menghapus 'P' dari Map Asal
+ *      Menempatkan 'P' pada Map Tujuan
+ *      Mengubah Map Aktif ke Map tujuan
+*/
+
 /* ********** Checker posisi pemain ********** */
 boolean isNearWahana (MATRIKS M, POINT P);
 /* Cek apakah ada wahana di posisi sekitar player */
 
 boolean isNearAntrian (MATRIKS M, POINT P);
 /* Cek apakah ada antrian di posisi sekitar player */
+
+boolean isNearGerbang (MATRIKS M, POINT P);
+/* Cek apakah ada Gerbang di posisi sekitar player */
+
+boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCommand);
+/* P berada di dekat gerbang.
+   Cek berdasarkan input Move apakah Player menuju Gerbang
+   Fungsi mengecek pada graph, apakah Player dapat berpindah Map*/
 
 boolean isInOffice (POINT PPlayer, POINT POffice);
 /* Cek apakah player sedang berada di titik office */
