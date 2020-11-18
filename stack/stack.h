@@ -71,20 +71,4 @@ void Pop (Stack * S, aksitype* X);
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 
-/* ************ FUNGSI-FUNGSI PROGRAM ************ */
-void Undo (Stack * S, aksitype *X);
-/* Melakukan undo dengan pop elemen dari stack */
-
-void AddAksi (Stack *S, aksitype X);
-/* Menambahkan aksi ke dalam stack aksi */
-
-void Execute (Stack *S);
-/* Eksekusi aksi-aksi di dalam stack */
-
-int JumlahAksi(Stack S);
-/* Mengembalikan jumlah aksi di dalam stack */
-
-int JumlahBiaya(Stack S);
-/*Mengembalikan jumlah dari biaya di dalam stack*/
-
 #endif

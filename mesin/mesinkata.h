@@ -6,7 +6,6 @@
 
 #include "../boolean.h"
 #include "mesinkar.h"
-#include "../array/array.h"
 
 #define NMax 50
 #define BLANK ' '
@@ -55,8 +54,8 @@ int KataToInteger (Kata K);
 void PrintKata (Kata K);
 /* Mencetak Kata K sebagai String ke Layar */
 
-void BacaMaterial (TabInt *ListMaterial);
-/* Membaca material dan harga material dari file material.txt */
+void Bagi2Kata (Kata Kin, Kata* Kout1, Kata* Kout2);
+/*Membagi Kata menjadi 2 bagian kata. 
+Misalnya: "serve Wangky's Universe" dibagi menjadi Kout1: "serve" dan Kout2: "Wangky's universe"*/
 
 #endif
-

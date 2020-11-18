@@ -51,19 +51,18 @@ int main() {
   Stack S;
 
   /* *********** Informasi Aksi dan Harga Barang *********** */
-  /* NamaAksi[i] durasinya Durasi[i] */
-  TabInt NamaAksi;
-  TabInt DurasiAksi;
+  TabInt ListAksi;
+  TabInt ListMaterial;
 
-  /* NamaBarang[i] harganya HargaBarang[i] */
-  TabInt NamaBarang;
-  TabInt HargaBarang;
+  /* *********** Trash *********** */
+  aksitype AksiTypeTrash;
 
   /* Nama Pemain dan Saldonya (Money) */
-  Kata Nama;
+  Kata NamaPlayer;
+  Kata CurrentPerintah;
   int money = 1000;
-  boolean prep = true;
-
+  boolean prep_status = true;
+  boolean main_status = false;
 
   /* *********** ALGORITMA UTAMA ********** */
   //Inisialisasi
@@ -71,40 +70,96 @@ int main() {
   initJam(&JOpen,&JClose);
   MaxDuration = KurangJAM(JOpen,JClose);
   CreateEmpty(&S,MaxDuration);
+
   //showMap(Map1);
-  initGame(&Nama);
-  if (prep) {
+  initGame(&NamaPlayer);
+  while (prep_status & !main_status) {
     JCurrent = TambahJAM(JClose, CurrentDuration(S));
-    Remaining = KurangJAM(JOpen,JCurrent);
-    prepDescription(Map1, Nama, money, JCurrent, JOpen, Remaining, S);
+    Remaining = KurangJAM(JOpen, JCurrent);
+    prepDescription(Map1, NamaPlayer, money, JCurrent, JOpen, Remaining, S);
+    printf("Masukkan Perintah: \n$ ");
+    inputPerintah(&CurrentPerintah);
+    cekPerintah(CurrentPerintah, &Map1, &S, &AksiTypeTrash);
   }
   return 0;
 }
 
+Kata StringToKata (char *string, int lengthString){
+  Kata K;
+  int i = 0;
+  while(i<lengthString){
+    K.TabKata[i] = string[i];
+    K.Length++;
+    i++;
+  }
+  return K;
+}
+
 /******* REALISASI FUNGSI-FUNGSI UTAMA *******/
 /*********************************************/
-    /**** MAIN MENU ****/
-void initGame(Kata * Nama) {
-    /**** MAIN MENU ****/
-    printf("// Welcome to Willy wangky's fum factory!!//\n// New game / load game / exit? //\n$ ");
+/******* INISIALISASI *******/
+void initGame(Kata * NamaPlayer) {
+  /**** MAIN MENU ****/
+  printf("// Welcome to Willy wangky's fum factory!!//\n// New game / load game / exit? //\n$ ");
 
-    // Baca masukan 
-    STARTKATA();
-    while (!EndKata) {
-        ADVKATA();  
+  // Baca masukan 
+  STARTKATA();
+  while (!EndKata) {
+      ADVKATA();  
+  }
+
+  if (CKata.TabKata[0] == 'n' || CKata.TabKata[0] == 'N') {
+      printf("Memulai permainan baru...\n");
+      printf("Masukkan nama: \n$ ");
+      *NamaPlayer = concatNama();
+  }
+
+    if (CKata.TabKata[0] == 'e' || CKata.TabKata[0] == 'E') {
+      printf("// Thanks for playing!!! //");
+  }
+}
+
+/******* MENANGANI PERINTAH *******/
+void inputPerintah(Kata *Perintah){
+  // Baca masukan 
+  STARTKATA();
+  while (!EndKata) {
+      ADVKATA();  
+  }
+  *Perintah = CKata;
+}
+
+void cekPerintah(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash) {
+    if (IsEQKata(CurrentPerintah,StringToKata("w",1))){
+      moveUp(&Map);
     }
-
-    if (CKata.TabKata[0] == 'n' || CKata.TabKata[0] == 'N') {
-        printf("Memulai permainan baru...\n");
-        printf("Masukkan nama: \n$ ");
-        *Nama = concatNama();
+    else if (IsEQKata(CurrentPerintah,StringToKata("a",1))){
+      moveLeft(&Map);
     }
-
-     if (CKata.TabKata[0] == 'e' || CKata.TabKata[0] == 'E') {
-        printf("// Thanks for playing!!! //");
+    else if (IsEQKata(CurrentPerintah,StringToKata("s",1))){
+      moveDown(&Map);
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("d",1))){
+      moveRight(&Map);
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("buy",3))){
+      //
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("build",5))){
+      //
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("upgrade",7))){
+      // 
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("undo",4))){
+      Undo(S, AksiTypeTrash);
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
+      //
     }
 }
 
+/******* INISIALISASI *******/
 void initMap(MATRIKS *Map) {
   BacaMATRIKSTxt(Map, 10, 20, "./map1.txt");
 }
@@ -117,12 +172,11 @@ void initPosisi (MATRIKS *MAP, POINT *PPlayer, POINT *POffice, POINT *PAntrian) 
 
 void initJam (JAM *JOpen, JAM *JClose) {
   /* ALGORITMA */
-  *JOpen = MakeJAM(10, 0, 0);
+  *JOpen = MakeJAM(10, 1, 0);
   *JClose = MakeJAM(22, 0, 0);
 }
 
 /* *************** yang lain **************** */
-
 Kata concatNama () {
   Kata K;
   STARTKATA();
@@ -142,7 +196,6 @@ Kata concatNama () {
 /* *************** MAP **************** */
 void printMap (MATRIKS M) {
 /* Mencetak Map dan Legenda */
-
     //KAMUS LOKAL
     int i,j;
 
@@ -172,12 +225,12 @@ void prepDescription (MATRIKS Map, Kata Nama, int saldo, JAM JCurrent, JAM JOpen
     TulisJAM(JOpen);
     printf("\n");
     printf("Time Remaining: ");
-    printf("%d Hour(s) %d Minute(s)", Hour(Remaining), Minute(Remaining));
+    printf("%02d Hour(s) %02d Minute(s)", Hour(Remaining), Minute(Remaining));
     printf("\n");
     printf("Total aksi yang dilakukan: %d", JumlahAksi(S));
     printf("\n");
     printf("Total waktu yang dibutuhkan: ");
-    printf("%d Hour(s) %d Minute(s)", Hour(CurrentDuration(S)), Minute(CurrentDuration(S)));
+    printf("%02d Hour(s) %02d Minute(s)", Hour(CurrentDuration(S)), Minute(CurrentDuration(S)));
     printf("\n");
     printf("Total uang yang dibutuhkan: %d", JumlahBiaya(S));
     printf("\n");

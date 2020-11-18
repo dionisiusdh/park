@@ -44,7 +44,7 @@ void TulisJAM (JAM J)
     /* Proses : Menulis ke layar */
     /* Kamus lokal */
     /* Algoritma */
-    printf("%d:%d:%d",Hour(J),Minute(J),Second(J));
+    printf("%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
 }
 
 long JAMToDetik (JAM J)
@@ -109,18 +109,20 @@ JAM TambahJAM (JAM J1, JAM J2)
 
 JAM KurangJAM (JAM J1, JAM J2)
 {
+    /* Mengirim J2-J1 dlm Detik, dengan kalkulasi */
+	/* Jika JAw > JAkh, maka JAkh adalah 1 hari setelah JAw */
+
     /* KAMUS */
-    long D1, D2, DHasil;
+	int detikJAw, detikJAkh;
 
     /* ALGORITMA */
-    D1 = JAMToDetik(J1);
-    D2 = JAMToDetik(J2);
-    if (D2 > D1){
-        D1 += 86400;
-    }
-    DHasil = D1 - D2;
-
-    return (DetikToJAM(DHasil));
+	detikJAw = JAMToDetik(J1);
+	detikJAkh = JAMToDetik(J2);
+	if (detikJAw > detikJAkh) {
+		return DetikToJAM(86400 - detikJAw + detikJAkh);
+	} else {
+		return DetikToJAM(detikJAkh - detikJAw);
+	}
 }
 
 JAM NextDetik (JAM J)
@@ -140,13 +142,13 @@ JAM NextNMenit (JAM J, int N)
 }
 
 void IncrementNDetik (JAM *J, int N)
-/* Mengirim N detik setelah J dalam bentuk JAM */
+/* Menambah N detik pada J dalam bentuk JAM */
 {
     *J = DetikToJAM(JAMToDetik(*J)+N);
 }
 
 void IncrementNMenit (JAM *J, int N)
-/* Mengirim N detik setelah J dalam bentuk JAM */
+/* Menambah N menit setelah J dalam bentuk JAM */
 {
     *J = DetikToJAM(JAMToDetik(*J)+N*60);
 }
@@ -168,13 +170,13 @@ JAM PrevNMenit (JAM J, int N)
 }
 
 void DecrementNDetik (JAM *J, int N)
-/* *** Kelompok Operator Aritmetika *** */
+/* Mengurangi N menit pada J dalam bentuk JAM */
 {
     *J = DetikToJAM(JAMToDetik(*J)-N);
 }
 
 void DecrementNMenit (JAM *J, int N)
-/* *** Kelompok Operator Aritmetika *** */
+/* Mengurangi N menit pada J dalam bentuk JAM */
 {
     *J = DetikToJAM(JAMToDetik(*J)-N*60);
 }

@@ -1,0 +1,5 @@
+build 3600
+upgrade 3600
+buy 900
+undo 0
+execute 0.
