@@ -30,12 +30,12 @@ typedef struct {
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 /* *** Konstruktor membuat PENGUNJUNG *** */
-void MakePENGUNJUNG (int Neff, PENGUNJUNG *P);
+void MakePENGUNJUNG (PENGUNJUNG *P);
 /* Membuat data dengan tipe PENGUNJUNG dengan wahana yang ingin dinaiki kosong */
-/* I.S. JE jumlah elemen efektif, SB kesabaran awal */
+/* I.S. Sembarang */
 /* F.S. PENGUNJUNG terbentuk */
 
-void GetRandomWahana ();
-/* Menghasilkan wahana random */
+void GetRandomWahana (PENGUNJUNG *P);
+/* Menghasilkan wahana random yang ingin dikunjungi pengunjung */
 
 #endif

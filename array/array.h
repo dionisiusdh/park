@@ -9,6 +9,7 @@
 
 #include "../boolean.h"
 #include "../mesin/mesinkata.h"
+#include "../mesin/mesinkar.h"
 
 /*  Kamus Umum */
 #define IdxMin 0
@@ -24,7 +25,7 @@ typedef struct {
 } ElArrayType;
 typedef struct
 {
-  ElArrayType *TI; /* memori tempat penyimpan elemen (container) */
+  ElArrayType TI[100]; /* memori tempat penyimpan elemen (container) */
   int Neff;   /* >=0, banyaknya elemen efektif */
   int MaxEl;  /* ukuran elemen */
 } TabInt;
@@ -44,13 +45,12 @@ typedef struct
 #define NeffArray(T) (T).Neff
 #define TI(T) (T).TI
 #define ElmtArray(T, i) (T).TI[(i)]
-#define MaxElArray(T) (T).MaxEl
 #define Nama(E) (E).nama
 #define Value(E) (E).value
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
-void MakeEmpty(TabInt *T, int maxel);
+void MakeEmpty(TabInt *T);
 /* I.S. T sembarang, maxel > 0 */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas maxel */
 
@@ -111,34 +111,23 @@ void TulisIsiTab(TabInt T);
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika tabel kosong : menulis [] */
 
-/* ********** SEARCHING ********** */
-/* ***  Perhatian : Tabel boleh kosong!! *** */
-IdxType Search1(TabInt T, Kata X);
-/* Search apakah ada elemen tabel T yang bernilai X */
-/* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = X */
-/* Jika tidak ada, mengirimkan IdxUndef */
-/* Menghasilkan indeks tak terdefinisi (IdxUndef) jika tabel T kosong */
-/* Skema Searching yang digunakan bebas */
-boolean SearchB(TabInt T, Kata X);
-/* Search apakah ada elemen tabel T yang bernilai X */
-/* Jika ada, menghasilkan true, jika tidak ada menghasilkan false */
-/* Skema searching yang digunakan bebas */
+void AddAsLastEl(TabInt *T, ElArrayType X);
+/* Proses: Menambahkan X sebagai elemen terakhir tabel */
+/* I.S. Tabel T boleh kosong, tetapi tidak penuh */
+/* F.S. X adalah elemen terakhir T yang baru */
 
-/* ********** OPERASI LAIN ********** */
-int SumTab(TabInt T);
-/* Menghasilkan hasil penjumlahan semua elemen T */
-/* Proses : Menambahkan max element sebanyak num */
-/* I.S. Tabetl sudah terdefinisi */
-/* F.S. Ukuran tabel bertambah sebanyak num */
-
-void ShrinkTab(TabInt *T, int num);
-/* Proses : Mengurangi max element sebanyak num */
-/* I.S. Tabel sudah terdefinisi, ukuran MaxEl > num, dan Neff < MaxEl - num. */
-/* F.S. Ukuran tabel berkurang sebanyak num. */
-
-void CompactTab(TabInt *T);
-/* Proses : Mengurangi max element sehingga Neff = MaxEl */
+/* ********** MENGHAPUS ELEMEN ********** */
+void DelLastEl(TabInt *T, ElArrayType *X);
+/* Proses : Menghapus elemen terakhir tabel */
 /* I.S. Tabel tidak kosong */
-/* F.S. Ukuran MaxEl = Neff */
+/* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */
+/*      Banyaknya elemen tabel berkurang satu */
+/*      Tabel T mungkin menjadi kosong */
+
+void BacaMaterial (TabInt *ListMaterial);
+/* Membaca material dan harga material dari file material.txt */
+
+void BacaAksi (TabInt *ListAksi);
+/* Membaca material dan harga material dari file material.txt */
 
 #endif

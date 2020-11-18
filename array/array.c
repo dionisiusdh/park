@@ -5,25 +5,27 @@
 #include <stdlib.h>
 #include "array.h"
 #include "../boolean.h"
+#include "../mesin/mesinkata.h"
+#include "../mesin/mesinkar.h"
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
-void MakeEmpty(TabInt *T, int maxel){
+void MakeEmpty(TabInt *T){ //, int maxel){
 /* I.S. T sembarang, maxel > 0 */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas maxel */
     /*KAMUS LOKAL*/
 
     /*ALGORITMA*/
-    TI(*T) = (ElArrayType *) malloc (maxel*sizeof(ElArrayType));
+    //TI(*T) = (ElArrayType *) malloc (maxel*sizeof(ElArrayType));
     NeffArray(*T) = 0;
-    MaxElArray(*T) = maxel;
+    //MaxElArray(*T) = maxel;
 }
 
 void Dealokasi(TabInt *T){
 /* I.S. T terdefinisi; */
 /* F.S. TI(T) dikembalikan ke system, MaxElArray(T)=0; NeffArray(T)=0 */
     free(TI(*T));
-    MaxElArray(*T) = 0;
+    //MaxElArray(*T) = 0;
     NeffArray(*T) = 0;
 }
 
@@ -43,7 +45,8 @@ int MaxElement(TabInt T){
     /*KAMUS LOKAL*/
     
     /*ALGORITMA*/
-    return MaxElArray(T);
+    return 0;
+    //return MaxElArray(T);
 }
 /* *** Selektor INDEKS *** */
 IdxType GetFirstIdx(TabInt T){
@@ -144,58 +147,20 @@ void TulisIsiTab(TabInt T){
       printf("[");
       for(i=IdxMin; i<=GetLastIdx(T);i++){
          if (i == GetLastIdx(T)){
-            printf("%d",ElmtArray(T,i));
+            printf("(");         
+            PrintKata(Nama(ElmtArray(T,i)));
+            printf(", %d", Value(ElmtArray(T,i)));
+            printf(")");
          } else {
-            printf("%d,",ElmtArray(T,i));
+            printf("(");  
+            PrintKata(Nama(ElmtArray(T,i)));
+            printf(", %d", Value(ElmtArray(T,i)));
+            printf("),");  
          }
       }
       printf("]");
    }
 }
-
-/* ********** SEARCHING ********** */
-/* ***  Perhatian : Tabel boleh kosong!! *** */
-IdxType Search1(TabInt T, Kata X){
-/* Search apakah ada elemen tabel T yang bernilai X */
-/* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = X */
-/* Jika tidak ada, mengirimkan IdxUndef */
-/* Menghasilkan indeks tak terdefinisi (IdxUndef) jika tabel T kosong */
-/* Skema Searching yang digunakan bebas */
-    /*KAMUS LOKAL*/
-    IdxType i;
-    IdxType idx;
-    boolean found = false;
-    i = IdxMin;
-
-    /*ALGORITMA*/
-    if(IsEmpty(T)){
-        return IdxUndef;
-    } else {
-        while((found == false) && (i<=GetLastIdx(T))){
-            if(IsEQKata(Nama(ElmtArray(T,i)), X)){
-                idx = i;
-                found = true;
-            }
-            i += 1;
-        }
-    }
-
-    if(found == true){
-            return idx;
-    } else {
-        return IdxUndef;
-    }
-}
-boolean SearchB(TabInt T, Kata X){
-/* Search apakah ada elemen tabel T yang bernilai X */
-/* Jika ada, menghasilkan true, jika tidak ada menghasilkan false */
-/* Skema searching yang digunakan bebas */
-    /*KAMUS LOKAL*/
-
-    /*ALGORITMA*/
-    return Search1(T,X) != IdxUndef;
-}
-
 
 /* ********** OPERASI LAIN ********** */
 int SumTab(TabInt T){
@@ -235,69 +200,96 @@ void DelLastEl(TabInt *T, ElArrayType *X){
    NeffArray(*T) -= 1;
 }
 
-/* ********* MENGUBAH UKURAN ARRAY ********* */
-void GrowTab(TabInt *T, int num){
-/* Proses : Menambahkan max element sebanyak num */
-/* I.S. Tabel sudah terdefinisi */
-/* F.S. Ukuran tabel bertambah sebanyak num */
-    /*KAMUS LOKAL*/
-    TabInt temp;
-    int i;
+void BacaMaterial (TabInt *ListMaterial)
+/* Membaca material dan harga material dari file material.txt */
+{
+  /* KAMUS */
+  FILE *PFile;
+  int i,j,k;
 
-    /*ALGORITMA*/
-    MakeEmpty(&temp, MaxElement(*T));
-    CopyTab(*T,&temp);
+  int harga;
+  char val;
+  Kata tempnama;
+  Kata tempharga;
+  ElArrayType element;
 
-    Dealokasi(T);
-    MakeEmpty(T, MaxElement(temp)+num);
+  /* ALGORITMA */
+  PFile = fopen("../material.txt", "r");
 
-    NeffArray(*T) = NeffArray(temp);
-    for (i = GetFirstIdx(temp); i  <= GetLastIdx(temp);  ++i){
-        ElmtArray(*T, i) = ElmtArray(temp, i);
-    }
-
-    Dealokasi(&temp);
+  if (PFile != NULL){
+      val = fgetc(PFile);
+      i = 0;
+      while(val != '.'){
+        j = 0;
+        tempnama.Length = 0;
+        while (val != BLANK && val != '.') {
+          tempnama.TabKata[j] = val;
+          tempnama.Length ++;
+          j++;
+          val = fgetc(PFile);
+        }
+        
+        k = 0;
+        val = fgetc(PFile);
+        tempharga.Length = 0;
+        while (val != MARK && val != '.') {
+          tempharga.TabKata[k] = val;
+          tempharga.Length ++;
+          k++;
+          val = fgetc(PFile);
+        }
+        Nama(element) = tempnama;
+        Value(element) = KataToInteger(tempharga);
+        AddAsLastEl(ListMaterial, element);
+        i++;
+      }
+  }
+  printf("\n");
 }
 
-void ShrinkTab(TabInt *T, int num){
-/* Proses : Mengurangi max element sebanyak num */
-/* I.S. Tabel sudah terdefinisi, ukuran MaxEl > num, dan NeffArray < MaxEl - num. */
-/* F.S. Ukuran tabel berkurang sebanyak num. */
-    /*KAMUS LOKAL*/
-    TabInt temp;
-    int i;
+void BacaAksi (TabInt *ListAksi)
+/* Membaca aksi dan durasi material dari file aksi.txt */
+{
+  /* KAMUS */
+  FILE *PFile;
+  int i,j,k;
 
-    /*ALGORITMA*/
-    MakeEmpty(&temp, MaxElement(*T));
-    CopyTab(*T,&temp);
+  int harga;
+  char val;
+  Kata tempaksi;
+  Kata tempwaktu;
+  ElArrayType element;
 
-    Dealokasi(T);
-    MakeEmpty(T, MaxElement(temp)-num);
-    
-    NeffArray(*T) = NeffArray(temp);
-    for (i = GetFirstIdx(temp); i  <= GetLastIdx(temp);  ++i){
-        ElmtArray(*T, i) = ElmtArray(temp, i);
-    }
+  /* ALGORITMA */
+  PFile = fopen("../aksi.txt", "r");
 
-    Dealokasi(&temp);
-}
-
-void CompactTab(TabInt *T){
-/* Proses : Mengurangi max element sehingga NeffArray = MaxEl */
-/* I.S. Tabel tidak kosong */
-/* F.S. Ukuran MaxEl = NeffArray */
-    /*KAMUS LOKAL*/
-    TabInt temp;
-
-    /*ALGORITMA*/
-    MakeEmpty(&temp, MaxElement(*T));
-    CopyTab(*T,&temp);
-
-    Dealokasi(T);
-    MakeEmpty(T, NbElmtArray(temp));
-    
-    CopyTab(temp,T);
-
-    Dealokasi(&temp);
-    MaxElArray(*T) = NbElmtArray(*T);
+  if (PFile != NULL){
+      val = fgetc(PFile);
+      i = 0;
+      while(val != '.'){
+        j = 0;
+        tempaksi.Length = 0;
+        while (val != BLANK && val != '.') {
+          tempaksi.TabKata[j] = val;
+          tempaksi.Length ++;
+          j++;
+          val = fgetc(PFile);
+        }
+        
+        k = 0;
+        val = fgetc(PFile);
+        tempwaktu.Length = 0;
+        while (val != MARK && val != '.') {
+          tempwaktu.TabKata[k] = val;
+          tempwaktu.Length ++;
+          k++;
+          val = fgetc(PFile);
+        }
+        Nama(element) = tempaksi;
+        Value(element) = KataToInteger(tempwaktu);
+        AddAsLastEl(ListAksi, element);
+        i++;
+      }
+  }
+  printf("\n");
 }

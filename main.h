@@ -17,10 +17,16 @@
 #include "./array/array.h"
 
 /******* DEKLARASI FUNGSI-FUNGSI UTAMA *******/
+Kata StringToKata (char *string, int lengthString);
+/* Mengubah String bernama string Ke Dalam Bentuk Kata */
+
 void initGame(Kata * Nama);
 /* Menginisiasi mulainya permainan Willy Wangky's World.
    I.S. Game belum dimulai.
    F.S. Game dimulai dengan input pilihan di main menu. */
+
+void inputPerintah (Kata *Perintah);
+/* Membaca perintah dari user dalam bentuk kata */ 
 
 void initMap();
 /* Menginisiasi map awal permainan Willy Wangky's World.
