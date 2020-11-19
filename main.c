@@ -50,6 +50,10 @@ int main() {
   /* *********** Stack Aksi *********** */
   Stack S;
 
+  /* *********** Inventory *********** */
+  TabInt Inventory;
+  TabInt TempInventory;
+
   /* *********** Informasi Aksi dan Harga Barang *********** */
   TabInt ListAksi;
   TabInt ListMaterial;

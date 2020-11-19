@@ -116,6 +116,13 @@ void DelLastEl(TabInt *T, ElArrayType *X);
 /*      Banyaknya elemen tabel berkurang satu */
 /*      Tabel T mungkin menjadi kosong */
 
+/* ********** COPY ********** */
+TabInt CopyTab (TabInt TIn);
+/* Mereturn sebuah tabint hasil copy dari TIn */
+
+void SetAllValueZero (TabInt *T);
+/* Mengganti semu value dari T menjadi 0 */
+
 void BacaMaterial (TabInt *ListMaterial);
 /* Membaca material dan harga material dari file material.txt */
 
