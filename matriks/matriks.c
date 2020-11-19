@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include "matriks.h"
-#include "../boolean.h"
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk MATRIKS *** */
@@ -134,6 +133,16 @@ int NBElmt (MATRIKS M){
 }
 
 /* ********** GETTER POSISI OBJEK ********** */
+POINT initializePlayerPosition (MATRIKS* M) {
+    /* Menentukan posisi Player pertama kali */
+    indeks i, j;
+    while (IsIdxValid(i, j)) {
+        if (Elmt(*M, i, j) == '-') {
+            Elmt(*M, i, j) = 'P';
+        }
+    }
+}
+
 POINT getPlayer (MATRIKS M) {
 /* Mengirimkan posisi player */
 /* Posisi dihitung mulai dari 0,0 */
@@ -188,7 +197,58 @@ POINT getAntrian (MATRIKS M) {
     }
 }
 
-POINT getGerbang (MATRIKS M) {
+POINT getGerbangUp (MATRIKS M) {
+/* Mengirimkan posisi gerbang */
+/* Posisi dihitung mulai dari 0,0 */
+    //KAMUS LOKAL
+    int i,j;
+    POINT P;
+
+    //ALGORITMA
+    for (i=0; i<10; i++){
+        for (j=0; j<20; j++){
+            if (Elmt(M, i, j) == '^') {
+                P = MakePOINT(i, j);
+                return P;
+            }
+        }  
+    }
+}
+POINT getGerbangDown (MATRIKS M) {
+/* Mengirimkan posisi gerbang */
+/* Posisi dihitung mulai dari 0,0 */
+    //KAMUS LOKAL
+    int i,j;
+    POINT P;
+
+    //ALGORITMA
+    for (i=0; i<10; i++){
+        for (j=0; j<20; j++){
+            if (Elmt(M, i, j) == 'v') {
+                P = MakePOINT(i, j);
+                return P;
+            }
+        }  
+    }
+}
+POINT getGerbangLeft (MATRIKS M) {
+/* Mengirimkan posisi gerbang */
+/* Posisi dihitung mulai dari 0,0 */
+    //KAMUS LOKAL
+    int i,j;
+    POINT P;
+
+    //ALGORITMA
+    for (i=0; i<10; i++){
+        for (j=0; j<20; j++){
+            if (Elmt(M, i, j) == '<') {
+                P = MakePOINT(i, j);
+                return P;
+            }
+        }  
+    }
+}
+POINT getGerbangRight (MATRIKS M) {
 /* Mengirimkan posisi gerbang */
 /* Posisi dihitung mulai dari 0,0 */
     //KAMUS LOKAL
@@ -205,6 +265,31 @@ POINT getGerbang (MATRIKS M) {
         }  
     }
 }
+POINT getPlayerTransportedPosition (MATRIKS MDest, POINT GDest) {
+    /* Mengirimkan posisi Player setelah berpindah Map ke MDest, berdasarkan
+    posisi Gerbang GDest pada Map tujuan */
+    indeks xG = Absis(GDest);
+    indeks yG = Ordinat(GDest);
+    POINT PlayerNew;
+    if (Elmt(MDest, xG, yG) == '^') {
+        Absis(PlayerNew) = xG+1;
+        Ordinat(PlayerNew) = yG;
+    }
+    else if (Elmt(MDest, xG, yG) == 'v') {
+        Absis(PlayerNew) = xG-1;
+        Ordinat(PlayerNew) = yG;
+    }
+    else if (Elmt(MDest, xG, yG) == '<') {
+        Absis(PlayerNew) = xG;
+        Ordinat(PlayerNew) = yG+1;
+    }
+    else if (Elmt(MDest, xG, yG) == '>') {
+        Absis(PlayerNew) = xG;
+        Ordinat(PlayerNew) = yG-1;
+    }
+    return PlayerNew;
+}
+
 
 /* ********** MOVEMENT ********** */
 /* Titik 0,0 berada di pojok kiri atas matriks */
@@ -313,6 +398,52 @@ boolean hitWall (MATRIKS *M, int xNew, int yNew){
     return (Elmt(*M, xNew, yNew) == '*' || Elmt(*M, xNew, yNew) == 'W' || Elmt(*M, xNew, yNew) == 'A');
 }
 
+void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* ActiveMap, POINT* Player, Graph G, char MoveCommand) {
+    /**
+     * I.S. Player bergerak menuju gerbang dan terdapat graf yang menghubungkan Map asal ke tujuan
+     * F.S. Jika Gagal, tidak ada yang berubah.
+     *      Jika berhasil:
+     *      Posisi Player pada Map lama dihapus
+     *      Map aktif MActive menjadi Map selanjutnya
+     *      Posisi Player pada Map baru bergantung dari posisi gerbang ia keluar
+     * Proses:
+     *      Menghapus 'P' dari Map Asal
+     *      Menempatkan 'P' pada Map Tujuan
+     *      Mengubah Map Aktif ke Map tujuan
+    */
+    //if (isNearGerbang(*MAsal, *Player)) {
+    //if (isGoingTowardGerbang(*MAsal, *Player, MoveCommand)) {
+    //if (IsSrcByReqMoveExist(G, *ActiveMap, MoveCommand)) {
+    
+    // Menghapus posisi Player dari Map asal
+    Elmt(*MActive, Absis(*Player), Ordinat(*Player)) = '-';
+    CopyMATRIKS(*MActive, MAsal);
+    
+    // Mencari posisi gerbang di Map tujuan
+    POINT GDest;
+    if (MoveCommand=='w') { GDest = getGerbangDown(*MTujuan); }
+    else if (MoveCommand=='s') { GDest = getGerbangUp(*MTujuan); }
+    else if (MoveCommand=='a') { GDest = getGerbangRight(*MTujuan); }
+    else if (MoveCommand=='d') { GDest = getGerbangLeft(*MTujuan); }
+    printf("GDest: ");
+    TulisPOINT(GDest);
+    printf("\n");
+    // Mencari posisi Player di Map tujuan
+    *Player = getPlayerTransportedPosition(*MTujuan, GDest);
+    printf("Player ");
+    TulisPOINT(*Player);
+    printf("\n");
+    // Mengubah Map Tujuan dan mengganti MapActive
+    CopyMATRIKS(*MTujuan, MActive);
+    Elmt(*MActive, Absis(*Player), Ordinat(*Player)) = 'P';
+    
+    *ActiveMap = ReturnMapDest(&G, *ActiveMap, MoveCommand);
+    //}
+    //}
+    //}
+}
+
+
 /* ********** POSITION CHECKER ********** */
 boolean isNearWahana (MATRIKS M, POINT P) {
      //KAMUS LOKAL
@@ -370,6 +501,64 @@ boolean isInOffice (POINT PPlayer, POINT POffice) {
     return EQ(PPlayer, POffice);
 } 
 
+boolean isNearGerbang (MATRIKS M, POINT P) {
+    /* Cek apakah ada Gerbang di posisi sekitar player */
+    int x = Absis(P);
+    int y = Ordinat(P);
+    if (Elmt(M, x-1, y) == '^' || Elmt(M, x-1, y) == 'v' || Elmt(M, x-1, y) == '<' || Elmt(M, x-1, y) == '>') {
+        return true;
+    }
+    else if (Elmt(M, x+1, y) == '^' || Elmt(M, x+1, y) == 'v' || Elmt(M, x+1, y) == '<' || Elmt(M, x+1, y) == '>') {
+        return true;
+    }
+    else if (Elmt(M, x, y-1) == '^' || Elmt(M, x, y-1) == 'v' || Elmt(M, x, y-1) == '<' || Elmt(M, x, y-1) == '>') {
+        return true;
+    }
+    else if (Elmt(M, x, y+1) == '^' || Elmt(M, x, y+1) == 'v' || Elmt(M, x, y+1) == '<' || Elmt(M, x, y+1) == '>') {
+        return true;
+    }
+    return false;
+}
+
+boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCommand) {
+/*  P berada di dekat gerbang.
+    Cek berdasarkan input Move apakah Player menuju Gerbang
+    Fungsi mengecek pada graph, apakah Player dapat berpindah Map*/
+    boolean toward = false;
+
+    // CEK MOVE
+    indeks x = Absis(P);
+    indeks y = Ordinat(P);
+    // Cek posisi relatif P dengan gerbang
+    if (Elmt(M, x-1, y) == '^') {
+        if (MoveCommand == 'w') {
+            toward = true;
+        }
+    }
+    if (Elmt(M, x+1, y) == 'v') {
+        if (MoveCommand == 's') {
+            toward = true;
+        }
+    }
+    if (Elmt(M, x, y-1) == '<') {
+        if (MoveCommand == 'w') {
+            toward = true;
+        }
+    }
+    if (Elmt(M, x, y+1) == '>') {
+        if (MoveCommand == 'w') {
+            toward = true;
+        }
+    }
+
+    // CEK GRAPH
+    boolean graphAllowed = IsSrcByReqMoveExist(G, Src, MoveCommand);
+
+    return (toward && graphAllowed);
+}
+
+/*
 boolean isInPortal (POINT PPlayer, POINT PPortal) {
     return EQ(PPlayer, PPortal);
 } 
+*/
