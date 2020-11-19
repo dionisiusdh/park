@@ -121,22 +121,6 @@ int KataToInteger (Kata K)
       else if(K.TabKata[i] == '9'){
         hasil = hasil*10+9;
       }
-      else{
-        hasil = hasil*10;
-      }
-  }
-  return hasil;
-}
-
-int KataToIntegerB(Kata K){
-  //KAMUS
-  int hasil;
-  //ALGORITMA
-  hasil = 0;
-  while ((CC != MARK) && (CC != BLANK)){
-    hasil= 10;
-    hasil += CC -'0';
-    ADV();    
   }
   return hasil;
 }
@@ -151,17 +135,26 @@ void PrintKata (Kata K) {
 
 void Bagi2Kata (Kata Kin, Kata *Kout1, Kata *Kout2){
   //KAMUS
-  int i=0;
+  int i = 0;
+  int j = 0;
   //ALGORITMA
-  SalinKata();
-  (*Kout1) = CKata;
-  IgnoreBlank();
-  while (CC != MARK){
-    (*Kout2).TabKata[i] = CC;
-    ADV();
-    i++; 
+  //Mengambil kata pertama
+  while (Kin.TabKata[i] != BLANK){
+    (*Kout1).TabKata[i] = Kin.TabKata[i];
+    i++;
   }
-  (*Kout2).Length = i;
+  (*Kout1).Length = i;
+  //Ignore Blank
+  while (Kin.TabKata[i] == BLANK){
+    i++;
+  }
+  //Mengambil kata kedua
+  while (i<Kin.Length){
+    (*Kout2).TabKata[j] = Kin.TabKata[i];
+    i++;
+    j++;
+  }
+  (*Kout2).Length = j;
 }
 
 Kata StringToKata (char *string, int lengthString){
@@ -169,9 +162,9 @@ Kata StringToKata (char *string, int lengthString){
   int i = 0;
   while(i<lengthString){
     K.TabKata[i] = string[i];
-    K.Length++;
     i++;
   }
+  K.Length = i;
   return K;
 }
 
