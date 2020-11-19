@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "prepaksi.h"
 
-void MenuBuy(TabInt *ListMaterial, int *Money)
+void MenuBuy(TabInt *Inventory, TabInt *ListMaterial, int *Money)
 /* I.S. Terdapat File Eksternal Material.txt */
 /* F.S. Menampilkan Daftar Material yang dapat dibeli ke layar, menerima input jumlah material yang dibeli
         Apabila uang mencukupi, masukkan perintah eksekusi ke dalam stack. Apabila uang tidak cukup atau 
@@ -17,29 +17,28 @@ void MenuBuy(TabInt *ListMaterial, int *Money)
     printf("List: \n");
     int i;
     for (i=0; (i<NeffArray(*ListMaterial)); i++){
-        printf("    - ");
         PrintKata(Nama(ElmtArray(*ListMaterial,i)));
-        printf("\n");
+        printf("   Harga: $%d", Value(ElmtArray(*ListMaterial,i)));
     }
     printf("Petunjuk : Input Dalam Format (<Jumlah Barang> <Nama Barang>); Contoh: 1000 Wood\n");
 
     STARTKATA();
-    Harga = KataToInteger(CKata);
+    JumlahBarang = KataToInteger(CKata);
     ADVKATA();
     NamaBarang = CKata;
 
     Harga = GetValue(ListMaterial, NamaBarang);
     TempPrice = *Money-(Harga*JumlahBarang);
     if(TempPrice >= 0){
-        Buy(ListMaterial, Money, NamaBarang, JumlahBarang);
+        Buy(Inventory, ListMaterial, Money, NamaBarang, JumlahBarang);
     }
     else{
         // Uang Tidak Cukup
-        printf("Uang Anda tidak memenuhi untuk melakukan pembelian material tersebut.");
+        printf("\nUang Anda tidak memenuhi untuk melakukan pembelian material tersebut.\n");
     }
 }
 
-void Buy(TabInt *ListMaterial, int *Money, Kata NamaBarang, int JumlahBarang){
+void Buy(TabInt *Inventory, TabInt *ListMaterial, int *Money, Kata NamaBarang, int JumlahBarang){
 /* Membeli barang. Menambahkan NamaBarang pada TempInventory sebanyak JumlahBarang */
 /* Mengurangi money dengan nilai total harga material dikali JumlahBarang */
     /* KAMUS */
@@ -47,11 +46,11 @@ void Buy(TabInt *ListMaterial, int *Money, Kata NamaBarang, int JumlahBarang){
     int Harga;
 
     /* ALGORITMA */
-    CurrentJumlah = GetValue(ListMaterial, NamaBarang);
+    CurrentJumlah = GetValue(Inventory, NamaBarang);
     NewJumlah = CurrentJumlah + JumlahBarang; 
-    ChangeValue(ListMaterial, NamaBarang, NewJumlah);
+    ChangeValue(Inventory, NamaBarang, NewJumlah);
 
-    Harga = GetValue(ListMaterial, NamaBarang);
+    Harga = GetValue(ListMaterial, NamaBarang) * JumlahBarang;
     *Money -= Harga;
 }
 
@@ -83,7 +82,7 @@ void Main(Stack *S){
     aksitype X;
 
     /* ALGORITMA */
-    while(Top(*S) != Nil){
+    while(Top(*S) != NilStack){
         Pop(S,&X);
     }
 }

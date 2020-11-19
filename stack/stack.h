@@ -8,7 +8,7 @@
 #include "../boolean.h"
 #include "../jam/jam.h"
 
-#define Nil -1
+#define NilStack -1
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 

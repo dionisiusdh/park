@@ -406,7 +406,7 @@ boolean hitWall (MATRIKS *M, int xNew, int yNew){
     return (Elmt(*M, xNew, yNew) == '*' || Elmt(*M, xNew, yNew) == 'W' || Elmt(*M, xNew, yNew) == 'A');
 }
 
-void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* ActiveMap, POINT* Player, Graph G, char MoveCommand) {
+//void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* ActiveMap, POINT* Player, Graph G, char MoveCommand) {
     /**
      * I.S. Player bergerak menuju gerbang dan terdapat graf yang menghubungkan Map asal ke tujuan
      * F.S. Jika Gagal, tidak ada yang berubah.
@@ -424,7 +424,7 @@ void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* Acti
     //if (IsSrcByReqMoveExist(G, *ActiveMap, MoveCommand)) {
     
     // Menghapus posisi Player dari Map asal
-    Elmt(*MActive, Absis(*Player), Ordinat(*Player)) = '-';
+    /*Elmt(*MActive, Absis(*Player), Ordinat(*Player)) = '-';
     CopyMATRIKS(*MActive, MAsal);
     
     // Mencari posisi gerbang di Map tujuan
@@ -449,7 +449,7 @@ void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* Acti
     //}
     //}
     //}
-}
+}*/
 
 
 /* ********** POSITION CHECKER ********** */
@@ -528,11 +528,11 @@ boolean isNearGerbang (MATRIKS M, POINT P) {
     return false;
 }
 
-boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCommand) {
+//boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCommand) {
 /*  P berada di dekat gerbang.
     Cek berdasarkan input Move apakah Player menuju Gerbang
     Fungsi mengecek pada graph, apakah Player dapat berpindah Map*/
-    boolean toward = false;
+    /*boolean toward = false;
 
     // CEK MOVE
     indeks x = Absis(P);
@@ -563,7 +563,7 @@ boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCom
     boolean graphAllowed = IsSrcByReqMoveExist(G, Src, MoveCommand);
 
     return (toward && graphAllowed);
-}
+}*/
 
 
 /*** BUILD ***/

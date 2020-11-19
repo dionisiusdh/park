@@ -1,5 +1,6 @@
 #include "prioqueue.h"
-#include "stdlib.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /* ********* Prototype ********* */
 boolean IsEmpty (Queue Q)

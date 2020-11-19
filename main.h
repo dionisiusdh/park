@@ -17,12 +17,12 @@
 #include "./jam/jam.h"
 #include "./stack/stack.h"
 #include "./array/array.h"
+//#include "./Graph/graph.h"
 
 /* ********* ADT ********* */
 #include "./aksi/prepaksi.h"
 
 /******* DEKLARASI FUNGSI-FUNGSI UTAMA *******/
-
 
 void initGame(Kata * Nama);
 /* Menginisiasi mulainya permainan Willy Wangky's World.
@@ -32,7 +32,7 @@ void initGame(Kata * Nama);
 void inputPerintah (Kata *Perintah);
 /* Membaca perintah dari user dalam bentuk kata */ 
 
-void cekPerintah(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash);
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, TabInt *ListAksi);
 /* Mengecek perintah dari user dalam bentuk kata */
 
 void initMap();
@@ -48,6 +48,9 @@ void initJam(JAM *JOpen, JAM *JClose);
 /******* PROSEDUR DESKRIPSI *******/
 void printMap (MATRIKS M);
 /* Mencetak Map dan Legenda */
+
+void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi);
+/*Menginisialisasi Inventory*/
 
 void prepDescription (MATRIKS M, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S);
 /* Mencetak Deskripsi Pemain (Termasuk Mencetak Map dan Legenda) */

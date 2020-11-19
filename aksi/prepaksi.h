@@ -10,13 +10,13 @@
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
-void MenuBuy(TabInt *ListMaterial, int *Money);
+void MenuBuy(TabInt *Inventory, TabInt *ListMaterial, int *Money);
 /* I.S. Terdapat File Eksternal Material.txt */
 /* F.S. Menampilkan Daftar Material yang dapat dibeli ke layar, menerima input jumlah material yang dibeli
         Apabila uang mencukupi, masukkan perintah eksekusi ke dalam stack. Apabila uang tidak cukup atau 
         waktu yang tersedia tidak cukup, menampilkan error ke layar (Memakan Waktu)  */
 
-void Buy(TabInt *ListMaterial, int *Money, Kata NamaBarang, int JumlahBarang);
+void Buy(TabInt *Inventory, TabInt *ListMaterial, int *Money, Kata NamaBarang, int JumlahBarang);
 /* Membeli barang. Menambahkan NamaBarang pada TempInventory sebanyak JumlahBarang */
 /* Mengurangi money dengan nilai total harga material dikali JumlahBarang */
 

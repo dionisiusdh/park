@@ -205,7 +205,7 @@ void SetAllValueZero (TabInt *T)
     int i;
     
     /* ALGORITMA */
-    for(i=0;i<Neff(*T);i++){
+    for(i=0;i<NeffArray(*T);i++){
         Value(ElmtArray(*T,i)) = 0;
     }
 }
@@ -217,7 +217,7 @@ void SetAllValueX (TabInt *T, int X)
     int i;
     
     /* ALGORITMA */
-    for(i=0;i<Neff(*T);i++){
+    for(i=0;i<NeffArray(*T);i++){
         Value(ElmtArray(*T,i)) = X;
     }
 }
@@ -228,8 +228,8 @@ void ChangeValue (TabInt *TInventory, Kata NamaBarang, int NewValue){
     int i;
     
     /* ALGORITMA */
-    for (i=0;i<Neff(*TInventory);i++){
-        if (IsEQ(Nama(ElmtArray(*TInventory, i)), NamaBarang)) {
+    for (i=0;i<NeffArray(*TInventory);i++){
+        if (IsEQKata(Nama(ElmtArray(*TInventory, i)), NamaBarang)) {
             Value(ElmtArray(*TInventory, i)) = NewValue;
             break;
         }
@@ -241,8 +241,8 @@ int GetValue (TabInt *TInventory, Kata NamaBarang) {
     int i;
     
     /* ALGORITMA */
-    for (i=0;i<Neff(*TInventory);i++){
-        if (IsEQ(Nama(ElmtArray(*TInventory, i)), NamaBarang)) {
+    for (i=0;i<NeffArray(*TInventory);i++){
+        if (IsEQKata(Nama(ElmtArray(*TInventory, i)), NamaBarang)) {
             return Value(ElmtArray(*TInventory, i));
         }
     }
@@ -255,15 +255,13 @@ void BacaMaterial (TabInt *ListMaterial)
   /* KAMUS */
   FILE *PFile;
   int i,j,k;
-  FILE *PFile;
-  int i,j,k;
   char val;
   Kata tempnama;
   Kata tempharga;
   ElArrayType element;
 
   /* ALGORITMA */
-  PFile = fopen("../material.txt", "r");
+  PFile = fopen("./material.txt", "r");
 
   if (PFile != NULL){
       val = fgetc(PFile);
@@ -310,7 +308,7 @@ void BacaAksi (TabInt *ListAksi)
   ElArrayType element;
 
   /* ALGORITMA */
-  PFile = fopen("../aksi.txt", "r");
+  PFile = fopen("./aksi.txt", "r");
 
   if (PFile != NULL){
       val = fgetc(PFile);

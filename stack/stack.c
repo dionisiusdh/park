@@ -17,11 +17,11 @@ void CreateEmpty (Stack *S, JAM MaxDuration){
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
 /* jadi indeksnya antara 0.. MaxEl */
 /* serta memiliki durasi maksimum MaxDuration */
-/* Ciri stack kosong : TOP bernilai Nil, CurrentDuration bernilai JAM(0,0,0) */
+/* Ciri stack kosong : TOP berNilStackai NilStack, CurrentDuration berNilStackai JAM(0,0,0) */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    Top(*S) = Nil;
+    Top(*S) = NilStack;
     CurrentDuration(*S) = MakeJAM(0,0,0);
     MaxDuration(*S) = MaxDuration;
 }
@@ -32,10 +32,10 @@ boolean IsEmptyStack (Stack S){
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    return (Top(S) == Nil && JEQ(CurrentDuration(S), MakeJAM(0,0,0)));
+    return (Top(S) == NilStack && JEQ(CurrentDuration(S), MakeJAM(0,0,0)));
 }
 boolean IsFullStack (Stack S){
-/* Mengirim true jika tabel penampung nilai elemen stack penuh */
+/* Mengirim true jika tabel penampung NilStackai elemen stack penuh */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
@@ -57,7 +57,7 @@ void Push (Stack * S, aksitype X){
 void Pop (Stack * S, aksitype * X){
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
-/* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
+/* F.S. X adalah NilStackai elemen TOP yang lama, TOP berkurang 1 */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */

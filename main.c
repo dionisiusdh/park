@@ -10,15 +10,16 @@
 #include "./jam/jam.h"
 #include "./stack/stack.h"
 #include "./array/array.h"
-#include "./array/array.h"
+#include "./aksi/prepaksi.h"
+//#include "./Graph/graph.h"
 
-// gcc -std=c99 -o main main.c ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
+// gcc -std=c99 -o main main.c ./aksi/prepaksi.o ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
 
 /******* FUNGSI MAIN *******/
 int main() {
   /* *********** KAMUS UTAMA ********** */
   /********** GRAPH **********/
-  Graph GMain; MakeGMain(&GMain);
+  //Graph GMain; MakeGMain(&GMain);
   // PrintGraph(GMain);
   Map MapNameActive = 1;
   Map MapNameAsal = 1;
@@ -35,7 +36,6 @@ int main() {
   MATRIKS Map4; BacaMATRIKSTxt(&Map4, 10, 20, "../map4.txt");
   MATRIKS* MapList[4] = {&Map1, &Map2, &Map3, &Map4};
   MATRIKS MapActive;
-  CopyMATRIKS(M1, &MapActive);
 
   /* *********** JAM ************** */
   JAM JOpen;
@@ -48,6 +48,7 @@ int main() {
   POINT PPlayer = getPlayer(MapActive);
   POINT POffice = getOffice(MapActive);
   POINT PAntrian = getAntrian(MapActive);
+  /*
   POINT PGerbang_Map1_Kanan = getGerbangRight(Map1);
   POINT PGerbang_Map1_Bawah = getGerbangDown(Map1);
   POINT PGerbang_Map2_Kiri = getGerbangLeft(Map2);
@@ -56,13 +57,13 @@ int main() {
   POINT PGerbang_Map3_Kiri = getGerbangLeft(Map3);
   POINT PGerbang_Map4_Atas = getGerbangUp(Map4);
   POINT PGerbang_Map4_Kanan = getGerbangRight(Map4);
+  */
 
   /* *********** Stack Aksi *********** */
   Stack S;
 
   /* *********** Inventory *********** */
   TabInt Inventory;
-  TabInt TempInventory;
 
   /* *********** Informasi Aksi dan Harga Barang *********** */
   TabInt ListAksi;
@@ -74,19 +75,17 @@ int main() {
   /* Nama Pemain dan Saldonya (Money) */
   Kata NamaPlayer;
   Kata CurrentPerintah;
-  int Money = 1000;
-  boolean prep_status = false;
 
   /* *********** ALGORITMA UTAMA ********** */
   //Inisialisasi
+  int Money = 10000;
+  boolean prep_status = true;
+  boolean main_status = false;
   initMap(&Map1);
   initJam(&JOpen,&JClose);
   MaxDuration = KurangJAM(JOpen,JClose);
-  BacaMaterial(&ListMaterial);
-  Inventory = CopyTab(ListMaterial);
-  SetAllValueZero(&Inventory);
-  TempInventory = CopyTab(&Inventory);
-  BacaAksi(&ListAksi);CreateEmpty(&S,MaxDuration);
+  initAllList(&Inventory, &ListMaterial, &ListAksi);
+  CreateEmpty(&S,MaxDuration);
 
   //showMap(Map1);
   initGame(&NamaPlayer);
@@ -96,12 +95,12 @@ int main() {
     prepDescription(Map1, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
     printf("Masukkan Perintah: \n$ ");
     inputPerintah(&CurrentPerintah);
-    cekPerintah(CurrentPerintah, &Map1, &S, &AksiTypeTrash);
+    cekPerintahPrep(CurrentPerintah, &Map1, &S, &AksiTypeTrash, &Inventory, &ListMaterial, &Money, &main_status, &prep_status, &ListAksi);
   }
   return 0;
 }
 
-K******* REALISASI FUNGSI-FUNGSI UTAMA *******/
+/******* REALISASI FUNGSI-FUNGSI UTAMA *******/
 /*********************************************/
 /******* INISIALISASI *******/
 void initGame(Kata * NamaPlayer) {
@@ -135,21 +134,23 @@ void inputPerintah(Kata *Perintah){
   *Perintah = CKata;
 }
 
-void cekPerintah(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash) {
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, TabInt *ListAksi) {
+    JAM durasi;
+
     if (IsEQKata(CurrentPerintah,StringToKata("w",1))){
-      moveUp(&Map);
+      moveUp(Map);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("a",1))){
-      moveLeft(&Map);
+      moveLeft(Map);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("s",1))){
-      moveDown(&Map);
+      moveDown(Map);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("d",1))){
-      moveRight(&Map);
+      moveRight(Map);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("buy",3))){
-      //
+      MenuBuy(Inventory, ListMaterial, Money);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("build",5))){
       //
@@ -163,6 +164,17 @@ void cekPerintah(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTyp
     else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
       //
     }
+    else if (IsEQKata(CurrentPerintah,StringToKata("main",4))){
+      *prep_status = false;
+      *main_status = true;
+    }
+    else if (IsEQKata(CurrentPerintah,StringToKata("exit",4))){
+      *prep_status = false;
+      *main_status = false;
+    }
+
+    durasi = DetikToJAM((long) GetValue(ListAksi, CurrentPerintah));
+    //CurrentDuration(*S) = TambahJAM(CurrentDuration(*S), durasi);
 }
 
 /******* INISIALISASI *******/
@@ -178,8 +190,20 @@ void initPosisi (MATRIKS *MAP, POINT *PPlayer, POINT *POffice, POINT *PAntrian) 
 
 void initJam (JAM *JOpen, JAM *JClose) {
   /* ALGORITMA */
-  *JOpen = MakeJAM(10, 1, 0);
-  *JClose = MakeJAM(22, 0, 0);
+  *JOpen = MakeJAM(10, 00, 00);
+  *JClose = MakeJAM(22, 00, 00);
+}
+
+void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi) {
+  /* ALGORITMA */
+  MakeEmpty(ListMaterial);
+  MakeEmpty(Inventory);
+
+  BacaMaterial(ListMaterial);
+  BacaMaterial(Inventory);
+  SetAllValueX(Inventory, 10);
+
+  BacaAksi(ListAksi);
 }
 
 /* *************** MAP **************** */
@@ -206,7 +230,10 @@ void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen
     printf("Name: ");
     PrintKata(Nama);
     printf("\n");
-    printf("Money: %d \n", Money);
+    printf("Money: %d", Money);
+    printf("\n");
+    printf("Current Time: ");
+    TulisJAM(JCurrent);
     printf("\n");
     printf("Opening Time: ");
     TulisJAM(JOpen);
