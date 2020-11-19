@@ -17,15 +17,25 @@
 /******* FUNGSI MAIN *******/
 int main() {
   /* *********** KAMUS UTAMA ********** */
-  /* *********** Map ********** */
-  // Map 1 > <  Map 2
-  //  V          V
-  //  ^          ^
-  // Map 4 > < Map 3
-  MATRIKS Map1;
-  MATRIKS Map2;
-  MATRIKS Map3;
-  MATRIKS Map4;
+  /********** GRAPH **********/
+  Graph GMain; MakeGMain(&GMain);
+  // PrintGraph(GMain);
+  Map MapNameActive = 1;
+  Map MapNameAsal = 1;
+  Map MapNameTujuan;
+  
+  /* *********** MATRIKS ********** */
+  // Map1 > < Map2
+  //  v        v
+  //  ^        ^
+  // Map4 > < Map3
+  MATRIKS Map1; BacaMATRIKSTxt(&Map1, 10, 20, "../map1.txt");
+  MATRIKS Map2; BacaMATRIKSTxt(&Map2, 10, 20, "../map2.txt");
+  MATRIKS Map3; BacaMATRIKSTxt(&Map3, 10, 20, "../map3.txt");
+  MATRIKS Map4; BacaMATRIKSTxt(&Map4, 10, 20, "../map4.txt");
+  MATRIKS* MapList[4] = {&Map1, &Map2, &Map3, &Map4};
+  MATRIKS MapActive;
+  CopyMATRIKS(M1, &MapActive);
 
   /* *********** JAM ************** */
   JAM JOpen;
@@ -34,18 +44,18 @@ int main() {
   JAM JCurrent;
   JAM Remaining;
 
-  /* *********** Posisi *********** */
-  POINT PPlayer;
-  POINT POffice;
-  POINT PAntrian;
-  POINT PGerbang_Map1_Kanan;
-  POINT PGerbang_Map1_Bawah;
-  POINT PGerbang_Map2_Kiri;
-  POINT PGerbang_Map2_Bawah;
-  POINT PGerbang_Map3_Atas;
-  POINT PGerbang_Map3_Kiri;
-  POINT PGerbang_Map4_Atas;
-  POINT PGerbang_Map4_Kanan;
+  /* *********** POINT *********** */
+  POINT PPlayer = getPlayer(MapActive);
+  POINT POffice = getOffice(MapActive);
+  POINT PAntrian = getAntrian(MapActive);
+  POINT PGerbang_Map1_Kanan = getGerbangRight(Map1);
+  POINT PGerbang_Map1_Bawah = getGerbangDown(Map1);
+  POINT PGerbang_Map2_Kiri = getGerbangLeft(Map2);
+  POINT PGerbang_Map2_Bawah = getGerbangDown(Map2);
+  POINT PGerbang_Map3_Atas = getGerbangUp(Map3);
+  POINT PGerbang_Map3_Kiri = getGerbangLeft(Map3);
+  POINT PGerbang_Map4_Atas = getGerbangUp(Map4);
+  POINT PGerbang_Map4_Kanan = getGerbangRight(Map4);
 
   /* *********** Stack Aksi *********** */
   Stack S;
@@ -64,23 +74,26 @@ int main() {
   /* Nama Pemain dan Saldonya (Money) */
   Kata NamaPlayer;
   Kata CurrentPerintah;
-  int money = 1000;
-  boolean prep_status = true;
-  boolean main_status = false;
+  int Money = 1000;
+  boolean prep_status = false;
 
   /* *********** ALGORITMA UTAMA ********** */
   //Inisialisasi
   initMap(&Map1);
   initJam(&JOpen,&JClose);
   MaxDuration = KurangJAM(JOpen,JClose);
-  CreateEmpty(&S,MaxDuration);
+  BacaMaterial(&ListMaterial);
+  Inventory = CopyTab(ListMaterial);
+  SetAllValueZero(&Inventory);
+  TempInventory = CopyTab(&Inventory);
+  BacaAksi(&ListAksi);CreateEmpty(&S,MaxDuration);
 
   //showMap(Map1);
   initGame(&NamaPlayer);
   while (prep_status & !main_status) {
     JCurrent = TambahJAM(JClose, CurrentDuration(S));
     Remaining = KurangJAM(JOpen, JCurrent);
-    prepDescription(Map1, NamaPlayer, money, JCurrent, JOpen, Remaining, S);
+    prepDescription(Map1, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
     printf("Masukkan Perintah: \n$ ");
     inputPerintah(&CurrentPerintah);
     cekPerintah(CurrentPerintah, &Map1, &S, &AksiTypeTrash);
@@ -88,18 +101,7 @@ int main() {
   return 0;
 }
 
-Kata StringToKata (char *string, int lengthString){
-  Kata K;
-  int i = 0;
-  while(i<lengthString){
-    K.TabKata[i] = string[i];
-    K.Length++;
-    i++;
-  }
-  return K;
-}
-
-/******* REALISASI FUNGSI-FUNGSI UTAMA *******/
+K******* REALISASI FUNGSI-FUNGSI UTAMA *******/
 /*********************************************/
 /******* INISIALISASI *******/
 void initGame(Kata * NamaPlayer) {
@@ -180,23 +182,6 @@ void initJam (JAM *JOpen, JAM *JClose) {
   *JClose = MakeJAM(22, 0, 0);
 }
 
-/* *************** yang lain **************** */
-Kata concatNama () {
-  Kata K;
-  STARTKATA();
-  int j=0; int i;
-  while (!EndKata) {
-    for (i=0; i<CKata.Length; i++) {
-      K.TabKata[i+j] = CKata.TabKata[i];
-    }
-    K.TabKata[i+j] = ' ';
-    j+=CKata.Length+1;
-    ADVKATA();
-  }
-  K.Length = j;
-  return K;
-}
-
 /* *************** MAP **************** */
 void printMap (MATRIKS M) {
 /* Mencetak Map dan Legenda */
@@ -213,7 +198,7 @@ void printMap (MATRIKS M) {
 }
 
 /* *************** DESCRIPTION **************** */
-void prepDescription (MATRIKS Map, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S) {
+void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S) {
     //KAMUS LOKAL
     //ALGORITMA
     printMap(Map);
@@ -221,9 +206,7 @@ void prepDescription (MATRIKS Map, Kata Nama, int saldo, JAM JCurrent, JAM JOpen
     printf("Name: ");
     PrintKata(Nama);
     printf("\n");
-    printf("Money: %d \n", saldo);
-    printf("Current Time: ");
-    TulisJAM(JCurrent);
+    printf("Money: %d \n", Money);
     printf("\n");
     printf("Opening Time: ");
     TulisJAM(JOpen);

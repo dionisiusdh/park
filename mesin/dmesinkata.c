@@ -5,15 +5,18 @@
 #include <stdio.h>
 
 int main() {
-    TabInt T, T2;
-    MakeEmpty(&T);
-    MakeEmpty(&T2);
-    int i;
-    BacaMaterial(&T);
-    BacaAksi(&T2);
-    TulisIsiTab(T);
-    
-    TulisIsiTab(T2);
+    //KAMUS
+    Kata K,K1,K2;
+    char (nama[21]) = "Jordan Daniel Joshua";
+
+    //ALGORITMA
+    K = StringToKata(nama,21);
+    PrintKata(K);
+    printf("\n");
+    Bagi2Kata(K,&K1,&K2);
+    PrintKata(K1);
+    printf("\n");
+    PrintKata(K2);
     printf("\n");
     return 0;
 }

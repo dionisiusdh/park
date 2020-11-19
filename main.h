@@ -22,8 +22,7 @@
 #include "./aksi/prepaksi.h"
 
 /******* DEKLARASI FUNGSI-FUNGSI UTAMA *******/
-Kata StringToKata (char *string, int lengthString);
-/* Mengubah String bernama string Ke Dalam Bentuk Kata */
+
 
 void initGame(Kata * Nama);
 /* Menginisiasi mulainya permainan Willy Wangky's World.
@@ -45,11 +44,6 @@ void initJam(JAM *JOpen, JAM *JClose);
 /* Menginisiasi jam awal (preparation phase) permainan Willy Wangky's World.
    I.S. Game belum dimulai.
    F.S. Game dimulai dengan jam awal preparation phase permainan Willy Wangky's World. */
-
-Kata concatNama();
-/* Menerima input dan menyatukan kata-kata yang diakuisisi oleh mesin kata ke dalam satu array of character.
-   I.S. Input sembarang.
-   F.S. Didapat sebuah array of character yang berisi kata-kata terakuisisi dengan dipisahkan spasi. */
 
 /******* PROSEDUR DESKRIPSI *******/
 void printMap (MATRIKS M);

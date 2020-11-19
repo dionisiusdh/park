@@ -64,4 +64,3 @@ void Pop (Stack * S, aksitype * X){
     *X = InfoTop(*S);
     Top(*S)--;
 }
-

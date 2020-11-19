@@ -49,22 +49,22 @@ boolean IsIdxEff (MATRIKS M, indeks i, indeks j){
 
 /* ********** Assignment  MATRIKS ********** */
 void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl){
-/* Melakukan assignment MHsl  MIn */
+    /* Melakukan assignment MHsl  MIn */
     //KAMUS LOKAL
     *MHsl = MIn;
 }
 
 /* ********** KELOMPOK BACA/TULIS ********** */
 void BacaMATRIKS (MATRIKS * M, int NB, int NK){
-/* I.S. IsIdxValid(NB,NK) */
-/* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
-/* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
-/* Selanjutnya membaca nilai elemen per baris dan kolom */
-/* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi matriks :
-1 2 3
-4 5 6
-8 9 10
-*/
+    /* I.S. IsIdxValid(NB,NK) */
+    /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
+    /* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
+    /* Selanjutnya membaca nilai elemen per baris dan kolom */
+    /* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi matriks :
+    1 2 3
+    4 5 6
+    8 9 10
+    */
     //KAMUS LOKAL
     int i,j; int val;
     //ALGORITMA
@@ -77,15 +77,15 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK){
     }
 }
 void BacaMATRIKSTxt (MATRIKS * M, int NB, int NK, char* filename){
-/* I.S. IsIdxValid(NB,NK) */
-/* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
-/* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
-/* Selanjutnya membaca nilai elemen per baris dan kolom */
-/* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi matriks :
-1 2 3
-4 5 6
-8 9 10
-*/
+    /* I.S. IsIdxValid(NB,NK) */
+    /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
+    /* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
+    /* Selanjutnya membaca nilai elemen per baris dan kolom */
+    /* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi matriks :
+    1 2 3
+    4 5 6
+    8 9 10
+    */
     //KAMUS LOKAL
     int i,j; 
     char val;
@@ -106,15 +106,15 @@ void BacaMATRIKSTxt (MATRIKS * M, int NB, int NK, char* filename){
     }
 }
 void TulisMATRIKS (MATRIKS M){
-/* I.S. M terdefinisi */
-/* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
-   dipisahkan sebuah spasi */
-/* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
-/* Contoh: menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
-1 2 3
-4 5 6
-8 9 10
-*/
+    /* I.S. M terdefinisi */
+    /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
+       dipisahkan sebuah spasi */
+    /* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
+    /* Contoh: menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
+    1 2 3
+    4 5 6
+    8 9 10
+    */
     //KAMUS LOKAL
     int i,j;
     //ALGORITMA
@@ -200,6 +200,7 @@ POINT getAntrian (MATRIKS M) {
 POINT getGerbangUp (MATRIKS M) {
 /* Mengirimkan posisi gerbang */
 /* Posisi dihitung mulai dari 0,0 */
+/* Mengembalikan (-1, -1) jika tidak ditemukan */
     //KAMUS LOKAL
     int i,j;
     POINT P;
@@ -213,10 +214,12 @@ POINT getGerbangUp (MATRIKS M) {
             }
         }  
     }
+    return MakePOINT(-1,-1);
 }
 POINT getGerbangDown (MATRIKS M) {
 /* Mengirimkan posisi gerbang */
 /* Posisi dihitung mulai dari 0,0 */
+/* Mengembalikan (-1, -1) jika tidak ditemukan */
     //KAMUS LOKAL
     int i,j;
     POINT P;
@@ -230,10 +233,12 @@ POINT getGerbangDown (MATRIKS M) {
             }
         }  
     }
+    return MakePOINT(-1,-1);
 }
 POINT getGerbangLeft (MATRIKS M) {
 /* Mengirimkan posisi gerbang */
 /* Posisi dihitung mulai dari 0,0 */
+/* Mengembalikan (-1, -1) jika tidak ditemukan */
     //KAMUS LOKAL
     int i,j;
     POINT P;
@@ -247,10 +252,12 @@ POINT getGerbangLeft (MATRIKS M) {
             }
         }  
     }
+    return MakePOINT(-1,-1);
 }
 POINT getGerbangRight (MATRIKS M) {
 /* Mengirimkan posisi gerbang */
 /* Posisi dihitung mulai dari 0,0 */
+/* Mengembalikan (-1, -1) jika tidak ditemukan */
     //KAMUS LOKAL
     int i,j;
     POINT P;
@@ -264,6 +271,7 @@ POINT getGerbangRight (MATRIKS M) {
             }
         }  
     }
+    return MakePOINT(-1,-1);
 }
 POINT getPlayerTransportedPosition (MATRIKS MDest, POINT GDest) {
     /* Mengirimkan posisi Player setelah berpindah Map ke MDest, berdasarkan
@@ -556,6 +564,30 @@ boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCom
 
     return (toward && graphAllowed);
 }
+
+
+/*** BUILD ***/
+void PlaceWahana (MATRIKS* M, POINT Player) {
+    /* Menempatkan posisi rancangan pembangunan wahana pada MapActive */
+    /* Menempatkan posisi rancangan wahana 'w' (w kecil) di atas, bawah, kiri atau kanan Player */
+    /**
+     * I.S. Setidaknya masih ada ruang diantar keempat posisi relatif dari Player
+     * F.S. Ditambahkan rencana wahana 'w' di M
+     * Proses: Cek posisi yang tersedia untuk membangun wahana berdasarkan posisi Player
+     *         Perhatikan bahwa tidak boleh menmpatkan wahana persis di sebelah gerbang
+    */
+    // Cek dengan urutan Atas, Bawah, Kiri, Kanan
+    POINT GerbangUp = getGerbangUp(*M);
+    POINT GerbangDown = getGerbangDown(*M);
+    POINT GerbangLeft = getGerbangLeft(*M);
+    POINT GerbangRight = getGerbangRight(*M);
+    POINT wahana;
+    int x = Absis(Player);
+    int y = Ordinat(Player);
+
+    wahana = MakePOINT(x+1,y);
+}
+    
 
 /*
 boolean isInPortal (POINT PPlayer, POINT PPortal) {

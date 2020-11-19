@@ -120,9 +120,20 @@ void DelLastEl(TabInt *T, ElArrayType *X);
 TabInt CopyTab (TabInt TIn);
 /* Mereturn sebuah tabint hasil copy dari TIn */
 
+/* ********** VALUE ********** */
 void SetAllValueZero (TabInt *T);
-/* Mengganti semu value dari T menjadi 0 */
+/* Mengganti semua value dari T menjadi 0 */
 
+void SetAllValueX (TabInt *T, int X);
+/* Mengganti semua value dari T menjadi X */
+
+void ChangeValue (TabInt *TInventory, Kata NamaBarang, int NewValue);
+/* Mengganti value dari NamaBarang menjadi NewValue */
+
+int GetValue (TabInt *TInventory, Kata NamaBarang);
+/* Mengambil value dari TInventory untuk NamaBarang */
+
+/* ********** PEMBACAAN FILE EKSTERNAL ********** */
 void BacaMaterial (TabInt *ListMaterial);
 /* Membaca material dan harga material dari file material.txt */
 

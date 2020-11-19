@@ -182,14 +182,81 @@ void DelLastEl(TabInt *T, ElArrayType *X){
    NeffArray(*T) -= 1;
 }
 
+/* ********** COPY ********** */
+TabInt CopyTab (TabInt TIn)
+/* Mereturn sebuah tabint hasil copy dari TIn */
+{   //KAMUS
+    TabInt Tout;
+    int i;
+    //ALGORITMA
+    MakeEmpty(&Tout);
+    NeffArray(Tout) = NeffArray(TIn);
+    for (i=0; i<NeffArray(Tout); i++){
+
+        ElmtArray(Tout,i) = ElmtArray(TIn,i);
+    }
+}
+
+/* ********** VALUE ********** */
+void SetAllValueZero (TabInt *T)
+/* Mengganti semua value dari T menjadi 0 */
+{
+    /* KAMUS */
+    int i;
+    
+    /* ALGORITMA */
+    for(i=0;i<Neff(*T);i++){
+        Value(ElmtArray(*T,i)) = 0;
+    }
+}
+
+void SetAllValueX (TabInt *T, int X)
+/* Mengganti semua value dari T menjadi X */
+{
+    /* KAMUS */
+    int i;
+    
+    /* ALGORITMA */
+    for(i=0;i<Neff(*T);i++){
+        Value(ElmtArray(*T,i)) = X;
+    }
+}
+
+void ChangeValue (TabInt *TInventory, Kata NamaBarang, int NewValue){
+/* Mengganti value dari NamaBarang menjadi NewValue */
+    /* KAMUS */
+    int i;
+    
+    /* ALGORITMA */
+    for (i=0;i<Neff(*TInventory);i++){
+        if (IsEQ(Nama(ElmtArray(*TInventory, i)), NamaBarang)) {
+            Value(ElmtArray(*TInventory, i)) = NewValue;
+            break;
+        }
+    }
+}
+
+int GetValue (TabInt *TInventory, Kata NamaBarang) {
+    /* KAMUS */
+    int i;
+    
+    /* ALGORITMA */
+    for (i=0;i<Neff(*TInventory);i++){
+        if (IsEQ(Nama(ElmtArray(*TInventory, i)), NamaBarang)) {
+            return Value(ElmtArray(*TInventory, i));
+        }
+    }
+}
+
+/* ********** PEMBACAAN FILE EKSTERNAL ********** */
 void BacaMaterial (TabInt *ListMaterial)
 /* Membaca material dan harga material dari file material.txt */
 {
   /* KAMUS */
   FILE *PFile;
   int i,j,k;
-
-  int harga;
+  FILE *PFile;
+  int i,j,k;
   char val;
   Kata tempnama;
   Kata tempharga;

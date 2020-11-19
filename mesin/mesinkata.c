@@ -151,11 +151,42 @@ void PrintKata (Kata K) {
 
 void Bagi2Kata (Kata Kin, Kata *Kout1, Kata *Kout2){
   //KAMUS
-  int i;
+  int i=0;
   //ALGORITMA
-  i = 0;
   SalinKata();
   (*Kout1) = CKata;
-  SalinKata();
-  (*Kout2) = CKata;
+  IgnoreBlank();
+  while (CC != MARK){
+    (*Kout2).TabKata[i] = CC;
+    ADV();
+    i++; 
+  }
+  (*Kout2).Length = i;
+}
+
+Kata StringToKata (char *string, int lengthString){
+  Kata K;
+  int i = 0;
+  while(i<lengthString){
+    K.TabKata[i] = string[i];
+    K.Length++;
+    i++;
+  }
+  return K;
+}
+
+Kata concatNama() {
+  Kata K;
+  STARTKATA();
+  int j=0; int i;
+  while (!EndKata) {
+    for (i=0; i<CKata.Length; i++) {
+      K.TabKata[i+j] = CKata.TabKata[i];
+    }
+    K.TabKata[i+j] = ' ';
+    j+=CKata.Length+1;
+    ADVKATA();
+  }
+  K.Length = j;
+  return K;
 }

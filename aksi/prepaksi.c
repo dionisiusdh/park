@@ -1,26 +1,58 @@
 #include <stdio.h>
 #include "prepaksi.h"
 
-void Buy(TabInt *Material){
-/* I.S. Terdapat File Eksternal Material. */
-/* F.S. Terbentuk tabel T kosong dengan kapasitas maxel */
-    //KAMUS
-    // int i;
-    // Kata bahan,jumlah,jenis;
-    // //ALGORITMA
-    // printf("Ingin membeli apa?\n");
-    // printf("List: \n");
-    // for (i=0; (i<NeffArray(*Material)); i++){
-    //     printf("    - ");
-    //     PrintKata(Nama(ElmtArray(*Material,i)));
-    //     printf("\n");
-    // }
-    // printf("$ ");
-    // STARTKATA();
-    // while (!EndKata){
-    //   ADVKATA();  
-    // }
-    // bahan = CKata;
+void MenuBuy(TabInt *ListMaterial, int *Money)
+/* I.S. Terdapat File Eksternal Material.txt */
+/* F.S. Menampilkan Daftar Material yang dapat dibeli ke layar, menerima input jumlah material yang dibeli
+        Apabila uang mencukupi, masukkan perintah eksekusi ke dalam stack. Apabila uang tidak cukup atau 
+        waktu yang tersedia tidak cukup, menampilkan error ke layar (Memakan Waktu)  */
+{
+    /* KAMUS */
+    int Harga, TempPrice, JumlahBarang;
+    Kata NamaBarang;
+
+    /* ALGORITMA */
+    // Menu Buy Material //
+    printf("Ingin membeli apa?\n");
+    printf("List: \n");
+    int i;
+    for (i=0; (i<NeffArray(*ListMaterial)); i++){
+        printf("    - ");
+        PrintKata(Nama(ElmtArray(*ListMaterial,i)));
+        printf("\n");
+    }
+    printf("Petunjuk : Input Dalam Format (<Jumlah Barang> <Nama Barang>); Contoh: 1000 Wood\n");
+
+    STARTKATA();
+    Harga = KataToInteger(CKata);
+    ADVKATA();
+    NamaBarang = CKata;
+
+    Harga = GetValue(ListMaterial, NamaBarang);
+    TempPrice = *Money-(Harga*JumlahBarang);
+    if(TempPrice >= 0){
+        Buy(ListMaterial, Money, NamaBarang, JumlahBarang);
+    }
+    else{
+        // Uang Tidak Cukup
+        printf("Uang Anda tidak memenuhi untuk melakukan pembelian material tersebut.");
+    }
+}
+
+void Buy(TabInt *ListMaterial, int *Money, Kata NamaBarang, int JumlahBarang){
+/* Membeli barang. Menambahkan NamaBarang pada TempInventory sebanyak JumlahBarang */
+/* Mengurangi money dengan nilai total harga material dikali JumlahBarang */
+    /* KAMUS */
+    int CurrentJumlah, NewJumlah;
+    int Harga;
+
+    /* ALGORITMA */
+    CurrentJumlah = GetValue(ListMaterial, NamaBarang);
+    NewJumlah = CurrentJumlah + JumlahBarang; 
+    ChangeValue(ListMaterial, NamaBarang, NewJumlah);
+
+    Harga = GetValue(ListMaterial, NamaBarang);
+    *Money -= Harga;
 }
 
 /* ************ FUNGSI-FUNGSI PROGRAM ************ */
@@ -47,6 +79,13 @@ void Execute(Stack *S, int *Money, TabInt *Bahan){
 void Main(Stack *S){
 /* I.S. Execute tidak dijalankan */
 /* F.S. Stack Kosong dan Memulai Main Phase */
+    /* KAMUS LOKAL */
+    aksitype X;
+
+    /* ALGORITMA */
+    while(Top(*S) != Nil){
+        Pop(S,&X);
+    }
 }
 
 void AddAksi (Stack *S, aksitype X) {
