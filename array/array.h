@@ -21,7 +21,8 @@
 typedef int IdxType; /* type indeks */
 typedef struct {
     Kata nama;  /* Nama material / aksi */
-    int value;  /* Harga material / durasi aksi*/
+    int value;  /* Harga material */
+    long value_durasi; /* Durasi aksi */
 } ElArrayType;
 typedef struct
 {
@@ -47,6 +48,7 @@ typedef struct
 #define ElmtArray(T, i) (T).TI[(i)]
 #define Nama(E) (E).nama
 #define Value(E) (E).value
+#define ValueDurasi(E) (E).value_durasi
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
@@ -133,11 +135,13 @@ void ChangeValue (TabInt *TInventory, Kata NamaBarang, int NewValue);
 int GetValue (TabInt *TInventory, Kata NamaBarang);
 /* Mengambil value dari TInventory untuk NamaBarang */
 
+long GetValueDurasi (TabInt *TAksi, Kata NamaAksi);
+
 /* ********** PEMBACAAN FILE EKSTERNAL ********** */
 void BacaMaterial (TabInt *ListMaterial);
 /* Membaca material dan harga material dari file material.txt */
 
 void BacaAksi (TabInt *ListAksi);
-/* Membaca material dan harga material dari file material.txt */
+/* Membaca Aksi dan Waktu yang dibutuhkan dari file aksi.txt */
 
 #endif

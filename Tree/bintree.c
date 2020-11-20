@@ -1,30 +1,8 @@
 #include "listrek.h"
 #include "boolean.h"
+#include "bintree.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-/* #define Nil Nil */ /* konstanta Nil sesuai pada modul listrek */
-
-/* *** Definisi Type Pohon Biner *** */
-/* typedef int infotype; */ /* type infotype sesuai pada modul listrek */
-typedef struct tNode *addrNode;
-typedef struct tNode
-{
-  infotype info;
-  addrNode left;
-  addrNode right;
-} Node;
-
-/* Definisi PohonBiner : */
-/* Pohon Biner kosong : P = Nil */
-typedef addrNode BinTree;
-
-/* *** PROTOTYPE *** */
-
-/* *** Selektor *** */
-#define Akar(P) (P)->info
-#define Left(P) (P)->left
-#define Right(P) (P)->right
 
 /* Manajemen Memory */
 addrNode AlokNode(infotype X)
@@ -76,43 +54,6 @@ void MakeTree(infotype Akar, BinTree L, BinTree R, BinTree *P)
    jika alokasi berhasil. P = Nil jika alokasi gagal. */
 {
   (*P) = Tree(Akar, L, R);
-}
-
-BinTree BuildBalanceTree(int n)
-/* Menghasilkan sebuah balanced tree dengan n node, nilai setiap node dibaca */
-/* Jika n == 0, kembalikan Nil.
-   Mula-mula, baca nilai dari root dari stdin, lalu bangun pohon biner di kiri
-   (dengan membaca dari stdin) lalu di tree kanan (dengan membaca dari stdin).
-   misal dari stdin: 1, 2, 3, 4, 5, 6, 7, hasilnya:
-       1
-     2   5
-    3 4 6 7
-  */
-{
-  addrNode P;
-  infotype X;
-  BinTree R, L;
-  int nL, nR;
-  if (n == 0)
-  {
-    return Nil;
-  }
-  else
-  {
-    scanf("%d", &X);
-    P = AlokNode(X);
-    if (P != Nil)
-    {
-      Akar(P) = X;
-      nL = n / 2;
-      nR = n - nL - 1;
-      L = BuildBalanceTree(nL);
-      R = BuildBalanceTree(nR);
-      Left(P) = L;
-      Right(P) = R;
-    }
-    return P;
-  }
 }
 
 /* *** Predikat-Predikat Penting *** */
@@ -244,21 +185,6 @@ A
   PrintTree2(P, h, 0);
 }
 
-/* *** Searching *** */
-boolean SearchTree(BinTree P, infotype X)
-/* Mengirimkan true jika ada node dari P yang bernilai X */
-{
-  if (IsTreeEmpty(P))
-    return false;
-  else
-  {
-    if (Akar(P) == X)
-      return true;
-    else
-      return SearchTree(Left(P), X) | SearchTree(Right(P), X);
-  }
-}
-
 /* *** Fungsi-Fungsi Lain *** */
 int NbElmt(BinTree P)
 /* Mengirimkan banyaknya elemen (node) pohon biner P */
@@ -316,24 +242,6 @@ boolean IsSkewRight(BinTree P)
       return IsSkewRight(Right(P));
   }
 }
-
-int Level(BinTree P, infotype X)
-/* Mengirimkan level dari node X yang merupakan salah satu simpul dari pohon biner P.
-   Akar(P) level-nya adalah 1. Pohon P tidak kosong. */
-{
-  if (Akar(P) == X)
-    return 1;
-  else
-  {
-    if (SearchTree(Left(P), X))
-    {
-      return 1 + Level(Left(P), X);
-    }
-    else
-      return 1 + Level(Right(P), X);
-  }
-}
-
 int Tinggi(BinTree P)
 /* Pohon Biner mungkin kosong. Tinggi pohon kosong = 0.
    Mengirim "height" yaitu tinggi dari pohon */
@@ -563,4 +471,140 @@ void DelBtree(BinTree *P, infotype X)
       free(&q);
     }
   }
+}
+
+
+void BacaWahana(BinTree *WahanaTree1, BinTree *WahanaTree2, BinTree *WahanaTree3)
+/* Membaca Wahana dan Deskripsinya dari file wahana.txt */
+{
+  /* KAMUS */
+  FILE *PFile;
+  int i,j,k,l;
+  char val;
+  infotype X;
+  BinTree TempTree,wahana;
+  Kata temp;
+  // Kata tempwaktu;
+  // ElArrayType element;
+
+  /* ALGORITMA */
+  PFile = fopen("./wahana.txt", "r");
+
+  if (PFile != NULL){
+      i = 0;
+      val = fgetc(PFile);
+      while(val != '/'){
+        i++;
+        for (l=0; l<3; l++){
+          // Baca Nama Wahana
+          j = 0;
+          temp.Length = 0;
+          while(val != ','){
+            temp.TabKata[j] = val;
+            temp.Length ++;
+            j++;
+            val = fgetc(PFile);
+          }
+          Nama(X) = temp;
+          val = fgetc(PFile);
+          
+          // Baca Harga Tiket Wahana
+          j = 0;
+          temp.Length = 0;
+          while(val != ','){
+            temp.TabKata[j] = val;
+            temp.Length ++;
+            j++;
+            val = fgetc(PFile);
+          }
+          Harga(X) = KataToInteger(temp);
+          val = fgetc(PFile);        
+
+          // Baca Kapasitas Wahana
+          j = 0;
+          temp.Length = 0;
+          while(val != ','){
+            temp.TabKata[j] = val;
+            temp.Length ++;
+            j++;
+            val = fgetc(PFile);
+          }
+          Kapasitas(X) = KataToInteger(temp);
+          val = fgetc(PFile);
+
+          // Baca Durasi Wahana
+          j = 0;
+          temp.Length = 0;
+          while(val != ','){
+            temp.TabKata[j] = val;
+            temp.Length ++;
+            j++;
+            val = fgetc(PFile);
+          }   
+          Durasi(X) = KataToInteger(temp);
+          val = fgetc(PFile);
+
+          // Baca Deskripsi Wahana
+          j = 0;
+          temp.Length = 0;
+          while(val != ','){
+            temp.TabKata[j] = val;
+            temp.Length ++;
+            j++;
+            val = fgetc(PFile);
+          }
+          Deskripsi(X) = temp;
+          val = fgetc(PFile);
+
+          // Baca Uang yang dibutuhkan Wahana
+          j = 0;
+          temp.Length = 0;
+          while(val != ','){
+            temp.TabKata[j] = val;
+            temp.Length ++;
+            j++;
+            val = fgetc(PFile);
+          }
+          CostUp(X) = KataToInteger(temp);
+          val = fgetc(PFile);
+
+          // Baca Bahan bangunan yang dibutuhkan Wahana
+          j = 0;
+          while(val != '\n'){
+            k = 0;
+            temp.Length = 0;
+            while(val != '_'){
+              temp.TabKata[k] = val;
+              temp.Length ++;
+              k++;
+              val = fgetc(PFile);
+            }
+            MatUp(X,j) = KataToInteger(temp);
+            j++;
+            val = fgetc(PFile);
+          }
+          TempTree = AlokNode(X);
+          val = fgetc(PFile);
+          if(l==0){
+            wahana = TempTree;
+          }
+          else if(l==1){
+            Left(wahana) = TempTree;
+          }
+          else if(l == 2){
+            Right(wahana) = TempTree;
+          }
+        }
+        if (i == 1){
+          *WahanaTree1 = wahana;
+        }
+        else if (i == 2){
+          *WahanaTree2 = wahana;
+        }
+        else if (i == 3){
+          *WahanaTree3 = wahana;
+        }
+      } 
+  }
+  printf("\n");
 }

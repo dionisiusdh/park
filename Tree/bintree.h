@@ -9,18 +9,28 @@
 /* Modul lain yang digunakan : */
 #include "listrek.h"
 #include "boolean.h"
+#include "mesinkata.h"
 
 /* #define Nil NULL */ /* konstanta Nil sesuai pada modul listrek */
 
 /* *** Definisi Type Pohon Biner *** */
 /* typedef int infotype; */ /* type infotype sesuai pada modul listrek */
 typedef struct tNode *addrNode;
-typedef struct tNode
-{
+typedef struct tNode{
     infotype info;
     addrNode left;
     addrNode right;
 } Node;
+
+typedef struct{
+   Kata nama;
+   int harga;
+   int kapasitas;
+   int durasi;
+   Kata deskripsi;
+   int cost_up;
+   int mat_up[5];   
+} infotype;
 
 /* Definisi PohonBiner : */
 /* Pohon Biner kosong : P = Nil */
@@ -32,6 +42,13 @@ typedef addrNode BinTree;
 #define Akar(P) (P)->info
 #define Left(P) (P)->left
 #define Right(P) (P)->right
+#define Nama(E) (E).nama
+#define Harga(E) (E).harga
+#define Kapasitas(E) (E).kapasitas
+#define Durasi(E) (E).harga
+#define Deskripsi(E) (E).deskripsi
+#define CostUp(E) (E).cost_up
+#define MatUp(E,i) (E).mat_up[(i)]
 
 /* *** Konstruktor *** */
 BinTree Tree(infotype Akar, BinTree L, BinTree R);
@@ -41,16 +58,6 @@ void MakeTree(infotype Akar, BinTree L, BinTree R, BinTree *P);
 /* I.S. Akar, L, R terdefinisi. P Sembarang */
 /* F.S. Membentuk pohon P dengan Akar(P)=Akar, Left(P)=L, dan Right(P)=R
    jika alokasi berhasil. P = Nil jika alokasi gagal. */
-BinTree BuildBalanceTree(int n);
-/* Menghasilkan sebuah balanced tree dengan n node, nilai setiap node dibaca */
-/* Jika n == 0, kembalikan Nil.
-   Mula-mula, baca nilai dari root dari stdin, lalu bangun pohon biner di kiri
-   (dengan membaca dari stdin) lalu di tree kanan (dengan membaca dari stdin). 
-   misal dari stdin: 1, 2, 3, 4, 5, 6, 7, hasilnya:
-       1
-     2   5
-    3 4 6 7
-  */
 
 /* Manajemen Memory */
 addrNode AlokNode(infotype X);
@@ -122,10 +129,6 @@ A
     E
 */
 
-/* *** Searching *** */
-boolean SearchTree(BinTree P, infotype X);
-/* Mengirimkan true jika ada node dari P yang bernilai X */
-
 /* *** Fungsi-Fungsi Lain *** */
 int NbElmt(BinTree P);
 /* Mengirimkan banyaknya elemen (node) pohon biner P */
@@ -138,9 +141,6 @@ boolean IsSkewLeft(BinTree P);
 boolean IsSkewRight(BinTree P);
 /* Mengirimkan true jika P adalah pohon condong kanan */
 /* Pohon kosong adalah pohon condong kanan */
-int Level(BinTree P, infotype X);
-/* Mengirimkan level dari node X yang merupakan salah satu simpul dari pohon biner P.
-   Akar(P) level-nya adalah 1. Pohon P tidak kosong. */
 int Tinggi(BinTree P);
 /* Pohon Biner mungkin kosong. Tinggi pohon kosong = 0.
    Mengirim "height" yaitu tinggi dari pohon */
@@ -190,5 +190,8 @@ void DelBtree(BinTree *P, infotype X);
 /* I.S. Pohon P tidak  kosong */
 /* F.S. Nilai X yang dihapus pasti ada */
 /* Sebuah node dengan nilai X dihapus */
+
+void BacaWahana(BinTree *WahanaTree);
+/* Membaca Wahana dan Deskripsinya dari file wahana.txt */
 
 #endif

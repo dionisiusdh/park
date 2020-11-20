@@ -67,10 +67,7 @@ int main() {
 
   /* *********** Informasi Aksi dan Harga Barang *********** */
   TabInt ListAksi;
-  TabInt ListMaterial;
-
-  /* *********** Trash *********** */
-  aksitype AksiTypeTrash;
+  TabInt ListMaterial; 
 
   /* Nama Pemain dan Saldonya (Money) */
   Kata NamaPlayer;
@@ -86,16 +83,17 @@ int main() {
   MaxDuration = KurangJAM(JOpen,JClose);
   initAllList(&Inventory, &ListMaterial, &ListAksi);
   CreateEmpty(&S,MaxDuration);
+  
+  JCurrent = TambahJAM(JClose, CurrentDuration(S));
+  Remaining = KurangJAM(JOpen, JCurrent);
 
   //showMap(Map1);
   initGame(&NamaPlayer);
   while (prep_status & !main_status) {
-    JCurrent = TambahJAM(JClose, CurrentDuration(S));
-    Remaining = KurangJAM(JOpen, JCurrent);
-    prepDescription(Map1, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
+    prepDescription(Map1, NamaPlayer, Money, JCurrent, JOpen, Remaining, &S);
     printf("Masukkan Perintah: \n$ ");
     inputPerintah(&CurrentPerintah);
-    cekPerintahPrep(CurrentPerintah, &Map1, &S, &AksiTypeTrash, &Inventory, &ListMaterial, &Money, &main_status, &prep_status, &ListAksi);
+    cekPerintahPrep(CurrentPerintah, &Map1, &S, &ListMaterial, &Inventory, &Money, &main_status, &prep_status, &ListAksi);
   }
   return 0;
 }
@@ -134,8 +132,10 @@ void inputPerintah(Kata *Perintah){
   *Perintah = CKata;
 }
 
-void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, TabInt *ListAksi) {
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, TabInt *ListAksi) {
+    aksitype CurrentAksi;
     JAM durasi;
+    aksitype AksiTypeTrash;
 
     if (IsEQKata(CurrentPerintah,StringToKata("w",1))){
       moveUp(Map);
@@ -150,19 +150,23 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *Aks
       moveRight(Map);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("buy",3))){
-      MenuBuy(Inventory, ListMaterial, Money);
+      Aksi(CurrentAksi) = StringToKata("buy",3);
+      Durasi(CurrentAksi) = DetikToJAM(GetValueDurasi(ListAksi, CurrentPerintah));
+      MenuBuy(Inventory, ListMaterial, Money, &CurrentAksi);
+      AddAksi(S, CurrentAksi);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("build",5))){
-      //
+      Aksi(CurrentAksi) = StringToKata("build",5);
+      //MenuBuy(Inventory, ListMaterial, Money, &CurrentAksi);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("upgrade",7))){
       // 
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("undo",4))){
-      Undo(S, AksiTypeTrash);
+      Undo(S, &AksiTypeTrash);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
-      //
+      Execute(S, Money, Inventory, ListMaterial);
     }
     else if (IsEQKata(CurrentPerintah,StringToKata("main",4))){
       *prep_status = false;
@@ -172,9 +176,6 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *Aks
       *prep_status = false;
       *main_status = false;
     }
-
-    durasi = DetikToJAM((long) GetValue(ListAksi, CurrentPerintah));
-    //CurrentDuration(*S) = TambahJAM(CurrentDuration(*S), durasi);
 }
 
 /******* INISIALISASI *******/
@@ -203,6 +204,7 @@ void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi) {
   BacaMaterial(Inventory);
   SetAllValueX(Inventory, 10);
 
+  MakeEmpty(ListAksi);
   BacaAksi(ListAksi);
 }
 
@@ -222,7 +224,7 @@ void printMap (MATRIKS M) {
 }
 
 /* *************** DESCRIPTION **************** */
-void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S) {
+void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining, Stack *S) {
     //KAMUS LOKAL
     //ALGORITMA
     printMap(Map);
@@ -241,11 +243,11 @@ void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen
     printf("Time Remaining: ");
     printf("%02d Hour(s) %02d Minute(s)", Hour(Remaining), Minute(Remaining));
     printf("\n");
-    printf("Total aksi yang dilakukan: %d", JumlahAksi(S));
+    printf("Total aksi yang dilakukan: %d", JumlahAksi(*S));
     printf("\n");
     printf("Total waktu yang dibutuhkan: ");
-    printf("%02d Hour(s) %02d Minute(s)", Hour(CurrentDuration(S)), Minute(CurrentDuration(S)));
+    printf("%02d Hour(s) %02d Minute(s)", Hour(CurrentDuration(*S)), Minute(CurrentDuration(*S)));
     printf("\n");
-    printf("Total uang yang dibutuhkan: %d", JumlahBiaya(S));
+    printf("Total uang yang dibutuhkan: %d", JumlahBiaya(*S));
     printf("\n");
 }

@@ -30,8 +30,5 @@ cd ..
 cd stack
 gcc -std=c99 -c stack.c
 cd ..
-cd Tree
-gcc -std=c99 -c bintree.c
-gcc -std=c99 -c listrek.c
-cd ..
-gcc -std=c99 -o main main.c ./Tree/listrek.c ./Tree/bintree.c ./aksi/prepaksi.o ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
+gcc -std=c99 -o main main.c ./aksi/prepaksi.o ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
+./main

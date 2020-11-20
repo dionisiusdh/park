@@ -32,7 +32,7 @@ void initGame(Kata * Nama);
 void inputPerintah (Kata *Perintah);
 /* Membaca perintah dari user dalam bentuk kata */ 
 
-void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, TabInt *ListAksi);
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, TabInt *ListAksi);
 /* Mengecek perintah dari user dalam bentuk kata */
 
 void initMap();
@@ -52,7 +52,7 @@ void printMap (MATRIKS M);
 void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi);
 /*Menginisialisasi Inventory*/
 
-void prepDescription (MATRIKS M, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S);
+void prepDescription (MATRIKS M, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack *S);
 /* Mencetak Deskripsi Pemain (Termasuk Mencetak Map dan Legenda) */
 
 #endif

@@ -248,6 +248,18 @@ int GetValue (TabInt *TInventory, Kata NamaBarang) {
     }
 }
 
+long GetValueDurasi (TabInt *TAksi, Kata NamaAksi) {
+    /* KAMUS */
+    int i;
+    
+    /* ALGORITMA */
+    for (i=0;i<NeffArray(*TAksi);i++){
+        if (IsEQKata(Nama(ElmtArray(*TAksi, i)), NamaAksi)) {
+            return ValueDurasi(ElmtArray(*TAksi, i));
+        }
+    }
+}
+
 /* ********** PEMBACAAN FILE EKSTERNAL ********** */
 void BacaMaterial (TabInt *ListMaterial)
 /* Membaca material dan harga material dari file material.txt */
@@ -301,7 +313,7 @@ void BacaAksi (TabInt *ListAksi)
   FILE *PFile;
   int i,j,k;
 
-  int harga;
+  long harga;
   char val;
   Kata tempaksi;
   Kata tempwaktu;

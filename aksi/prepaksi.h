@@ -10,7 +10,7 @@
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
-void MenuBuy(TabInt *Inventory, TabInt *ListMaterial, int *Money);
+void MenuBuy(TabInt *Inventory, TabInt *ListMaterial, int *Money, aksitype *CurrentAksi);
 /* I.S. Terdapat File Eksternal Material.txt */
 /* F.S. Menampilkan Daftar Material yang dapat dibeli ke layar, menerima input jumlah material yang dibeli
         Apabila uang mencukupi, masukkan perintah eksekusi ke dalam stack. Apabila uang tidak cukup atau 
@@ -37,7 +37,7 @@ void Undo (Stack * S, aksitype *X);
 /* F.S. Top stack perintah T telah di pop (Current top hilang, perintah paling atas pada stack menjadi new top),
         apabila I.S. kosong maka tidak dilakukan apa-apa (TidakMemakan Waktu) */
 
-void Execute(Stack *S, int *Money, TabInt *Bahan);
+void Execute(Stack *S, int *Money, TabInt *Bahan, TabInt *ListMaterial);
 /* I.S. Terdapat stack perintah sembarang yang mungkin kosong */
 /* F.S. Semua perintah dijalankan satu per satu dari top hingga stack kosong, 
         kemudian fase berubah dari preparation ke main*/

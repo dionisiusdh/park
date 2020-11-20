@@ -7,15 +7,17 @@
 
 #include "../boolean.h"
 #include "../jam/jam.h"
+#include "../mesin/mesinkata.h"
 
 #define NilStack -1
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 
 typedef struct {
-    char aksi;  /* Aksi yang akan dilakukan build/upgrade/buy/undo/dll. */
-    char info_aksi;  /* Wahana yang ingin dibangun/diupgrade, Bahan yang ingin dibeli */
-    long harga; /* Harga dari aksi yang akan dilakukan */
+    Kata aksi;  /* Aksi yang akan dilakukan build/upgrade/buy/undo/dll. */
+    Kata info_nama_aksi;  /* Wahana yang ingin dibangun/diupgrade, Bahan yang ingin dibeli */
+    int info_jumlah_aksi; /* Jumlah untuk apapun */
+    int harga; /* Harga dari aksi yang akan dilakukan */
     JAM durasi; /* Durasi aksi */
 } aksitype;
 typedef int address;   /* indeks tabel */
@@ -36,7 +38,8 @@ typedef struct {
 
 /* Definisi akses dengan Selektor : Set dan Get */
 #define Aksi(e) (e).aksi
-#define InfoAksi(e) (e).info_aksi
+#define InfoNamaAksi(e) (e).info_nama_aksi
+#define InfoJumlahAksi(e) (e).info_jumlah_aksi
 #define Harga(e) (e).harga
 #define Durasi(e) (e).durasi
 #define Top(S) (S).TOP
