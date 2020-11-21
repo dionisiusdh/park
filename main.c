@@ -59,7 +59,6 @@ int main() {
   POINT PGerbang_Map4_Atas = getGerbangUp(Map4);
   POINT PGerbang_Map4_Kanan = getGerbangRight(Map4);
   
-
   /* *********** Stack Aksi *********** */
   Stack S;
 
@@ -103,7 +102,7 @@ int main() {
       prepDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
       printf("Masukkan Perintah: \n$ ");
       inputPerintah(&CurrentPerintah);
-      cekPerintahPrep(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &Money, &main_status, &prep_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, GMain, MapNameAsal, MapNameTujuan, MapNameActive, *MapList);
+      cekPerintahPrep(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &Money, &main_status, &prep_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList);
     }
 
     while (!prep_status && main_status) {
@@ -149,61 +148,94 @@ void inputPerintah(Kata *Perintah){
   *Perintah = CKata;
 }
 
-void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph GMain, Map MapNameAsal, Map MapNameTujuan, Map MapNameActive, MATRIKS MapList[4]) {
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]) {
     aksitype CurrentAksi;
     aksitype AksiTypeTrash;
     int CurrentWahana;
+    char MoveCommand;
     boolean Valid = true;
 
     if (IsEQKata(CurrentPerintah,StringToKata("w",1)) || IsEQKata(CurrentPerintah,StringToKata("a",1)) || IsEQKata(CurrentPerintah,StringToKata("s",1)) || IsEQKata(CurrentPerintah,StringToKata("d",1))) {
       if (IsEQKata(CurrentPerintah, StringToKata("w",1))) {
-            moveUp(Map1);
+            MoveCommand = 'w';
           } else if (IsEQKata(CurrentPerintah, StringToKata("a",1))) {
-            moveLeft(Map1);
+            MoveCommand = 'a';
           } else if (IsEQKata(CurrentPerintah, StringToKata("s",1))) {
-            moveDown(Map1);
+            MoveCommand = 's';
           } else if (IsEQKata(CurrentPerintah, StringToKata("d",1))) {
-            moveRight(Map1);
+            MoveCommand = 'd';
           }
-      }
       
       POINT Player = getPlayer(*Map1);
-      char MoveCommand = CurrentPerintah.TabKata[0];
       
       if (isNearGerbang(*Map1, Player)) {
-        if (isAllowedToChangeMap(*Map1, GMain, Player, MapNameAsal, MoveCommand) && IsSrcByReqMoveExist(GMain, MapNameAsal, MoveCommand)) {
+        if (isAllowedToChangeMap(*Map1, *GMain, Player, *MapNameAsal, MoveCommand) && IsSrcByReqMoveExist(*GMain, *MapNameAsal, MoveCommand)) {
           /*** berpindah ke Map lain ***/
-          MapNameTujuan = ReturnMapDest(&GMain, MapNameAsal, MoveCommand);
-          goToOtherMap(Map1, &MapList[MapNameAsal-1], &MapList[MapNameTujuan-1], &MapNameActive, &Player, GMain, MoveCommand);
-          
-          MapNameAsal = MapNameActive;
+          *MapNameTujuan = ReturnMapDest(GMain, *MapNameAsal, MoveCommand);
+          goToOtherMap(Map1, MapList[*MapNameAsal-1], MapList[*MapNameTujuan-1], MapNameActive, &Player, *GMain, MoveCommand);
+          *MapNameAsal = *MapNameActive;
         }
-    } else if (IsEQKata(CurrentPerintah,StringToKata("buy",3))) {
-      Aksi(CurrentAksi) = StringToKata("buy",3);
-      Durasi(CurrentAksi) = DetikToJAM(GetValue(ListAksi, CurrentPerintah));
-      MenuBuy(Inventory, ListMaterial, Money, &CurrentAksi, &Valid);
-      if (Valid) {
-        AddAksi(S, CurrentAksi);
+
+        if (MoveCommand == 'w') {
+          moveUp(Map1);
+          Player = getPlayer(*Map1);
+        }
+        else if (MoveCommand == 's') {
+          moveDown(Map1);
+          Player = getPlayer(*Map1);
+        }
+        else if (MoveCommand == 'a') {
+          moveLeft(Map1);
+          Player = getPlayer(*Map1);
+        }
+        else if (MoveCommand == 'd') {
+          moveRight(Map1);
+          Player = getPlayer(*Map1);
+        }
+      } else {
+          if (MoveCommand == 'w') {
+            moveUp(Map1);
+            Player = getPlayer(*Map1);
+          }
+          else if (MoveCommand == 's') {
+            moveDown(Map1);
+            Player = getPlayer(*Map1);
+          }
+          else if (MoveCommand == 'a') {
+            moveLeft(Map1);
+            Player = getPlayer(*Map1);
+          }
+          else if (MoveCommand == 'd') {
+            moveRight(Map1);
+            Player = getPlayer(*Map1);
+          }
+        }
+      } else if (IsEQKata(CurrentPerintah,StringToKata("buy",3))) {
+          Aksi(CurrentAksi) = StringToKata("buy",3);
+          Durasi(CurrentAksi) = DetikToJAM(GetValue(ListAksi, CurrentPerintah));
+          MenuBuy(Inventory, ListMaterial, Money, &CurrentAksi, &Valid);
+          if (Valid) {
+            AddAksi(S, CurrentAksi);
+          }
+      } else if (IsEQKata(CurrentPerintah,StringToKata("build",5))){
+          Aksi(CurrentAksi) = StringToKata("build",5);
+          Durasi(CurrentAksi) = DetikToJAM(GetValue(ListAksi, CurrentPerintah));
+          MenuBuild(Inventory, Wahana1, Wahana2, Wahana3, &CurrentWahana, &Valid);
+          InfoJumlahAksi(CurrentAksi) = CurrentWahana;
+          if (Valid) {
+            AddAksi(S, CurrentAksi);
+          }
+      } else if (IsEQKata(CurrentPerintah,StringToKata("upgrade",7))){
+         // 
+      } else if (IsEQKata(CurrentPerintah,StringToKata("undo",4))){
+        Undo(S, &AksiTypeTrash);
+      } else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
+        Execute(Map1, S, Money, Inventory, ListMaterial, Wahana1, Wahana2, Wahana3,  prep_status, main_status);
       }
-    } else if (IsEQKata(CurrentPerintah,StringToKata("build",5))){
-      Aksi(CurrentAksi) = StringToKata("build",5);
-      Durasi(CurrentAksi) = DetikToJAM(GetValue(ListAksi, CurrentPerintah));
-      MenuBuild(Inventory, Wahana1, Wahana2, Wahana3, &CurrentWahana, &Valid);
-      InfoJumlahAksi(CurrentAksi) = CurrentWahana;
-      if (Valid) {
-        AddAksi(S, CurrentAksi);
+      else if (IsEQKata(CurrentPerintah,StringToKata("main",4))){
+        *prep_status = false;
+        *main_status = true;
       }
-    } else if (IsEQKata(CurrentPerintah,StringToKata("upgrade",7))){
-      // 
-    } else if (IsEQKata(CurrentPerintah,StringToKata("undo",4))){
-      Undo(S, &AksiTypeTrash);
-    } else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
-      Execute(Map1, S, Money, Inventory, ListMaterial, Wahana1, Wahana2, Wahana3,  prep_status, main_status);
-    }
-    else if (IsEQKata(CurrentPerintah,StringToKata("main",4))){
-      *prep_status = false;
-      *main_status = true;
-    }
 }
 
 /******* INISIALISASI *******/

@@ -116,7 +116,6 @@ boolean IsNodeLast (NodePointer N) {
   return (NodeNext(N) == Nil);
 }
 
-
 /*** Searching ***/
 int SearchIndexSrc (Graph G, Map Src) {
   /* Mengembalikan Index Src di Graph G, -1 jika tidak ada */
