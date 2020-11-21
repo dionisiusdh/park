@@ -185,17 +185,10 @@ void AddAksi (Stack *S, aksitype X) {
 /* Menambahkan aksi ke dalam stack aksi */
     /* KAMUS LOKAL */
     long D1, D2, DHsl;
-    
+
     /* ALGORITMA */
     if (!IsFullStack(*S)) {
         Push(S,X);
-        /*
-        D1 = JAMToDetik(Durasi(X));
-        D2 = JAMToDetik(CurrentDuration(*S));
-        DHsl = D1 + D2;
-
-        CurrentDuration(*S) = DetikToJAM(DHsl);
-        */
         CurrentDuration(*S) = TambahJAM(CurrentDuration(*S), Durasi(X));
         printf("Berhasil menambahkan aksi.\n");
     } else {

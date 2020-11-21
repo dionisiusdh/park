@@ -1,7 +1,15 @@
 #include <stdio.h>
-#include "prepaksi.h"
+#include "./prepaksi.h"
 #include "../boolean.h"
 #include <stdlib.h>
+#include "../array/array.h"
+#include "../mesin/mesinkar.h"
+#include "../mesin/mesinkata.h"
+#include "../Tree/bintree.h"
+#include "../stack/stack.h"
+#include "../Jam/jam.h"
+#include "../matriks/matriks.h"
+#include "../point/point.h"
 
 // gcc -std=c99 -o dprep dprep.c prepaksi.o ../array/array.o ../mesin/mesinkata.o ../mesin/mesinkar.o ../stack/stack.o ../jam/jam.o
 // gcc -std=c99 -o dprep dprep.c ./prepaksi.o ../mesin/mesinkata.o ../array/array.o ../mesin/mesinkar.o ../Tree/bintree.o ../stack/
@@ -11,7 +19,6 @@ int main() {
     aksitype CurrentAksi;
     int CurrentWahana;
     boolean cek;
-    MakeEmpty(&L);
     MakeEmpty(&Inven);
     BinTree W1,W2,W3;
     

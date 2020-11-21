@@ -31,7 +31,7 @@ void initGame(Kata * Nama);
 void inputPerintah (Kata *Perintah);
 /* Membaca perintah dari user dalam bentuk kata */ 
 
-void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3);
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph GMain, Map MapNameAsal, Map MapNameTujuan, Map MapNameActive, MATRIKS MapList[4]);
 /* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah selain untuk pergerakan */
 
 void initMap();
