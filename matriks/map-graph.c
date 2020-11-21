@@ -18,8 +18,8 @@ int main () {
      * ***/
     /*** ADT Graph ***/
     Graph GMain;
-
     MakeGMain(&GMain);
+    
     PrintGraph(GMain);
     Map MapNameActive, MapNameAsal, MapNameTujuan;
     /*** ADT Matriks ***/
@@ -47,7 +47,7 @@ int main () {
     //initializePlayerPosition(&MActive);
     Player = getPlayer(MActive);
     POffice = getOffice(MActive);
-    printf("posisi player: ");TulisPOINT(Player);printf("\n");
+    printf("posisi player: "); TulisPOINT(Player);printf("\n");
     TulisMATRIKS(MActive);
 
     /*** EXPLORATION ***/
@@ -79,7 +79,8 @@ int main () {
           goToOtherMap(&MActive, MapList[MapNameAsal-1], MapList[MapNameTujuan-1], &MapNameActive, &Player, GMain, MoveCommand);
           printf("passed changing Map\n");
           MapNameAsal = MapNameActive;
-          TulisMATRIKS(MActive);
+          //TulisMATRIKS(MActive);
+          goto AfterMove;
         }
         goto Move;
       }
@@ -88,11 +89,12 @@ int main () {
       scanf(" %c", &MoveCommand);
 
       if (MoveCommand == '?') {
+        // Quit Exploring
         break;
       }
       
-      Move:
       /*** Move ***/
+      Move:
       if (MoveCommand == 'w') {
         moveUp(&MActive);
         Player = getPlayer(MActive);
@@ -109,8 +111,10 @@ int main () {
         moveRight(&MActive);
         Player = getPlayer(MActive);
       }
-      printf("***********************hoi\n");
-      printf("Position sesudah: "); TulisPOINT(Player);
+
+      /*** AfterMove ***/
+      AfterMove:
+      printf("\n\nPosition sesudah: "); TulisPOINT(Player);
       printf("\n");
       TulisMATRIKS(MActive);
     } while (true);

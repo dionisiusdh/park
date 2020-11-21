@@ -22,7 +22,6 @@ typedef int IdxType; /* type indeks */
 typedef struct {
     Kata nama;  /* Nama material / aksi */
     int value;  /* Harga material */
-    long value_durasi; /* Durasi aksi */
 } ElArrayType;
 typedef struct
 {
@@ -134,8 +133,6 @@ void ChangeValue (TabInt *TInventory, Kata NamaBarang, int NewValue);
 
 int GetValue (TabInt *TInventory, Kata NamaBarang);
 /* Mengambil value dari TInventory untuk NamaBarang */
-
-long GetValueDurasi (TabInt *TAksi, Kata NamaAksi);
 
 /* ********** PEMBACAAN FILE EKSTERNAL ********** */
 void BacaMaterial (TabInt *ListMaterial);

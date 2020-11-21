@@ -1,60 +1,10 @@
-Flyfly,500,2,1800,Mari kita terbang,300,10_5_5_0_0 
-Flyfly2,750,2,1800,Mari kita terbang,12345,0_0_0_0_0  
+Flyfly,500,2,1800,Mari kita terbang,300,10_5_5_0_0*
+Flyfly2,750,2,1800,Mari kita terbang,12345,0_0_0_0_0*  
 Flyfly3,800,2,1800,Mari kita terbang,12345,0_0_0_0_0/
-Fallfall,900,1,3600,Mari kita jatuh,200,5_2_2_0_0 
-Fallfall2,950,1,3600,Mari kita jatuh,12345,0_0_0_0_0 
+Fallfall,900,1,3600,Mari kita jatuh,200,5_2_2_0_0* 
+Fallfall2,950,1,3600,Mari kita jatuh,12345,0_0_0_0_0* 
 Fallfall3,1000,1,3600,Mari kita jatuh,12345,0_0_0_0_0/
-Walkwalk,1000,2,1800,Mari kita jalan,200,3_1_0_0_0
-Walkwalk,1000,2,1800,Mari kita jalan,12345,0_0_0_0_0 
-Walkwalk,1000,2,1800,Mari kita jalan,12345,0_0_0_0_0.
-
-MATERIAL
-Wood,Steel,Plastic,Paint,Screw
-
-Wahana yang setiap node-nya mencakup:
-i. Nama Wahana
-ii. Harga Wahana
-iii. Kapasitas Wahana
-iv. Durasi Wahana
-v. Deskripsi Wahana
-○ Cost yang dibutuhkan untuk upgrade wahana(pindah ke node tree lain):
-i. Uang yang dibutuhkan
-ii. Bahan bangunan yang dibutuhkan
-
-                  
-            FLYFLY TREE
-                   flyfly
-                    /  \
-                   /    \
-                  /      \
-                 /        \
-                /          \ 
-               /            \
-            flyfly2       flyfly3
-
-                              
-            WALKWALK TREE
-                  walkwalk
-                    /  \
-                   /    \
-                  /      \
-                 /        \
-               /            \
-           walkwalk2    walkwalk3
-
-dimas ada disini intinya.................................
-> < < > < > < > < > <
-
-* * *
-* * *
-Taasa
-
-=============================================================================
-adowkdakd adk awo apsdo woa diwad lsad awodk sal dk waod ksaod kwoadk spa owpdaiw pdsod pwoapdo 
-=============================================================================
-
-=============================================================================
-
-=============================================================================
-
-adowkdakd adk awo apsdo woa diwad lsad awodk sal dk waod ksaod kwoadk spa owpdaiw pdsod pwoapdo 
+Walkwalk,1000,2,1800,Mari kita jalan,200,3_1_0_0_0*
+Walkwalk,1000,2,1800,Mari kita jalan,12345,0_0_0_0_0* 
+Walkwalk,1000,2,1800,Mari kita jalan,12345,0_0_0_0_0/
+.

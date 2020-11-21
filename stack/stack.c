@@ -24,6 +24,8 @@ void CreateEmpty (Stack *S, JAM MaxDuration){
     Top(*S) = NilStack;
     CurrentDuration(*S) = MakeJAM(0,0,0);
     MaxDuration(*S) = MaxDuration;
+    TotalAksi(*S) = 0;
+    TotalBiaya(*S) = 0;
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
@@ -51,6 +53,8 @@ void Push (Stack * S, aksitype X){
     /* ALGORITMA */
     Top(*S)++;
     InfoTop(*S) = X;
+    TotalAksi(*S) += 1;
+    TotalBiaya(*S) += Harga(X);
 }
 
 /* ************ Menghapus sebuah elemen Stack ************ */
@@ -63,4 +67,6 @@ void Pop (Stack * S, aksitype * X){
     /* ALGORITMA */
     *X = InfoTop(*S);
     Top(*S)--;
+    TotalAksi(*S) -= 1;
+    TotalBiaya(*S) -= Harga(*X);
 }

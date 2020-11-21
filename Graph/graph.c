@@ -1,6 +1,5 @@
 #include "graph.h"
 
-
 /*** Konstruktor ***/
 void InitializeGraph (Graph* G) {
 /** Membuat graph kosong G dengan nilai Map 1 sampai NMap */

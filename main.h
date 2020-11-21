@@ -17,7 +17,6 @@
 #include "./jam/jam.h"
 #include "./stack/stack.h"
 #include "./array/array.h"
-//#include "./Graph/graph.h"
 
 /* ********* ADT ********* */
 #include "./aksi/prepaksi.h"
@@ -32,8 +31,8 @@ void initGame(Kata * Nama);
 void inputPerintah (Kata *Perintah);
 /* Membaca perintah dari user dalam bentuk kata */ 
 
-void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, TabInt *ListAksi);
-/* Mengecek perintah dari user dalam bentuk kata */
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3);
+/* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah selain untuk pergerakan */
 
 void initMap();
 /* Menginisiasi map awal permainan Willy Wangky's World.
@@ -45,6 +44,11 @@ void initJam(JAM *JOpen, JAM *JClose);
    I.S. Game belum dimulai.
    F.S. Game dimulai dengan jam awal preparation phase permainan Willy Wangky's World. */
 
+void initWahana (BinTree *Wahana1, BinTree *Wahana2, BinTree *Wahana3);
+/* Menginisiasi wahana Willy Wangky's World.
+   I.S. Game belum dimulai.
+   F.S. Game dimulai dengan map awal yang terdefinisi di file eksternal. */
+
 /******* PROSEDUR DESKRIPSI *******/
 void printMap (MATRIKS M);
 /* Mencetak Map dan Legenda */
@@ -52,7 +56,7 @@ void printMap (MATRIKS M);
 void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi);
 /*Menginisialisasi Inventory*/
 
-void prepDescription (MATRIKS M, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack *S);
+void prepDescription (MATRIKS M, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S);
 /* Mencetak Deskripsi Pemain (Termasuk Mencetak Map dan Legenda) */
 
 #endif

@@ -27,6 +27,8 @@ typedef int address;   /* indeks tabel */
 typedef struct { 
   aksitype T[MaxEl]; /* tabel penyimpan elemen */
   address TOP;  /* alamat TOP: elemen puncak */
+  int TotalAksi; /* Total jumlah semua aksi dalam stack */
+  int TotalBiaya; /* Total seluruh biaya aksi dalam stack */
   JAM CurrentDuration; /* Total durasi aksi-aksi yang ada pada kondisi sekarang */
   JAM MaxDuration; /* Durasi maksimum aksi-aksi yang dapat ditampung stack */
 } Stack;
@@ -46,6 +48,8 @@ typedef struct {
 #define InfoTop(S) (S).T[(S).TOP]
 #define CurrentDuration(S) (S).CurrentDuration
 #define MaxDuration(S) (S).MaxDuration
+#define TotalAksi(S) (S).TotalAksi
+#define TotalBiaya(S) (S).TotalBiaya
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */

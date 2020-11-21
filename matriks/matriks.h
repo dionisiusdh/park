@@ -6,7 +6,7 @@
 
 #include "../boolean.h"
 #include "../point/point.h"
-#include "../graph/graph.h"
+#include "../Graph/graph.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 0
@@ -71,6 +71,7 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK);
 8 9 10 
 */
 void BacaMATRIKSTxt (MATRIKS * M, int NB, int NK, char* filename);
+
 void TulisMATRIKS (MATRIKS M);
 /* I.S. M terdefinisi */
 /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
@@ -156,6 +157,9 @@ boolean isNearWahana (MATRIKS M, POINT P);
 boolean isNearAntrian (MATRIKS M, POINT P);
 /* Cek apakah ada antrian di posisi sekitar player */
 
+boolean isInOffice (POINT PPlayer, POINT POffice);
+/* Cek apakah player sedang berada di posisi office */
+
 boolean isNearGerbang (MATRIKS M, POINT P);
 /* Cek apakah ada Gerbang di posisi sekitar player */
 
@@ -164,7 +168,7 @@ boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCom
    Cek berdasarkan input Move apakah Player menuju Gerbang
    Fungsi mengecek pada graph, apakah Player dapat berpindah Map*/
 
-boolean isInOffice (POINT PPlayer, POINT POffice);
+// boolean isInOffice (POINT PPlayer, POINT POffice);
 /* Cek apakah player sedang berada di titik office */
 
 void PlaceWahana (MATRIKS* M, POINT Player);
@@ -172,9 +176,16 @@ void PlaceWahana (MATRIKS* M, POINT Player);
     /* Menempatkan posisi rancangan wahana 'w' (w kecil) di atas, bawah, kiri atau kanan Player */
     /**
      * I.S. Setidaknya masih ada ruang diantar keempat posisi relatif dari Player
-     * F.S. Ditambahkan rencana wahana 'w' di M
+     * F.S. Ditambahkan rencana wahana 'w' di M, di atas, bawah, kiri, atau kanan Player
      * Proses: Cek posisi yang tersedia untuk membangun wahana berdasarkan posisi Player
+     *         Perhatikan bahwa tidak boleh menmpatkan wahana persis di sebelah gerbang
     */
-    
+    // Cek dengan urutan Atas, Bawah, Kiri, Kanan
+
+void UndoBuildWahana (MATRIKS* M);
+   /* Menghapus semua rancangan wahana 'w' di M menjadi '-' */
+
+void BuildWahana (MATRIKS* M);
+    /* Membangun setiap rancangan wahana 'w' di M menjadi wahana 'W' */
 
 #endif
