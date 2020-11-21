@@ -12,7 +12,7 @@
 
 typedef struct {
 	char TabKata[NMax]; /* container penyimpan kata, indeks yang dipakai [0..NMax-1] */
-    int Length;
+   int Length;
 } Kata;
 
 /* State Mesin Kata */
@@ -56,6 +56,14 @@ void PrintKata (Kata K);
 
 void Bagi2Kata (Kata Kin, Kata* Kout1, Kata* Kout2);
 /*Membagi Kata menjadi 2 bagian kata. 
-Misalnya: "serve Wangky's Universe" dibagi menjadi Kout1: "serve" dan Kout2: "Wangky's universe"*/
+Misalnya: "serve Wangky's Universe" dibagi menjadi Kout1: "serve" dan Kout2: "Wangky's Universe"*/
+
+Kata StringToKata (char *string, int lengthString);
+/* Mengubah String bernama string Ke Dalam Bentuk Kata */
+
+Kata concatNama();
+/* Menerima input dan menyatukan kata-kata yang diakuisisi oleh mesin kata ke dalam satu array of character.
+   I.S. Input sembarang.
+   F.S. Didapat sebuah array of character yang berisi kata-kata terakuisisi dengan dipisahkan spasi. */
 
 #endif

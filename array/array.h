@@ -21,7 +21,8 @@
 typedef int IdxType; /* type indeks */
 typedef struct {
     Kata nama;  /* Nama material / aksi */
-    int value;  /* Harga material / durasi aksi*/
+    int value;  /* Harga material */
+    long value_durasi; /* Durasi aksi */
 } ElArrayType;
 typedef struct
 {
@@ -47,6 +48,7 @@ typedef struct
 #define ElmtArray(T, i) (T).TI[(i)]
 #define Nama(E) (E).nama
 #define Value(E) (E).value
+#define ValueDurasi(E) (E).value_durasi
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
@@ -116,10 +118,30 @@ void DelLastEl(TabInt *T, ElArrayType *X);
 /*      Banyaknya elemen tabel berkurang satu */
 /*      Tabel T mungkin menjadi kosong */
 
+/* ********** COPY ********** */
+TabInt CopyTab (TabInt TIn);
+/* Mereturn sebuah tabint hasil copy dari TIn */
+
+/* ********** VALUE ********** */
+void SetAllValueZero (TabInt *T);
+/* Mengganti semua value dari T menjadi 0 */
+
+void SetAllValueX (TabInt *T, int X);
+/* Mengganti semua value dari T menjadi X */
+
+void ChangeValue (TabInt *TInventory, Kata NamaBarang, int NewValue);
+/* Mengganti value dari NamaBarang menjadi NewValue */
+
+int GetValue (TabInt *TInventory, Kata NamaBarang);
+/* Mengambil value dari TInventory untuk NamaBarang */
+
+long GetValueDurasi (TabInt *TAksi, Kata NamaAksi);
+
+/* ********** PEMBACAAN FILE EKSTERNAL ********** */
 void BacaMaterial (TabInt *ListMaterial);
 /* Membaca material dan harga material dari file material.txt */
 
 void BacaAksi (TabInt *ListAksi);
-/* Membaca material dan harga material dari file material.txt */
+/* Membaca Aksi dan Waktu yang dibutuhkan dari file aksi.txt */
 
 #endif

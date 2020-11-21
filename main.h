@@ -17,13 +17,12 @@
 #include "./jam/jam.h"
 #include "./stack/stack.h"
 #include "./array/array.h"
+//#include "./Graph/graph.h"
 
 /* ********* ADT ********* */
 #include "./aksi/prepaksi.h"
 
 /******* DEKLARASI FUNGSI-FUNGSI UTAMA *******/
-Kata StringToKata (char *string, int lengthString);
-/* Mengubah String bernama string Ke Dalam Bentuk Kata */
 
 void initGame(Kata * Nama);
 /* Menginisiasi mulainya permainan Willy Wangky's World.
@@ -33,7 +32,7 @@ void initGame(Kata * Nama);
 void inputPerintah (Kata *Perintah);
 /* Membaca perintah dari user dalam bentuk kata */ 
 
-void cekPerintah(Kata CurrentPerintah, MATRIKS *Map, Stack *S, aksitype *AksiTypeTrash);
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, TabInt *ListAksi);
 /* Mengecek perintah dari user dalam bentuk kata */
 
 void initMap();
@@ -46,16 +45,14 @@ void initJam(JAM *JOpen, JAM *JClose);
    I.S. Game belum dimulai.
    F.S. Game dimulai dengan jam awal preparation phase permainan Willy Wangky's World. */
 
-Kata concatNama();
-/* Menerima input dan menyatukan kata-kata yang diakuisisi oleh mesin kata ke dalam satu array of character.
-   I.S. Input sembarang.
-   F.S. Didapat sebuah array of character yang berisi kata-kata terakuisisi dengan dipisahkan spasi. */
-
 /******* PROSEDUR DESKRIPSI *******/
 void printMap (MATRIKS M);
 /* Mencetak Map dan Legenda */
 
-void prepDescription (MATRIKS M, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S);
+void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi);
+/*Menginisialisasi Inventory*/
+
+void prepDescription (MATRIKS M, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack *S);
 /* Mencetak Deskripsi Pemain (Termasuk Mencetak Map dan Legenda) */
 
 #endif
