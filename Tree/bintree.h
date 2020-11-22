@@ -207,4 +207,7 @@ void GetInfoWahana (BinTree Wahana, wahanatype *InfoWahana);
 void PrintNamaWahana (BinTree Wahana1, BinTree Wahana2, BinTree Wahana3);
 /* Menampilkan List Nama Wahana yang bisa dibangun ke Layar */
 
+void PrintNamaUpgradeWahana (BinTree Wahana);
+/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
+
 #endif

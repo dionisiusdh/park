@@ -484,7 +484,7 @@ void BacaWahana(BinTree *WahanaTree1, BinTree *WahanaTree2, BinTree *WahanaTree3
   char val;
   wahanatype X;
   BinTree TempTree,wahana;
-  Kata temp;
+  Kata temp,tempNama,tempHargaTiket,tempKapasitas,tempDurasi,tempDeskripsi,tempUang,tempMaterial;
 
   /* ALGORITMA */
   int JUMLAH_WAHANA = 3;
@@ -501,89 +501,93 @@ void BacaWahana(BinTree *WahanaTree1, BinTree *WahanaTree2, BinTree *WahanaTree3
         for (l=0; l<JUMLAH_UPGRADE_PER_WAHANA; l++){
           // Baca Nama Wahana
           j = 0;
-          temp.Length = 0;
-          while(val != ','){
-            temp.TabKata[j] = val;
-            temp.Length ++;
-            j++;
+          tempNama.Length = 0;
+          while(val == '\n'){
             val = fgetc(PFile);
           }
-          WahanaNama(X) = temp;
+          while(val != ','){
+            if(val != '\n' && val != BLANK){
+              tempNama.TabKata[j] = val;
+              tempNama.Length ++;
+              j++;
+            }
+            val = fgetc(PFile);
+          }
+          WahanaNama(X) = tempNama;
           val = fgetc(PFile);
           
           // Baca Harga Tiket Wahana
           j = 0;
-          temp.Length = 0;
+          tempHargaTiket.Length = 0;
           while(val != ','){
-            temp.TabKata[j] = val;
-            temp.Length ++;
+            tempHargaTiket.TabKata[j] = val;
+            tempHargaTiket.Length ++;
             j++;
             val = fgetc(PFile);
           }
-          WahanaHarga(X) = KataToInteger(temp);
+          WahanaHarga(X) = KataToInteger(tempHargaTiket);
           val = fgetc(PFile);
 
           // Baca Kapasitas Wahana
           j = 0;
-          temp.Length = 0;
+          tempKapasitas.Length = 0;
           while(val != ','){
-            temp.TabKata[j] = val;
-            temp.Length ++;
+            tempKapasitas.TabKata[j] = val;
+            tempKapasitas.Length ++;
             j++;
             val = fgetc(PFile);
           }
-          WahanaKapasitas(X) = KataToInteger(temp);
+          WahanaKapasitas(X) = KataToInteger(tempKapasitas);
           val = fgetc(PFile);
 
           // Baca Durasi Wahana
           j = 0;
-          temp.Length = 0;
+          tempDurasi.Length = 0;
           while(val != ','){
-            temp.TabKata[j] = val;
-            temp.Length ++;
+            tempDurasi.TabKata[j] = val;
+            tempDurasi.Length ++;
             j++;
             val = fgetc(PFile);
           }   
-          WahanaDurasi(X) = KataToInteger(temp);
+          WahanaDurasi(X) = KataToInteger(tempDurasi);
           val = fgetc(PFile);
 
           // Baca Deskripsi Wahana
           j = 0;
-          temp.Length = 0;
+          tempDeskripsi.Length = 0;
           while(val != ','){
-            temp.TabKata[j] = val;
-            temp.Length ++;
+            tempDeskripsi.TabKata[j] = val;
+            tempDeskripsi.Length ++;
             j++;
             val = fgetc(PFile);
           }
-          WahanaDeskripsi(X) = temp;
+          WahanaDeskripsi(X) = tempDeskripsi;
           val = fgetc(PFile);
 
           // Baca Uang yang dibutuhkan Wahana
           j = 0;
-          temp.Length = 0;
+          tempUang.Length = 0;
           while(val != ','){
-            temp.TabKata[j] = val;
-            temp.Length ++;
+            tempUang.TabKata[j] = val;
+            tempUang.Length ++;
             j++;
             val = fgetc(PFile);
           }
-          WahanaCostUp(X) = KataToInteger(temp);
+          WahanaCostUp(X) = KataToInteger(tempUang);
 
           // Baca Bahan bangunan yang dibutuhkan Wahana
           j = 0;
           val = fgetc(PFile);          
           while(val != '*' && val != '/'){
             k = 0;
-            temp.Length = 0;
+            tempMaterial.Length = 0;
             while(val != '_' && val != '*' && val != '/'){
-              temp.TabKata[k] = val;
-              temp.Length ++;
+              tempMaterial.TabKata[k] = val;
+              tempMaterial.Length ++;
               k++;
-              
               val = fgetc(PFile);
             }
-            WahanaMatUp(X,j) = KataToInteger(temp);
+            WahanaMatUp(X,j) = KataToInteger(tempMaterial);
             j++;    
             if (val == '*' || val == '/') { break; }
             val = fgetc(PFile);
@@ -624,5 +628,16 @@ void PrintNamaWahana (BinTree Wahana1, BinTree Wahana2, BinTree Wahana3){
   PrintKata(AkarNama(Wahana1));
   PrintKata(AkarNama(Wahana2));
   PrintKata(AkarNama(Wahana3));
+  printf("\n");
+}
+
+void PrintNamaUpgradeWahana (BinTree Wahana){
+/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
+  printf("Ingin Melakukan Upgrade Apa?\n");
+  printf("List :\n");
+  printf("   -  ");
+  PrintKata(AkarNama(Left(Wahana)));
+  printf("\n   -  ");
+  PrintKata(AkarNama(Right(Wahana)));
   printf("\n");
 }

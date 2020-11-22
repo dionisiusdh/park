@@ -4,11 +4,14 @@
 #define AKSI_H
 
 #include "../boolean.h"
-#include "../mesin/mesinkata.h"
 #include "../array/array.h"
-#include "../stack/stack.h"
+#include "../mesin/mesinkar.h"
+#include "../mesin/mesinkata.h"
 #include "../Tree/bintree.h"
+#include "../stack/stack.h"
+#include "../Jam/jam.h"
 #include "../matriks/matriks.h"
+#include "../point/point.h"
 
 /* ********** MENU ********** */
 /* *********** BUY ***********  */
@@ -32,7 +35,13 @@ void MenuBuild(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Waha
 void Build(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana);
 
 /* *********** UPGRADE ***********  */
-void Upgrade(TabInt *T);
+void MenuUpgrade(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, boolean *Valid, int *CurrentUpgrade);
+/* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan dan uang yang dibutuhkan*/
+/* F.S. Menampilkan ingin upgrade apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
+        di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
+        Apabila bahan bangunan tidak cukup atau waktu tidak cukup atau uang tidak cukup, maka akan ditampilkan error (Memakan Waktu) */
+
+void Upgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, int CurrentUpgrade);
 /* I.S. Pemain berada di sekitar wahana yang dapat di-upgrade */
 /* F.S. Menampikan daftar upgrade yang mungkin untuk wahana tersebut ke layar. Apabila material yang dimiliki tidak cukup
 atau waktu tidak cukup, maka akan menampilkan error ke layar pengguna. Apabila kedua syarat (waktu dan material) terpenuhi,

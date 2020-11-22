@@ -261,7 +261,7 @@ void BacaMaterial (TabInt *ListMaterial)
   ElArrayType element;
 
   /* ALGORITMA */
-  PFile = fopen("./material.txt", "r");
+  PFile = fopen("../material.txt", "r");
 
   if (PFile != NULL){
       val = fgetc(PFile);

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "prepaksi.h"
+#include "./prepaksi.h"
 #include "../array/array.h"
 #include "../mesin/mesinkar.h"
 #include "../mesin/mesinkata.h"
@@ -97,8 +97,6 @@ void MenuBuild(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Waha
     }
     
     for (i=0;i<5;i++) {
-        printf("%d\n",WahanaMatUp(InfoWahana, i));
-        printf("%d\n",Value(ElmtArray(*Inventory, i)));
         if (WahanaMatUp(InfoWahana, i) > Value(ElmtArray(*Inventory, i))) {
             *Valid = false;
             printf("Material anda tidak mencukupi.");
@@ -129,6 +127,111 @@ void Build(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, Bi
 
     // Place wahana di Map
     PlaceWahana(Map, getPlayer(*Map));
+}
+
+/* *********** UPGRADE ***********  */
+void MenuUpgrade(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, boolean *Valid, int *CurrentUpgrade){
+/* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan dan uang yang dibutuhkan*/
+/* F.S. Menampilkan ingin upgrade apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
+        di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
+        Apabila bahan bangunan tidak cukup atau waktu tidak cukup atau uang tidak cukup, maka akan ditampilkan error (Memakan Waktu) */
+    /* KAMUS */
+    Kata NamaUpgrade;
+    BinTree CurrentTree, CurrentUpgradeTree;
+    wahanatype InfoWahana;
+    *Valid = true;
+    int i;
+
+    /* ALGORITMA */
+    // Inisialisasi CurrentUpgrade
+    *CurrentUpgrade = 0; // Jika sampai akhir fungsi CurrentUpgrade masih bernilai 0, maka tidak ada upgrade yang terjadi.
+    // Print list wahana
+    if(CurrentWahana == 1){
+        CurrentTree = Wahana1;
+        PrintNamaUpgradeWahana(Wahana1);
+    } else if(CurrentWahana == 2){
+        CurrentTree = Wahana2;
+        PrintNamaUpgradeWahana(Wahana2);
+    } else if(CurrentWahana == 3){
+        CurrentTree = Wahana3;
+        PrintNamaUpgradeWahana(Wahana3);
+    }
+    printf("$ ");
+    STARTKATA();
+    NamaUpgrade = CKata;
+    
+    // printf("*********************\n");
+    // printf("%d\n",AkarNama(CurrentTree).Length);
+    // printf("%d\n",AkarNama(Left(CurrentTree)).Length);
+    // int a;
+    // for(a=0;a<AkarNama(Left(CurrentTree)).Length;a++){
+    //     printf("%c\n",AkarNama(Left(CurrentTree)).TabKata[a]);
+    // }
+    // printf("%d\n",AkarNama(Right(CurrentTree)).Length);
+    // for(a=0;a<AkarNama(Right(CurrentTree)).Length;a++){
+    //     printf("%c\n",AkarNama(Right(CurrentTree)).TabKata[a]);
+    // }
+    // printf("%d\n",CKata.Length);
+    // printf("*********************\n");
+
+    // Cek input
+    if (IsEQKata(NamaUpgrade, AkarNama(Left(CurrentTree)))) {
+        CurrentUpgradeTree = Left(CurrentTree);
+        *CurrentUpgrade = 1; // Menandai Upgrade Left
+        GetInfoWahana(Left(CurrentTree), &InfoWahana);
+    } else if (IsEQKata(NamaUpgrade, AkarNama(Right(CurrentTree)))) {
+        CurrentUpgradeTree = Right(CurrentTree);
+        *CurrentUpgrade = 2; // Menandai Upgrade Right
+        GetInfoWahana(Right(CurrentTree), &InfoWahana);
+    }
+    
+    for (i=0;i<5;i++) {
+        // printf("%d\n",WahanaMatUp(InfoWahana, i));
+        // printf("%d\n",Value(ElmtArray(*Inventory, i)));
+        if (WahanaMatUp(InfoWahana, i) > Value(ElmtArray(*Inventory, i))) {
+            *Valid = false;
+            printf("Material atau uang anda tidak mencukupi.");
+            break;
+        }
+    }
+
+    if(Valid){
+        printf("Upgrade Berhasil.");
+    } 
+}
+
+void Upgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, int CurrentUpgrade){
+    /* KAMUS */
+    wahanatype InfoWahana;
+    BinTree CurrentTree, CurrentUpgradeTree;
+    int i;
+
+    /* ALGORITMA */
+    // Mengambil info wahana berdasarkan current wahana yang ingin dibangun
+    if (CurrentWahana == 1) {
+        CurrentTree = Wahana1;
+    } else if (CurrentWahana == 2) {
+        CurrentTree = Wahana2;
+    } else if (CurrentWahana == 3) {
+        CurrentTree = Wahana3;
+    } 
+
+    if (CurrentUpgrade == 1) {
+        CurrentUpgradeTree = Left(CurrentTree);
+        GetInfoWahana(Left(CurrentTree), &InfoWahana);
+    } else if (CurrentUpgrade == 2) {
+        CurrentUpgradeTree = Right(CurrentTree);
+        GetInfoWahana(Right(CurrentTree), &InfoWahana);
+    }
+
+    // Mengurangkan jumlah item di inventory sesuai dengan bahan yang diperlukan dan mengurangkan jumlah uang di money sesuai yang dibutuhkan
+    for (i=0;i<5;i++) {
+        Value(ElmtArray(*Inventory, i)) -= WahanaMatUp(InfoWahana, i);
+    }
+
+    // Place wahana di Map
+    //PlaceWahana(Map, getPlayer(*Map));
+
 }
 
 /* ************ FUNGSI-FUNGSI PROGRAM ************ */
