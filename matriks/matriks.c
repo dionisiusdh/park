@@ -617,7 +617,7 @@ void UndoBuildWahana (MATRIKS* M) {
     for (i=GetFirstIdxBrs(*M); i<10; i++) {
         for (j=GetFirstIdxKol(*M); j<20; j++) {
             if (Elmt(*M, i, j) == 'w') {
-                Elmt(*M, i, j) == '-';
+                Elmt(*M, i, j) = '-';
             }
         }
     }
@@ -629,7 +629,7 @@ void BuildWahana (MATRIKS* M) {
     for (i=GetFirstIdxBrs(*M); i<10; i++) {
         for (j=GetFirstIdxKol(*M); j<20; j++) {
             if (Elmt(*M, i, j) == 'w') {
-                Elmt(*M, i, j) == 'W';
+                Elmt(*M, i, j) = 'W';
             }
         }
     }

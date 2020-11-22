@@ -26,7 +26,7 @@ void Buy(TabInt *Inventory, TabInt *ListMaterial, Kata NamaBarang, int JumlahBar
 /* Mengurangi money dengan nilai total harga material dikali JumlahBarang */
 
 /* *********** BUILD ***********  */
-void MenuBuild(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid);
+void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid);
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan yang dibutuhkan */
 /* F.S. Menampilkan ingin membangun apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         dibangun kemudian akan menyimpan perintah bangun ke dalam stack yang akan dijalankan saat execute.
@@ -35,7 +35,7 @@ void MenuBuild(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Waha
 void Build(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana);
 
 /* *********** UPGRADE ***********  */
-void MenuUpgrade(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, boolean *Valid, int *CurrentUpgrade);
+void MenuUpgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, boolean *Valid, int *CurrentUpgrade);
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan dan uang yang dibutuhkan*/
 /* F.S. Menampilkan ingin upgrade apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.

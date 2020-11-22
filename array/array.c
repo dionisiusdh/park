@@ -188,11 +188,11 @@ TabInt CopyTab (TabInt TIn)
 {   //KAMUS
     TabInt Tout;
     int i;
+    
     //ALGORITMA
     MakeEmpty(&Tout);
     NeffArray(Tout) = NeffArray(TIn);
     for (i=0; i<NeffArray(Tout); i++){
-
         ElmtArray(Tout,i) = ElmtArray(TIn,i);
     }
 }
@@ -254,14 +254,14 @@ void BacaMaterial (TabInt *ListMaterial)
 {
   /* KAMUS */
   FILE *PFile;
-  int i,j,k;
+  int i,j,k,l;
   char val;
   Kata tempnama;
   Kata tempharga;
   ElArrayType element;
 
   /* ALGORITMA */
-  PFile = fopen("../material.txt", "r");
+  PFile = fopen("./material.txt", "r");
 
   if (PFile != NULL){
       val = fgetc(PFile);
@@ -276,6 +276,14 @@ void BacaMaterial (TabInt *ListMaterial)
           val = fgetc(PFile);
         }
         
+        // Prevent bug
+        if (i != 0) {
+            for (l=0;l<tempnama.Length-1;l++) {
+                tempnama.TabKata[l] = tempnama.TabKata[l+1];
+            }
+            tempnama.Length--;
+        }
+
         k = 0;
         val = fgetc(PFile);
         tempharga.Length = 0;
@@ -323,6 +331,7 @@ void BacaAksi (TabInt *ListAksi)
           val = fgetc(PFile);
         }
         
+        // Prevent bug
         if (i != 0) {
             for (l=0;l<tempaksi.Length-1;l++) {
                 tempaksi.TabKata[l] = tempaksi.TabKata[l+1];

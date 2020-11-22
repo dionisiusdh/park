@@ -29,7 +29,7 @@ void MenuBuy(TabInt *Inventory, TabInt *ListMaterial, int *Money, aksitype *Curr
     
     for (i=0; (i<NeffArray(*ListMaterial)); i++){
         PrintKata(Nama(ElmtArray(*ListMaterial,i)));
-        printf("   Harga: %d", Value(ElmtArray(*ListMaterial,i)));
+        printf("   Harga: %d\n", Value(ElmtArray(*ListMaterial,i)));
     }
     printf("\nPetunjuk : Input Dalam Format (<Jumlah Barang> <Nama Barang>); Contoh: 1000 Wood\n");
 
@@ -67,7 +67,7 @@ void Buy(TabInt *Inventory, TabInt *ListMaterial, Kata NamaBarang, int JumlahBar
 }
 
 /* *********** BUILD ***********  */
-void MenuBuild(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid){
+void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid){
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan yang dibutuhkan */
 /* F.S. Menampilkan ingin membangun apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         dibangun kemudian akan menyimpan perintah bangun ke dalam stack yang akan dijalankan saat execute.
@@ -99,9 +99,15 @@ void MenuBuild(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Waha
     for (i=0;i<5;i++) {
         if (WahanaMatUp(InfoWahana, i) > Value(ElmtArray(*Inventory, i))) {
             *Valid = false;
-            printf("Material anda tidak mencukupi.");
+            printf("Material anda tidak mencukupi.\n");
             break;
         }
+        Value(ElmtArray(*Inventory, i)) -= WahanaMatUp(InfoWahana, i);
+    }
+
+    if (*Valid) {
+        printf("Selamat, rancangan wahana anda bersimbol \'w\' telah ditambahkan\n");
+        PlaceWahana(Map, getPlayer(*Map));
     }
 }
 
@@ -126,11 +132,11 @@ void Build(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, Bi
     }
 
     // Place wahana di Map
-    PlaceWahana(Map, getPlayer(*Map));
+    BuildWahana(Map);
 }
 
 /* *********** UPGRADE ***********  */
-void MenuUpgrade(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, boolean *Valid, int *CurrentUpgrade){
+void MenuUpgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, boolean *Valid, int *CurrentUpgrade){
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan dan uang yang dibutuhkan*/
 /* F.S. Menampilkan ingin upgrade apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
@@ -146,33 +152,19 @@ void MenuUpgrade(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wa
     // Inisialisasi CurrentUpgrade
     *CurrentUpgrade = 0; // Jika sampai akhir fungsi CurrentUpgrade masih bernilai 0, maka tidak ada upgrade yang terjadi.
     // Print list wahana
-    if(CurrentWahana == 1){
+    if (CurrentWahana == 1){
         CurrentTree = Wahana1;
         PrintNamaUpgradeWahana(Wahana1);
-    } else if(CurrentWahana == 2){
+    } else if (CurrentWahana == 2){
         CurrentTree = Wahana2;
         PrintNamaUpgradeWahana(Wahana2);
-    } else if(CurrentWahana == 3){
+    } else if (CurrentWahana == 3){
         CurrentTree = Wahana3;
         PrintNamaUpgradeWahana(Wahana3);
     }
     printf("$ ");
     STARTKATA();
     NamaUpgrade = CKata;
-    
-    // printf("*********************\n");
-    // printf("%d\n",AkarNama(CurrentTree).Length);
-    // printf("%d\n",AkarNama(Left(CurrentTree)).Length);
-    // int a;
-    // for(a=0;a<AkarNama(Left(CurrentTree)).Length;a++){
-    //     printf("%c\n",AkarNama(Left(CurrentTree)).TabKata[a]);
-    // }
-    // printf("%d\n",AkarNama(Right(CurrentTree)).Length);
-    // for(a=0;a<AkarNama(Right(CurrentTree)).Length;a++){
-    //     printf("%c\n",AkarNama(Right(CurrentTree)).TabKata[a]);
-    // }
-    // printf("%d\n",CKata.Length);
-    // printf("*********************\n");
 
     // Cek input
     if (IsEQKata(NamaUpgrade, AkarNama(Left(CurrentTree)))) {
@@ -186,17 +178,15 @@ void MenuUpgrade(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wa
     }
     
     for (i=0;i<5;i++) {
-        // printf("%d\n",WahanaMatUp(InfoWahana, i));
-        // printf("%d\n",Value(ElmtArray(*Inventory, i)));
         if (WahanaMatUp(InfoWahana, i) > Value(ElmtArray(*Inventory, i))) {
             *Valid = false;
-            printf("Material tidak mencukupi.");
+            printf("Material tidak mencukupi.\n");
             break;
         }
     }
 
     if(*Valid){
-        printf("Upgrade Berhasil.");
+        printf("Upgrade Berhasil.\n");
     } 
 }
 
@@ -242,7 +232,7 @@ void Undo (Stack * S, aksitype *X) {
     /* ALGORITMA */
     if (!IsEmptyStack(*S)) {
         Pop(S, X);
-        CurrentDuration(*S) = KurangJAM(CurrentDuration(*S), Durasi(*X));
+        CurrentDuration(*S) = KurangJAM(Durasi(*X), CurrentDuration(*S));
         printf("Berhasil undo.\n");
     } else {
         printf("Anda belum memasukkan aksi apapun.\n");

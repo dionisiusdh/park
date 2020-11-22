@@ -490,7 +490,7 @@ void BacaWahana(BinTree *WahanaTree1, BinTree *WahanaTree2, BinTree *WahanaTree3
   int JUMLAH_WAHANA = 3;
   int JUMLAH_UPGRADE_PER_WAHANA = 3;
 
-  PFile = fopen("../wahana.txt", "r");
+  PFile = fopen("./wahana.txt", "r");
 
   if (PFile != NULL){
       i = 0;
@@ -626,7 +626,9 @@ void PrintNamaWahana (BinTree Wahana1, BinTree Wahana2, BinTree Wahana3){
   printf("Ingin Membangun Apa?\n");
   printf("List :\n");
   PrintKata(AkarNama(Wahana1));
+  printf("\n");
   PrintKata(AkarNama(Wahana2));
+  printf("\n");
   PrintKata(AkarNama(Wahana3));
   printf("\n");
 }

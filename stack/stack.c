@@ -34,7 +34,8 @@ boolean IsEmptyStack (Stack S){
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    return (Top(S) == NilStack && JEQ(CurrentDuration(S), MakeJAM(0,0,0)));
+    // return (Top(S) == NilStack || JEQ(CurrentDuration(S), MakeJAM(0,0,0)) || TotalAksi(S) == 0);
+    return TotalAksi(S) == 0;
 }
 boolean IsFullStack (Stack S){
 /* Mengirim true jika tabel penampung NilStackai elemen stack penuh */

@@ -94,20 +94,44 @@ int main() {
   initWahana(&Wahana1, &Wahana2, &Wahana3);
   
   initGame(&NamaPlayer);
-  
-  while (!exit_status) {
+
+  // Wahana buat testing aja, bisa dihapus nnti
+  PlaceWahana(&MapActive, getPlayer(MapActive));
+  BuildWahana(&MapActive);
+
+  while (!exit_status) {    
+    // Membuat copy dari inventory untuk pengecekan
+    TabInt InventoryCopy;
+    int s;
+    
+    //ALGORITMA
+    MakeEmpty(&InventoryCopy);
+    NeffArray(InventoryCopy) = NeffArray(Inventory);
+    for (s=0; s<NeffArray(InventoryCopy); s++){
+        ElmtArray(InventoryCopy,s) = ElmtArray(Inventory,s);
+    }
+
     while (prep_status && !main_status) {
+      // Show description
       JCurrent = TambahJAM(JClose, CurrentDuration(S));
       Remaining = KurangJAM(JCurrent, JOpen);
       prepDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
+
+      // Input perintah
       printf("Masukkan Perintah: \n$ ");
       inputPerintah(&CurrentPerintah);
-      cekPerintahPrep(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &Money, &main_status, &prep_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList);
+      cekPerintahPrep(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList);
     }
 
     while (!prep_status && main_status) {
+      printf("Your final inventory: ");
+      TulisIsiTab(Inventory);
+      printf("\nYour final status\n");
+      prepDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
       printf("Selamat datang di main phase yang belum terimplementasikan :\") ");
+      break;
     }
+    break;
   }
 
   printf("\nTerima kasih telah bermain.");
@@ -148,12 +172,14 @@ void inputPerintah(Kata *Perintah){
   *Perintah = CKata;
 }
 
-void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]) {
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]) {
     aksitype CurrentAksi;
     aksitype AksiTypeTrash;
-    int CurrentWahana;
-    char MoveCommand;
     boolean Valid = true;
+
+    int CurrentWahana;
+    int CurrentUpgrade;
+    char MoveCommand;
 
     if (IsEQKata(CurrentPerintah,StringToKata("w",1)) || IsEQKata(CurrentPerintah,StringToKata("a",1)) || IsEQKata(CurrentPerintah,StringToKata("s",1)) || IsEQKata(CurrentPerintah,StringToKata("d",1))) {
       if (IsEQKata(CurrentPerintah, StringToKata("w",1))) {
@@ -220,17 +246,31 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
       } else if (IsEQKata(CurrentPerintah,StringToKata("build",5))){
           Aksi(CurrentAksi) = StringToKata("build",5);
           Durasi(CurrentAksi) = DetikToJAM(GetValue(ListAksi, CurrentPerintah));
-          MenuBuild(Inventory, Wahana1, Wahana2, Wahana3, &CurrentWahana, &Valid);
+          MenuBuild(Map1, InventoryCopy, Wahana1, Wahana2, Wahana3, &CurrentWahana, &Valid);
           InfoJumlahAksi(CurrentAksi) = CurrentWahana;
           if (Valid) {
             AddAksi(S, CurrentAksi);
           }
       } else if (IsEQKata(CurrentPerintah,StringToKata("upgrade",7))){
-         // 
+          if (isNearWahana(*Map1, getPlayer(*Map1))) {
+            Aksi(CurrentAksi) = StringToKata("upgrade",7);
+            Durasi(CurrentAksi) = DetikToJAM(GetValue(ListAksi, CurrentPerintah));
+            
+            // BUAT DEBUG, NANTI HARUS DI GET OTOMATIS
+            CurrentWahana = 1;
+
+            MenuUpgrade(Map1, InventoryCopy, Wahana1, Wahana2, Wahana3, CurrentWahana, &Valid, &CurrentUpgrade);
+            InfoJumlahAksi(CurrentAksi) = CurrentWahana;
+            if (Valid) {
+              AddAksi(S, CurrentAksi);
+            }
+          } else {
+            printf("Anda sedang tidak berada di dekat wahana.\n");
+          }
       } else if (IsEQKata(CurrentPerintah,StringToKata("undo",4))){
         Undo(S, &AksiTypeTrash);
       } else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
-        Execute(Map1, S, Money, Inventory, ListMaterial, Wahana1, Wahana2, Wahana3,  prep_status, main_status);
+        Execute(Map1, S, Money, Inventory, ListMaterial, Wahana1, Wahana2, Wahana3, prep_status, main_status);
       }
       else if (IsEQKata(CurrentPerintah,StringToKata("main",4))){
         *prep_status = false;
