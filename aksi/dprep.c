@@ -26,7 +26,7 @@ int main() {
     int money = 5000;
     printf("Initial Money: %d", money);
     BacaMaterial(&Inven);
-    SetAllValueX(&Inven, 100);
+    SetAllValueX(&Inven, 0);
     TulisIsiTab(Inven);
     printf("\n");
     printf("Initial Inventory:");
@@ -37,7 +37,9 @@ int main() {
     // printf("\nFinal Money: %d\n", money);
     // printf("Initial Inventory:");
     // TulisIsiTab(Inven);
-    Upgrade(&M1, &Inven, W1, W2, W3, 3, CurrentUpgrades);
+    if(cek){
+        Upgrade(&M1, &Inven, W1, W2, W3, 3, CurrentUpgrades);
+    }
     TulisIsiTab(Inven);
     printf("\n");
     return 0;

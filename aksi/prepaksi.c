@@ -190,12 +190,12 @@ void MenuUpgrade(TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wa
         // printf("%d\n",Value(ElmtArray(*Inventory, i)));
         if (WahanaMatUp(InfoWahana, i) > Value(ElmtArray(*Inventory, i))) {
             *Valid = false;
-            printf("Material atau uang anda tidak mencukupi.");
+            printf("Material tidak mencukupi.");
             break;
         }
     }
 
-    if(Valid){
+    if(*Valid){
         printf("Upgrade Berhasil.");
     } 
 }
