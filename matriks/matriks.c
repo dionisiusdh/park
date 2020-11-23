@@ -101,6 +101,7 @@ void BacaMATRIKSTxt (MATRIKS * M, int NB, int NK, char* filename){
                 val = fgetc(PFile);
                 Elmt(*M,i,j) = val;
             }
+            val = fgetc(PFile); // newline
         }
         fclose(PFile);
     }
@@ -559,7 +560,6 @@ boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCom
             toward = true;
         }
     }
-
     // CEK GRAPH
     boolean graphAllowed = IsSrcByReqMoveExist(G, Src, MoveCommand);
 
@@ -568,7 +568,7 @@ boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCom
 
 
 /*** BUILD ***/
-void PlaceWahana (MATRIKS* M, POINT Player) {
+void PlaceRancanganWahana (MATRIKS* M, POINT Player) {
     /* Menempatkan posisi rancangan pembangunan wahana pada MapActive */
     /* Menempatkan posisi rancangan wahana 'w' (w kecil) di atas, bawah, kiri atau kanan Player */
     /**

@@ -171,7 +171,7 @@ boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCom
 // boolean isInOffice (POINT PPlayer, POINT POffice);
 /* Cek apakah player sedang berada di titik office */
 
-void PlaceWahana (MATRIKS* M, POINT Player);
+void PlaceRancanganWahana (MATRIKS* M, POINT Player);
     /* Menempatkan posisi rancangan pembangunan wahana pada MapActive */
     /* Menempatkan posisi rancangan wahana 'w' (w kecil) di atas, bawah, kiri atau kanan Player */
     /**

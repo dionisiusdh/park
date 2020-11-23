@@ -100,9 +100,6 @@ boolean IsSrcByReqMoveExist (Graph G, Map Src, char ReqMove) {
       found = true;
     }
   }
-  if (found) {
-    printf("yeayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
-  }
   return found;
 }
 

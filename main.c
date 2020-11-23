@@ -20,12 +20,12 @@
 int main() {
   /* *********** KAMUS UTAMA ********** */
   /********** GRAPH **********/
-  Graph GMain; 
-  MakeGMain(&GMain);
-  Map MapNameActive, MapNameAsal, MapNameTujuan;
-  MapNameActive = 1;
-  MapNameAsal = 1;
-
+  Graph GMain; MakeGMain(&GMain);
+  // PrintGraph(GMain);
+  Map MapNameActive = 1;
+  Map MapNameAsal = 1;
+  Map MapNameTujuan;
+  
   /* *********** MATRIKS ********** */
   // Map1 > < Map2
   //  v        v

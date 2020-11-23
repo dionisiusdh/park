@@ -62,13 +62,14 @@ int main () {
         printf("Player is near by the Wahana\n");
       }
       if (isInOffice(POffice, Player)) {
-        /*** What to do when near Wahana ***/
+        /*** What to do when in Office ***/
         printf("Player is in the Office\n");
       }
 
       /*** Cek apakah Player berpindah Map ***/
       if (isNearGerbang(MActive, Player)) {
         printf("Player is near Gerbang\n");
+        printf("We are in Map%d\n", MapNameActive);
         printf("Where to move?\n");
         scanf(" %c", &MoveCommand);
         if (isAllowedToChangeMap(MActive, GMain, Player, MapNameAsal, MoveCommand) && IsSrcByReqMoveExist(GMain, MapNameAsal, MoveCommand)) {
