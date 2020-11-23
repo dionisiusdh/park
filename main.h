@@ -32,7 +32,10 @@ void inputPerintah (Kata *Perintah);
 /* Membaca perintah dari user dalam bentuk kata */ 
 
 void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]);
-/* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah selain untuk pergerakan */
+/* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah pada preparation phase */
+
+void cekPerintahMain(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]);
+/* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah pada main phase */
 
 void initMap();
 /* Menginisiasi map awal permainan Willy Wangky's World.
@@ -49,14 +52,17 @@ void initWahana (BinTree *Wahana1, BinTree *Wahana2, BinTree *Wahana3);
    I.S. Game belum dimulai.
    F.S. Game dimulai dengan map awal yang terdefinisi di file eksternal. */
 
+void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi);
+/*Menginisialisasi Inventory*/
+
 /******* PROSEDUR DESKRIPSI *******/
 void printMap (MATRIKS M);
 /* Mencetak Map dan Legenda */
 
-void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi);
-/*Menginisialisasi Inventory*/
+void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S);
+/* Mencetak Deskripsi Pemain saat preparation phase (Termasuk Mencetak Map dan Legenda) */
 
-void prepDescription (MATRIKS M, Kata Nama, int saldo, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S);
-/* Mencetak Deskripsi Pemain (Termasuk Mencetak Map dan Legenda) */
+void mainDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining);
+/* Mencetak Deskripsi Pemain saat main phase (Termasuk Mencetak Map dan Legenda) */
 
 #endif

@@ -14,7 +14,7 @@
 
 /* *** Definisi Type Pohon Biner *** */
 /* typedef int wahanatype; */ /* type wahanatype sesuai pada modul listrek */
-typedef struct tNode *addrNode;
+typedef struct tNodeWahana *addrNodeWahana;
 
 typedef struct {
    Kata nama;
@@ -26,11 +26,11 @@ typedef struct {
    int mat_up[5];   
 } wahanatype;
 
-typedef struct tNode{
+typedef struct tNodeWahana{
     wahanatype info;
-    addrNode left;
-    addrNode right;
-} Node;
+    addrNodeWahana left;
+    addrNodeWahana right;
+} NodeWahana;
 
 /* Definisi PohonBiner : */
 /* Pohon Biner kosong : P = Nil */

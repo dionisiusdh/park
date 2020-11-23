@@ -12,6 +12,7 @@
 #include "./array/array.h"
 #include "./aksi/prepaksi.h"
 #include "./Tree/bintree.h"
+#include "./Queue/prioqueue.h"
 
 // gcc -std=c99 -o main main.c ./aksi/prepaksi.o ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
 
@@ -84,12 +85,13 @@ int main() {
   boolean prep_status = true;
   boolean main_status = false;
   boolean exit_status = false;
+  int day = 0;
 
   initJam(&JOpen,&JClose);
   MaxDuration = KurangJAM(JOpen,JClose);
 
   initAllList(&Inventory, &ListMaterial, &ListAksi);
-  CreateEmpty(&S,MaxDuration);
+  CreateEmpty(&S, MaxDuration);
 
   initWahana(&Wahana1, &Wahana2, &Wahana3);
   
@@ -99,7 +101,10 @@ int main() {
   PlaceWahana(&MapActive, getPlayer(MapActive));
   BuildWahana(&MapActive);
 
-  while (!exit_status) {    
+  while (!exit_status) {
+    //Inisialisasi day ke-berapa
+    day++;
+        
     // Membuat copy dari inventory untuk pengecekan
     TabInt InventoryCopy;
     int s;
@@ -115,6 +120,7 @@ int main() {
       // Show description
       JCurrent = TambahJAM(JClose, CurrentDuration(S));
       Remaining = KurangJAM(JCurrent, JOpen);
+      println("Preparation Phase Day %d\n",day);
       prepDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
 
       // Input perintah
@@ -124,14 +130,11 @@ int main() {
     }
 
     while (!prep_status && main_status) {
-      printf("Your final inventory: ");
-      TulisIsiTab(Inventory);
-      printf("\nYour final status\n");
-      prepDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
+      println("Preparation Phase Day %d\n",day);
+      mainDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining);
       printf("Selamat datang di main phase yang belum terimplementasikan :\") ");
-      break;
+      cekPerintahMain(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList);
     }
-    break;
   }
 
   printf("\nTerima kasih telah bermain.");
@@ -278,6 +281,81 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
       }
 }
 
+void cekPerintahMain(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]) {
+    aksitype CurrentAksi;
+    aksitype AksiTypeTrash;
+
+    char MoveCommand;
+
+    if (IsEQKata(CurrentPerintah,StringToKata("w",1)) || IsEQKata(CurrentPerintah,StringToKata("a",1)) || IsEQKata(CurrentPerintah,StringToKata("s",1)) || IsEQKata(CurrentPerintah,StringToKata("d",1))) {
+      if (IsEQKata(CurrentPerintah, StringToKata("w",1))) {
+            MoveCommand = 'w';
+          } else if (IsEQKata(CurrentPerintah, StringToKata("a",1))) {
+            MoveCommand = 'a';
+          } else if (IsEQKata(CurrentPerintah, StringToKata("s",1))) {
+            MoveCommand = 's';
+          } else if (IsEQKata(CurrentPerintah, StringToKata("d",1))) {
+            MoveCommand = 'd';
+          }
+      
+      POINT Player = getPlayer(*Map1);
+      
+      if (isNearGerbang(*Map1, Player)) {
+        if (isAllowedToChangeMap(*Map1, *GMain, Player, *MapNameAsal, MoveCommand) && IsSrcByReqMoveExist(*GMain, *MapNameAsal, MoveCommand)) {
+          /*** berpindah ke Map lain ***/
+          *MapNameTujuan = ReturnMapDest(GMain, *MapNameAsal, MoveCommand);
+          goToOtherMap(Map1, MapList[*MapNameAsal-1], MapList[*MapNameTujuan-1], MapNameActive, &Player, *GMain, MoveCommand);
+          *MapNameAsal = *MapNameActive;
+        }
+
+        if (MoveCommand == 'w') {
+          moveUp(Map1);
+          Player = getPlayer(*Map1);
+        }
+        else if (MoveCommand == 's') {
+          moveDown(Map1);
+          Player = getPlayer(*Map1);
+        }
+        else if (MoveCommand == 'a') {
+          moveLeft(Map1);
+          Player = getPlayer(*Map1);
+        }
+        else if (MoveCommand == 'd') {
+          moveRight(Map1);
+          Player = getPlayer(*Map1);
+        }
+      } else {
+          if (MoveCommand == 'w') {
+            moveUp(Map1);
+            Player = getPlayer(*Map1);
+          }
+          else if (MoveCommand == 's') {
+            moveDown(Map1);
+            Player = getPlayer(*Map1);
+          }
+          else if (MoveCommand == 'a') {
+            moveLeft(Map1);
+            Player = getPlayer(*Map1);
+          }
+          else if (MoveCommand == 'd') {
+            moveRight(Map1);
+            Player = getPlayer(*Map1);
+          }
+        }
+      } else if (IsEQKata(CurrentPerintah,StringToKata("serve",5))) {
+      //
+      } else if (IsEQKata(CurrentPerintah,StringToKata("repair",6))) {
+      //
+      } else if (IsEQKata(CurrentPerintah,StringToKata("detail",6))) {
+      //
+      } else if (IsEQKata(CurrentPerintah,StringToKata("office",6))) {
+      //
+      } else if (IsEQKata(CurrentPerintah,StringToKata("prepare",7))){
+        *prep_status = true;
+        *main_status = false;
+      }
+}
+
 /******* INISIALISASI *******/
 void initMap1(MATRIKS *Map) {
   BacaMATRIKSTxt(Map, 10, 20, "./map1.txt");
@@ -312,6 +390,7 @@ void initWahana (BinTree *Wahana1, BinTree *Wahana2, BinTree *Wahana3) {
   BacaWahana(Wahana1, Wahana2, Wahana3);
 }
 
+
 /* *************** MAP **************** */
 void printMap (MATRIKS M) {
 /* Mencetak Map dan Legenda */
@@ -330,6 +409,7 @@ void printMap (MATRIKS M) {
 /* *************** DESCRIPTION **************** */
 void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S) {
     //KAMUS LOKAL
+
     //ALGORITMA
     printMap(Map);
     printf("\n");
@@ -353,5 +433,27 @@ void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen
     printf("%02d Hour(s) %02d Minute(s)", Hour(CurrentDuration(S)), Minute(CurrentDuration(S)));
     printf("\n");
     printf("Total uang yang dibutuhkan: %d", JumlahBiaya(S));
+    printf("\n");
+}
+
+void mainDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining){
+    //KAMUS LOKAL
+
+    //ALGORITMA
+    printMap(Map);
+    printf("\n");
+    printf("Name: ");
+    PrintKata(Nama);
+    printf("\n");
+    printf("Money: %d", Money);
+    printf("\n");
+    printf("Current Time: ");
+    TulisJAM(JCurrent);
+    printf("\n");
+    printf("Opening Time: ");
+    TulisJAM(JOpen);
+    printf("\n");
+    printf("Time Remaining: ");
+    printf("%02d Hour(s) %02d Minute(s)", Hour(Remaining), Minute(Remaining));
     printf("\n");
 }

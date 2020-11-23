@@ -1,25 +1,28 @@
-#include "prioqueuechar.c"
-#include "stdio.h"
+#include "prioqueue.h"
+#include "../pengunjung/pengunjung.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+// gcc -std=c99 -o cek cek.c prioqueue.o
 
 int main(){
-    PrioQueueChar Q,Q2;
-    MakeEmpty(&Q,4);
-    MakeEmpty(&Q2,3);
-    infotype X,X1,X2,X3;
-    X.prio = 1;
-    X.info = 'j';
-    X1.prio = 2;
-    X1.info = 'd';
-    X2.prio = 2;
-    X2.info = 'g';
-    X3.prio = 4;
-    X3.info = 'o';
-    Enqueue(&Q,X2);
-    Enqueue(&Q,X);
-    Enqueue(&Q,X1);
-    Enqueue(&Q,X3);
-    PrintPrioQueueChar(Q);
-    PrintPrioQueueChar(Q2);
-    printf("%c",Elmt(Q,Tail(Q)).info);
+    Queue Q,Q2;
+    CreateEmptyQueue(&Q,5);
+    queuetype X,X1,X2,X3;
+
+    initQueue(&Q);
+    // PrioQueue(X) = 1;
+    // PrioQueue(X1) = 3;
+    // PrioQueue(X2) = 2;
+    // PrioQueue(X3) = 4;
+    // NamaPengunjung(X) = 'A';
+    // NamaPengunjung(X1) = 'B';
+    // NamaPengunjung(X2) = 'C';
+    // NamaPengunjung(X3) = 'D';
+    // MakePENGUNJUNG(&(Pengunjung(X)));
+    // MakePENGUNJUNG(&(Pengunjung(X1)));
+    // MakePENGUNJUNG(&(Pengunjung(X2)));
+    // MakePENGUNJUNG(&(Pengunjung(X3)));
+    PrintQueue(Q);
     return 0;
 }

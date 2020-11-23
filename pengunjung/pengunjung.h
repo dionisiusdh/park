@@ -18,13 +18,13 @@ typedef Kata ElPengunjungType;
 typedef struct {
     ElPengunjungType Mem[MaxElmt+1];    /* Wahana yang ingin dinaiki pengunjung */
     int NeffPengunjung;                 /* Jumlah elemen efektif wahana yang ingin dikunjungi pengunjung */
-    int Prioritas;                      /* Priority */
+    // int Prioritas;                      /* Priority */
 	int Kesabaran;                      /* Tingkat kesabaran   */
 } PENGUNJUNG;
 
 /* *** Selektor *** */
 #define NeffPengunjung(P) (P).NeffPengunjung
-#define Prioritas(P) (P).Prioritas
+// #define Prioritas(P) (P).Prioritas
 #define Kesabaran(P) (P).Kesabaran
 #define ElmtPengunjung(P,i) (P).Mem[(i)]
 

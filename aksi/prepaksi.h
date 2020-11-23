@@ -1,7 +1,7 @@
-/* MODUL AKSI */
+/* MODUL AKSI PREPARATION */
 
-#ifndef AKSI_H
-#define AKSI_H
+#ifndef PREPAKSI_H
+#define PREPAKSI_H
 
 #include "../boolean.h"
 #include "../array/array.h"

@@ -4,13 +4,14 @@
 #ifndef WAHANA_H
 #define WAHANA_H
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "../boolean.h"
 #include "../mesin/mesinkata.h"
 #include "../mesin/mesinkar.h"
 #include "../Tree/bintree.h"
 #include "../point/point.h"
 #include "../list-linier/listlinier.h"
-#include <stdlib.h>
 
 /*  Kamus Umum */
 #define IdxMin 0
@@ -22,22 +23,20 @@
 typedef int IdxType; /* type indeks */
 
 typedef struct {
-    wahanatype datawahana;  /* Berisi datawahana berjenis wahanatype dari bintree.h */
+    NodeWahana datawahana;  /* Berisi datawahana berjenis wahanatype dari bintree.h */
     POINT posisiwahana;  /* Berisi posisi wahana dalam bentuk (X,Y) dari point.h */
     List historyupgrade; /* Digunakan untuk melakukan tracking terhadap status upgrade wahana. Menggunakan list linier */
 } Wahana;
 
-typedef struct tElmtlistWahana *address;
+typedef struct tElmtlistWahana *addressWahana;
 typedef struct tElmtlistWahana { 
 	Wahana infoWahana;
-	address nextWahana;
+	addressWahana nextWahana;
 } ElmtListWahana;
 
 typedef struct {
-	address FirstWahana;
+	addressWahana FirstWahana;
 } ListWahana;
-
-
 
 /* Indeks yang digunakan [IdxMin..MaxEl-1] */
 /* ********** SELEKTOR ********** */
@@ -54,7 +53,7 @@ typedef struct {
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create Wahana Baru  */
-void MakeWahana(Wahana *W, wahanatype datawahana, POINT posisiwahana, List historyupgrade);
+void MakeWahana(Wahana *W, NodeWahana datawahana, POINT posisiwahana, List historyupgrade);
 /* I.S. W, datawahana, posisiwahana, dan historyupgrade sudah terdefinisi */
 /* F.S. Wahana W terbentuk */
 
@@ -69,7 +68,7 @@ List GetHistoryWahana(Wahana W);
 /* Sebuah Getter untuk mengembalikan history upgrade wahana dalam bentuk List */
 
 /* ********** SETTER ********** */
-void SetDataWahana(Wahana *W, wahanatype X);
+void SetDataWahana(Wahana *W, NodeWahana X);
 /* Mengubah attribut datawahana pada W menjadi X */
 
 void SetPosisiWahana(Wahana *W, POINT X);
@@ -89,12 +88,12 @@ void CreateEmptyListWahana (ListWahana *L);
 /* F.S. Terbentuk list wahana kosong */
 
 /****************** Manajemen Memori ******************/
-address AlokasiWahana (Wahana W);
+addressWahana AlokasiWahana (Wahana W);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
-void DealokasiWahana (address *P);
+void DealokasiWahana (addressWahana *P);
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
@@ -104,7 +103,7 @@ boolean IsWahanaSama (Wahana W1, Wahana W2);
 /* Mengembalikan true apabila Wahana W1 = W2, yaitu
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address SearchWahana (ListWahana L, Wahana W);
+addressWahana SearchWahana (ListWahana L, Wahana W);
 /* Mencari apakah ada elemen list dengan info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
@@ -124,6 +123,19 @@ void InsertLastWahana (ListWahana *L, Wahana W);
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
+
+void DelFirstWahana (ListWahana *L, addressWahana *P){
+/* I.S. List tidak kosong */
+/* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
+/*      Elemen list berkurang satu (mungkin menjadi kosong) */
+/* First element yg baru adalah suksesor elemen pertama yang lama */
+}
+
+void DelAfterWahana (ListWahana *L, addressWahana *Pdel, addressWahana Prec){
+/* I.S. List tidak kosong. Prec adalah anggota list  */
+/* F.S. Menghapus Next(Prec): */
+/*      Pdel adalah alamat elemen list yang dihapus  */ 
+}
 
 void DeleteWahana (ListWahana *L, Wahana W);
 /* I.S. Sembarang */
