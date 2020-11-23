@@ -62,13 +62,14 @@ int main () {
         printf("Player is near by the Wahana\n");
       }
       if (isInOffice(POffice, Player)) {
-        /*** What to do when near Wahana ***/
+        /*** What to do when in Office ***/
         printf("Player is in the Office\n");
       }
 
       /*** Cek apakah Player berpindah Map ***/
       if (isNearGerbang(MActive, Player)) {
         printf("Player is near Gerbang\n");
+        printf("We are in Map%d\n", MapNameActive);
         printf("Where to move?\n");
         scanf(" %c", &MoveCommand);
         if (isAllowedToChangeMap(MActive, GMain, Player, MapNameAsal, MoveCommand) && IsSrcByReqMoveExist(GMain, MapNameAsal, MoveCommand)) {
@@ -79,7 +80,8 @@ int main () {
           goToOtherMap(&MActive, MapList[MapNameAsal-1], MapList[MapNameTujuan-1], &MapNameActive, &Player, GMain, MoveCommand);
           printf("passed changing Map\n");
           MapNameAsal = MapNameActive;
-          TulisMATRIKS(MActive);
+          //TulisMATRIKS(MActive);
+          goto AfterMove;
         }
         goto Move;
       }
@@ -109,8 +111,10 @@ int main () {
         moveRight(&MActive);
         Player = getPlayer(MActive);
       }
-      printf("***********************hoi\n");
-      printf("Position sesudah: "); TulisPOINT(Player);
+
+      /*** AfterMove ***/
+      AfterMove:
+      printf("\n\nPosition sesudah: "); TulisPOINT(Player);
       printf("\n");
       TulisMATRIKS(MActive);
     } while (true);

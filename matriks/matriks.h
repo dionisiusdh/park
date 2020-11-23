@@ -167,14 +167,21 @@ boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCom
 boolean isInOffice (POINT PPlayer, POINT POffice);
 /* Cek apakah player sedang berada di titik office */
 
-void PlaceWahana (MATRIKS* M, POINT Player);
+void PlaceRancanganWahana (MATRIKS* M, POINT Player);
     /* Menempatkan posisi rancangan pembangunan wahana pada MapActive */
     /* Menempatkan posisi rancangan wahana 'w' (w kecil) di atas, bawah, kiri atau kanan Player */
     /**
      * I.S. Setidaknya masih ada ruang diantar keempat posisi relatif dari Player
-     * F.S. Ditambahkan rencana wahana 'w' di M
+     * F.S. Ditambahkan rencana wahana 'w' di M, di atas, bawah, kiri, atau kanan Player
      * Proses: Cek posisi yang tersedia untuk membangun wahana berdasarkan posisi Player
+     *         Perhatikan bahwa tidak boleh menmpatkan wahana persis di sebelah gerbang
     */
-    
+    // Cek dengan urutan Atas, Bawah, Kiri, Kanan
+
+void UndoBuildWahana (MATRIKS* M);
+   /* Menghapus semua rancangan wahana 'w' di M menjadi '-' */
+
+void BuildWahana (MATRIKS* M);
+    /* Membangun setiap rancangan wahana 'w' di M menjadi wahana 'W' */
 
 #endif

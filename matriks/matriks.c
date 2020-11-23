@@ -101,6 +101,7 @@ void BacaMATRIKSTxt (MATRIKS * M, int NB, int NK, char* filename){
                 val = fgetc(PFile);
                 Elmt(*M,i,j) = val;
             }
+            val = fgetc(PFile); // newline
         }
         fclose(PFile);
     }
@@ -406,7 +407,7 @@ boolean hitWall (MATRIKS *M, int xNew, int yNew){
     return (Elmt(*M, xNew, yNew) == '*' || Elmt(*M, xNew, yNew) == 'W' || Elmt(*M, xNew, yNew) == 'A');
 }
 
-//void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* ActiveMap, POINT* Player, Graph G, char MoveCommand) {
+void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* ActiveMap, POINT* Player, Graph G, char MoveCommand) {
     /**
      * I.S. Player bergerak menuju gerbang dan terdapat graf yang menghubungkan Map asal ke tujuan
      * F.S. Jika Gagal, tidak ada yang berubah.
@@ -424,7 +425,7 @@ boolean hitWall (MATRIKS *M, int xNew, int yNew){
     //if (IsSrcByReqMoveExist(G, *ActiveMap, MoveCommand)) {
     
     // Menghapus posisi Player dari Map asal
-    /*Elmt(*MActive, Absis(*Player), Ordinat(*Player)) = '-';
+    Elmt(*MActive, Absis(*Player), Ordinat(*Player)) = '-';
     CopyMATRIKS(*MActive, MAsal);
     
     // Mencari posisi gerbang di Map tujuan
@@ -449,7 +450,7 @@ boolean hitWall (MATRIKS *M, int xNew, int yNew){
     //}
     //}
     //}
-}*/
+}
 
 
 /* ********** POSITION CHECKER ********** */
@@ -528,11 +529,11 @@ boolean isNearGerbang (MATRIKS M, POINT P) {
     return false;
 }
 
-//boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCommand) {
+boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCommand) {
 /*  P berada di dekat gerbang.
     Cek berdasarkan input Move apakah Player menuju Gerbang
     Fungsi mengecek pada graph, apakah Player dapat berpindah Map*/
-    /*boolean toward = false;
+    boolean toward = false;
 
     // CEK MOVE
     indeks x = Absis(P);
@@ -549,48 +550,86 @@ boolean isNearGerbang (MATRIKS M, POINT P) {
         }
     }
     if (Elmt(M, x, y-1) == '<') {
-        if (MoveCommand == 'w') {
+        if (MoveCommand == 'a') {
             toward = true;
         }
     }
     if (Elmt(M, x, y+1) == '>') {
-        if (MoveCommand == 'w') {
+        if (MoveCommand == 'd') {
             toward = true;
         }
     }
-
     // CEK GRAPH
     boolean graphAllowed = IsSrcByReqMoveExist(G, Src, MoveCommand);
 
     return (toward && graphAllowed);
-}*/
+}
 
 
 /*** BUILD ***/
-void PlaceWahana (MATRIKS* M, POINT Player) {
+void PlaceRancanganWahana (MATRIKS* M, POINT Player) {
     /* Menempatkan posisi rancangan pembangunan wahana pada MapActive */
     /* Menempatkan posisi rancangan wahana 'w' (w kecil) di atas, bawah, kiri atau kanan Player */
     /**
      * I.S. Setidaknya masih ada ruang diantar keempat posisi relatif dari Player
-     * F.S. Ditambahkan rencana wahana 'w' di M
+     * F.S. Ditambahkan rencana wahana 'w' di M, di atas, bawah, kiri, atau kanan Player
      * Proses: Cek posisi yang tersedia untuk membangun wahana berdasarkan posisi Player
      *         Perhatikan bahwa tidak boleh menmpatkan wahana persis di sebelah gerbang
     */
     // Cek dengan urutan Atas, Bawah, Kiri, Kanan
-    POINT GerbangUp = getGerbangUp(*M);
-    POINT GerbangDown = getGerbangDown(*M);
-    POINT GerbangLeft = getGerbangLeft(*M);
-    POINT GerbangRight = getGerbangRight(*M);
     POINT wahana;
     int x = Absis(Player);
     int y = Ordinat(Player);
 
-    wahana = MakePOINT(x+1,y);
+    if (Elmt(*M, x-1, y) == '-') {
+        wahana = MakePOINT(x-1,y);
+        if (!isNearGerbang(*M, wahana)) {
+            Elmt(*M, x-1, y) = 'w';
+        }
+    }
+    else if (Elmt(*M, x+1, y) == '-') {
+        wahana = MakePOINT(x+1,y);
+        if (!isNearGerbang(*M, wahana)) {
+            Elmt(*M, x+1, y) = 'w';
+        }
+    }
+    else if (Elmt(*M, x, y-1) == '-') {
+        wahana = MakePOINT(x,y-1);
+        if (!isNearGerbang(*M, wahana)) {
+            Elmt(*M, x, y-1) = 'w';
+        }
+    }
+    else if (Elmt(*M, x, y+1) == '-') {
+        wahana = MakePOINT(x,y+1);
+        if (!isNearGerbang(*M, wahana)) {
+            Elmt(*M, x, y+1) = 'w';
+        }
+    }
+    else {
+        printf("Gagal menempatkan wahana di sekitar Player.\n");
+    }
 }
-    
 
-/*
-boolean isInPortal (POINT PPlayer, POINT PPortal) {
-    return EQ(PPlayer, PPortal);
-} 
-*/
+void UndoBuildWahana (MATRIKS* M) {
+   /* Menghapus semua rancangan wahana 'w' di M menjadi '-' */
+    int i, j;
+    for (i=GetFirstIdxBrs(*M); i<10; i++) {
+        for (j=GetFirstIdxKol(*M); j<20; j++) {
+            if (Elmt(*M, i, j) == 'w') {
+                Elmt(*M, i, j) == '-';
+            }
+        }
+    }
+}
+
+void BuildWahana (MATRIKS* M) {
+    /* Membangun setiap rancangan wahana 'w' di M menjadi wahana 'W' */
+    int i, j;
+    for (i=GetFirstIdxBrs(*M); i<10; i++) {
+        for (j=GetFirstIdxKol(*M); j<20; j++) {
+            if (Elmt(*M, i, j) == 'w') {
+                Elmt(*M, i, j) == 'W';
+            }
+        }
+    }
+}

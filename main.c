@@ -19,7 +19,7 @@
 int main() {
   /* *********** KAMUS UTAMA ********** */
   /********** GRAPH **********/
-  //Graph GMain; MakeGMain(&GMain);
+  Graph GMain; MakeGMain(&GMain);
   // PrintGraph(GMain);
   Map MapNameActive = 1;
   Map MapNameAsal = 1;
@@ -35,7 +35,7 @@ int main() {
   MATRIKS Map3; BacaMATRIKSTxt(&Map3, 10, 20, "../map3.txt");
   MATRIKS Map4; BacaMATRIKSTxt(&Map4, 10, 20, "../map4.txt");
   MATRIKS* MapList[4] = {&Map1, &Map2, &Map3, &Map4};
-  MATRIKS MapActive;
+  MATRIKS MapActive; CopyMATRIKS(Map1, &MapActive);
 
   /* *********** JAM ************** */
   JAM JOpen;
