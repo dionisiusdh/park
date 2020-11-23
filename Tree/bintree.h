@@ -210,4 +210,7 @@ void PrintNamaWahana (BinTree Wahana1, BinTree Wahana2, BinTree Wahana3);
 void PrintNamaUpgradeWahana (BinTree Wahana);
 /* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
 
+boolean IsWahanaTypeSama (BinTree Wahana1, BinTree Wahana2);
+/* Mengembalikan true apabila Wahana1 = Wahana2, dan false apabila tidak */
+
 #endif
