@@ -507,8 +507,9 @@ boolean isNearAntrian (MATRIKS M, POINT P) {
 }
 
 boolean isInOffice (POINT PPlayer, POINT POffice) {
+    /* Cek apakah player sedang berada di posisi office */
     return EQ(PPlayer, POffice);
-} 
+}  
 
 boolean isNearGerbang (MATRIKS M, POINT P) {
     /* Cek apakah ada Gerbang di posisi sekitar player */
@@ -616,7 +617,7 @@ void UndoBuildWahana (MATRIKS* M) {
     for (i=GetFirstIdxBrs(*M); i<10; i++) {
         for (j=GetFirstIdxKol(*M); j<20; j++) {
             if (Elmt(*M, i, j) == 'w') {
-                Elmt(*M, i, j) == '-';
+                Elmt(*M, i, j) = '-';
             }
         }
     }
@@ -628,7 +629,7 @@ void BuildWahana (MATRIKS* M) {
     for (i=GetFirstIdxBrs(*M); i<10; i++) {
         for (j=GetFirstIdxKol(*M); j<20; j++) {
             if (Elmt(*M, i, j) == 'w') {
-                Elmt(*M, i, j) == 'W';
+                Elmt(*M, i, j) = 'W';
             }
         }
     }

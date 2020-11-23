@@ -18,8 +18,8 @@ int main () {
      * ***/
     /*** ADT Graph ***/
     Graph GMain;
-
     MakeGMain(&GMain);
+    
     PrintGraph(GMain);
     Map MapNameActive, MapNameAsal, MapNameTujuan;
     /*** ADT Matriks ***/
@@ -47,7 +47,7 @@ int main () {
     //initializePlayerPosition(&MActive);
     Player = getPlayer(MActive);
     POffice = getOffice(MActive);
-    printf("posisi player: ");TulisPOINT(Player);printf("\n");
+    printf("posisi player: "); TulisPOINT(Player);printf("\n");
     TulisMATRIKS(MActive);
 
     /*** EXPLORATION ***/
@@ -90,11 +90,12 @@ int main () {
       scanf(" %c", &MoveCommand);
 
       if (MoveCommand == '?') {
+        // Quit Exploring
         break;
       }
       
-      Move:
       /*** Move ***/
+      Move:
       if (MoveCommand == 'w') {
         moveUp(&MActive);
         Player = getPlayer(MActive);
