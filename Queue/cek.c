@@ -2,14 +2,13 @@
 #include "../pengunjung/pengunjung.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-// gcc -std=c99 -o cek cek.c prioqueue.o
+// gcc -std=c99 -o cek cek.c prioqueue.o ../pengunjung/pengunjung.o ../mesin/mesinkata.o ../mesin/mesinkar.o
 
 int main(){
-    Queue Q,Q2;
-    CreateEmptyQueue(&Q,5);
+    Queue Q;
     queuetype X,X1,X2,X3;
-
     initQueue(&Q);
     // PrioQueue(X) = 1;
     // PrioQueue(X1) = 3;

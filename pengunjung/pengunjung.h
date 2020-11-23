@@ -14,9 +14,8 @@
 #define PrioritasAwal 0
 /* Nilai priorias awal */
 
-typedef Kata ElPengunjungType;
 typedef struct {
-    ElPengunjungType Mem[MaxElmt+1];    /* Wahana yang ingin dinaiki pengunjung */
+    Kata Mem[MaxElmt+1];    /* Wahana yang ingin dinaiki pengunjung */
     int NeffPengunjung;                 /* Jumlah elemen efektif wahana yang ingin dikunjungi pengunjung */
     // int Prioritas;                      /* Priority */
 	int Kesabaran;                      /* Tingkat kesabaran   */
@@ -30,12 +29,14 @@ typedef struct {
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 /* *** Konstruktor membuat PENGUNJUNG *** */
-void MakePENGUNJUNG (PENGUNJUNG *P);
+void MakePENGUNJUNG (PENGUNJUNG *P, int random);
 /* Membuat data dengan tipe PENGUNJUNG dengan wahana yang ingin dinaiki kosong */
 /* I.S. Sembarang */
 /* F.S. PENGUNJUNG terbentuk */
 
-void GetRandomWahana (PENGUNJUNG *P);
+void GetRandomWahana (PENGUNJUNG *P, int random);
 /* Menghasilkan wahana random yang ingin dikunjungi pengunjung */
+
+void TulisWahana (PENGUNJUNG P);
 
 #endif

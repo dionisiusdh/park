@@ -100,7 +100,7 @@ void DealokasiWahana (addressWahana *P);
 
 /****************** MENGENALI APAKAH 2 WAHANA SAMA ******************/
 boolean IsWahanaSama (Wahana W1, Wahana W2);
-/* Mengembalikan true apabila Wahana W1 = W2, yaitu
+/* Mengembalikan true apabila Wahana W1 = W2, yaitu wahanatype W1 = wahanatype W2, Posisi W1 = Posisi W2, History W1 = History W2. */
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
 addressWahana SearchWahana (ListWahana L, Wahana W);
@@ -117,6 +117,11 @@ void InsertFirstWahana (ListWahana *L, Wahana W);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
+
+void InsertAfterWahana (ListWahana *L, addressWahana P, addressWahana Prec);
+/* I.S. Prec pastilah elemen list dan bukan elemen terakhir, */
+/*      P sudah dialokasi  */
+/* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
 
 void InsertLastWahana (ListWahana *L, Wahana W);
 /* I.S. L mungkin kosong */

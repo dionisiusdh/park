@@ -123,6 +123,11 @@ void DealokasiWahana (address *P)
     free(*P);
 }
 
+boolean IsWahanaSama (Wahana W1, Wahana W2)
+{
+    return (IsWahanaTypeSama(Akar(Wahana1)),Akar(Wahana2));
+}
+
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
 addressWahana SearchWahana (ListWahana L, Wahana W)
 /* Mencari apakah ada elemen list dengan info(P)= X */

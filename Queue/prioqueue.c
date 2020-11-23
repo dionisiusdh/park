@@ -2,6 +2,7 @@
 #include "../pengunjung/pengunjung.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 /* ********* Prototype ********* */
 boolean IsEmptyQueue (Queue Q)
@@ -156,6 +157,7 @@ void DelQueue (Queue * Q, queuetype * X)
         Head(*Q)++;
     }
 }
+
 /* Operasi Tambahan */
 void PrintQueue (Queue Q)
 /* Mencetak isi queue Q ke layar */
@@ -170,38 +172,63 @@ void PrintQueue (Queue Q)
 {   //KAMUS
     int i;
     //ALGORITMA
-    printf("Antrian [%d/5]", NBElmtQueue(Q));
+    printf("Antrian [%d/5]\n", NBElmtQueue(Q));
 
     if (Tail(Q)<Head(Q)){
         for (i= Head(Q); i<=NBElmtQueue(Q); i++){
-            printf(" | kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
+            TulisWahana(Pengunjung(ElmtQueue(Q,i)));
+            printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
             printf(" | Customer %c\n", NamaPengunjung(ElmtQueue(Q,i)));
         }
         for (i= 1; i<=Tail(Q); i++){
-            printf(" | kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
+            TulisWahana(Pengunjung(ElmtQueue(Q,i)));
+            printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
             printf(" | Customer %c\n",NamaPengunjung(ElmtQueue(Q,i)));
         }
     }
     else{
         for(i=Head(Q);i<=Tail(Q);i++){
-            printf(" | kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
+            TulisWahana(Pengunjung(ElmtQueue(Q,i)));
+            printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
             printf(" | Customer %c\n",NamaPengunjung(ElmtQueue(Q,i)));
         }
     }  
 }
 
+
+void TulisWahanaPengunjung (Queue Q) {
+    int i;
+    PENGUNJUNG P;
+
+    printf("(");
+    for (i=0;i<NeffPengunjung(Pengunjung(ElmtQueue(Q, i)));i++) {
+        if (i != NeffPengunjung(Pengunjung(ElmtQueue(Q, i)))) {
+            P = Pengunjung(ElmtQueue(Q, i));
+            PrintKata(ElmtPengunjung(P, i));
+            printf(", ");
+        } else {
+            P = Pengunjung(ElmtQueue(Q, i));
+            PrintKata(ElmtPengunjung(P, i));
+        }
+    }
+    printf(")");
+}
+
+
 void initQueue (Queue *Antrian) {
   // KAMUS LOKAL
-  int jumlahOrang, i,nama;
+  int jumlahOrang, i, nama;
   PENGUNJUNG P;
 
   // ALGORITMA
-  jumlahOrang = 1 + rand()%(5);
+  srand(time(NULL));
+  jumlahOrang = 1 + rand()%4;
+
   CreateEmptyQueue(Antrian, jumlahOrang);
   i=1;
   nama = 65;
   while (i<=jumlahOrang) {
-    MakePENGUNJUNG(&P);
+    MakePENGUNJUNG(&P, i);
     Pengunjung(ElmtQueue(*Antrian,i)) = P;
     NamaPengunjung(ElmtQueue(*Antrian,i)) = (char) nama;
     PrioQueue(ElmtQueue(*Antrian,i)) = 0;

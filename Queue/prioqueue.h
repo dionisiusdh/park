@@ -85,6 +85,10 @@ void PrintQueue (Queue Q);
 <prio-n> <elemen-n>
 #
 */
+
+void TulisWahanaPengunjung (Queue Q);
+/* Mencetak wahana yang ingin dikunjungi pengunjung */
+
 void initQueue (Queue *Antrian);
 /* Menginisialisasikan antrian wahana */
 
