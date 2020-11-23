@@ -643,3 +643,33 @@ void PrintNamaUpgradeWahana (BinTree Wahana){
   PrintKata(AkarNama(Right(Wahana)));
   printf("\n");
 }
+
+boolean IsWahanaTypeSama (BinTree Wahana1, BinTree Wahana2)
+/* Mengembalikan true apabila Wahana1 = Wahana2, dan false apabila tidak */
+{
+  boolean result;
+  if (IsEQKata(AkarNama(Wahana1),AkarNama(Wahana2)) && AkarHarga(Wahana1) == AkarHarga(Wahana2) && AkarKapasitas(Wahana1) == AkarKapasitas(Wahana2)){
+    if(AkarDurasi(Wahana1) == AkarDurasi(Wahana2) && IsEQKata(AkarDeskripsi(Wahana1),AkarDeskripsi(Wahana2)) && AkarCostUp(Wahana1) == AkarCostUp(Wahana2)){
+      int i = 0;
+      boolean cek = true;
+      while(i<5 && cek){
+        if(AkarMatUp(Wahana1,i) != AkarMatUp(Wahana2,i)){
+          cek = false;
+        }
+      }
+      if(cek){
+        result = true;
+      }
+      else{
+        result = false;
+      }
+    }
+    else{
+      result = false;
+    }
+  }
+  else{
+    result = false;
+  }
+  return result;
+}
