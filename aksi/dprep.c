@@ -26,7 +26,7 @@ int main() {
     int money = 5000;
     printf("Initial Money: %d", money);
     BacaMaterial(&Inven);
-    SetAllValueX(&Inven, 0);
+    SetAllValueX(&Inven, 100);
     TulisIsiTab(Inven);
     printf("\n");
     printf("Initial Inventory:");
