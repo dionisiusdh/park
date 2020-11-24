@@ -3,7 +3,7 @@
 #include "./wahana.h"
 
 /* ********** KONSTRUKTOR ********** */
-void MakeWahana(Wahana *W, NodeWahana datawahana, POINT posisiwahana, List historyupgrade){
+void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade){
     /* KAMUS */
 
     /* ALGORITMA */
@@ -13,7 +13,7 @@ void MakeWahana(Wahana *W, NodeWahana datawahana, POINT posisiwahana, List histo
 }
 
 /* ********** GETTER ********** */
-NodeWahana GetDataWahana(Wahana W)
+BinTree GetDataWahana(Wahana W)
 /* Sebuah Getter untuk mengembalikan data wahana dalam bentuk wahanatype */
 {
     /* KAMUS */
@@ -41,7 +41,7 @@ List GetHistoryWahana(Wahana W)
 }
 
 /* ********** SETTER ********** */
-void SetDataWahana(Wahana *W, NodeWahana X)
+void SetDataWahana(Wahana *W, BinTree X)
 /* Mengubah attribut datawahana pada W menjadi X */
 {
     /* KAMUS */
@@ -112,7 +112,7 @@ addressWahana AlokasiWahana (Wahana W)
     }
 }
 
-void DealokasiWahana (address *P)
+void DealokasiWahana (addressWahana *P)
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
@@ -125,7 +125,7 @@ void DealokasiWahana (address *P)
 
 boolean IsWahanaSama (Wahana W1, Wahana W2)
 {
-    return (IsWahanaTypeSama(Akar(Wahana1)),Akar(Wahana2));
+    return (IsWahanaTypeSama(Deskripsi(W1),(Deskripsi(W2))) && EQ(Posisi(W1),Posisi(W2)) && First(History(W1)) == First(History(W2)));
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
@@ -263,7 +263,7 @@ void DeleteWahana (ListWahana *L, Wahana W)
     /* KAMUS LOKAL */
     addressWahana P, Prec;
     addressWahana A;
-    boolean found=false;
+    boolean found = false;
 
     /* ALGORITMA */
     if (!IsEmptyListWahana(*L)) {
@@ -283,5 +283,30 @@ void DeleteWahana (ListWahana *L, Wahana W)
     			}
     		}
     	}
+    }
+}
+
+void PrintListWahana (ListWahana L)
+/* I.S. ListWahana L terdefinisi */
+/* F.S. Menampilkan List Wahana dalam format : [(<NamaWahana>,<PosisiWahana>)]  */
+{
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
+    addressWahana P = FirstWahana(L);
+    if (IsEmptyListWahana(L)){
+        printf("[]");
+    }
+    else{
+        printf("[");
+        while (P != Nil){
+            printf("(");
+            PrintKata(AkarNama(Deskripsi(InfoWahana(P))));
+            printf(",");
+            TulisPOINT(Posisi(InfoWahana(P)));
+            printf(")");
+            P = NextWahana(P);
+        }
+        printf("]");
     }
 }

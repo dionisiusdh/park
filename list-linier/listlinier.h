@@ -30,11 +30,11 @@ typedef struct {
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmpty (List L);
+boolean IsEmptyListLinier (List L);
 /* Mengirim true jika list kosong */
 
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmpty (List *L);
+void CreateEmptyListLinier (List *L);
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 
@@ -44,7 +44,7 @@ address Alokasi (infotype X);
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
-void Dealokasi (address *P);
+void DealokasiListLinier (address *P);
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
@@ -131,7 +131,7 @@ void PrintInfo (List L);
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika list kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-int NbElmt (List L);
+int NbElmtList (List L);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/

@@ -23,7 +23,7 @@
 typedef int IdxType; /* type indeks */
 
 typedef struct {
-    NodeWahana datawahana;  /* Berisi datawahana berjenis wahanatype dari bintree.h */
+    BinTree datawahana;  /* Berisi datawahana berjenis wahanatype dari bintree.h */
     POINT posisiwahana;  /* Berisi posisi wahana dalam bentuk (X,Y) dari point.h */
     List historyupgrade; /* Digunakan untuk melakukan tracking terhadap status upgrade wahana. Menggunakan list linier */
 } Wahana;
@@ -53,12 +53,12 @@ typedef struct {
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create Wahana Baru  */
-void MakeWahana(Wahana *W, NodeWahana datawahana, POINT posisiwahana, List historyupgrade);
+void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade);
 /* I.S. W, datawahana, posisiwahana, dan historyupgrade sudah terdefinisi */
 /* F.S. Wahana W terbentuk */
 
 /* ********** GETTER ********** */
-wahanatype GetDataWahana(Wahana W);
+BinTree GetDataWahana(Wahana W);
 /* Sebuah Getter untuk mengembalikan data wahana dalam bentuk wahanatype */
 
 POINT GetPosisiWahana(Wahana W);
@@ -68,7 +68,7 @@ List GetHistoryWahana(Wahana W);
 /* Sebuah Getter untuk mengembalikan history upgrade wahana dalam bentuk List */
 
 /* ********** SETTER ********** */
-void SetDataWahana(Wahana *W, NodeWahana X);
+void SetDataWahana(Wahana *W, BinTree X);
 /* Mengubah attribut datawahana pada W menjadi X */
 
 void SetPosisiWahana(Wahana *W, POINT X);
@@ -129,18 +129,18 @@ void InsertLastWahana (ListWahana *L, Wahana W);
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
-void DelFirstWahana (ListWahana *L, addressWahana *P){
+void DelFirstWahana (ListWahana *L, addressWahana *P);
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
 /* First element yg baru adalah suksesor elemen pertama yang lama */
-}
 
-void DelAfterWahana (ListWahana *L, addressWahana *Pdel, addressWahana Prec){
+
+void DelAfterWahana (ListWahana *L, addressWahana *Pdel, addressWahana Prec);
 /* I.S. List tidak kosong. Prec adalah anggota list  */
 /* F.S. Menghapus Next(Prec): */
 /*      Pdel adalah alamat elemen list yang dihapus  */ 
-}
+
 
 void DeleteWahana (ListWahana *L, Wahana W);
 /* I.S. Sembarang */
@@ -148,5 +148,9 @@ void DeleteWahana (ListWahana *L, Wahana W);
 /* Maka P dihapus dari list dan di-dealokasi */
 /* Jika tidak ada elemen list dengan info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
+
+void PrintListWahana (ListWahana L);
+/* I.S. ListWahana L terdefinisi */
+/* F.S. Menampilkan List Wahana dalam format : [(<NamaWahana>,<PosisiWahana>)]  */
 
 #endif

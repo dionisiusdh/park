@@ -4,13 +4,13 @@
 #include <stdio.h>
 
 /* Manajemen Memory */
-addrNode AlokNode(wahanatype X)
+addrNodeWahana AlokNode(wahanatype X)
 /* Mengirimkan addrNode hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka addrNode tidak Nil, dan misalnya menghasilkan P,
   maka Akar(P) = X, Left(P) = Nil, Right(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 {
-  addrNode N = (addrNode)malloc(sizeof(Node));
+  addrNodeWahana N = (addrNodeWahana)malloc(sizeof(NodeWahana));
   if (N != Nil)
   {
     Akar(N) = X;
@@ -24,7 +24,7 @@ addrNode AlokNode(wahanatype X)
   }
 }
 
-void DealokNode(addrNode P)
+void DealokNode(addrNodeWahana P)
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian addrNode P */
@@ -490,7 +490,7 @@ void BacaWahana(BinTree *WahanaTree1, BinTree *WahanaTree2, BinTree *WahanaTree3
   int JUMLAH_WAHANA = 3;
   int JUMLAH_UPGRADE_PER_WAHANA = 3;
 
-  PFile = fopen("./wahana.txt", "r");
+  PFile = fopen("../wahana.txt", "r");
 
   if (PFile != NULL){
       i = 0;
@@ -647,29 +647,30 @@ void PrintNamaUpgradeWahana (BinTree Wahana){
 boolean IsWahanaTypeSama (BinTree Wahana1, BinTree Wahana2)
 /* Mengembalikan true apabila Wahana1 = Wahana2, dan false apabila tidak */
 {
-  boolean result;
-  if (IsEQKata(AkarNama(Wahana1),AkarNama(Wahana2)) && AkarHarga(Wahana1) == AkarHarga(Wahana2) && AkarKapasitas(Wahana1) == AkarKapasitas(Wahana2)){
-    if(AkarDurasi(Wahana1) == AkarDurasi(Wahana2) && IsEQKata(AkarDeskripsi(Wahana1),AkarDeskripsi(Wahana2)) && AkarCostUp(Wahana1) == AkarCostUp(Wahana2)){
-      int i = 0;
-      boolean cek = true;
-      while(i<5 && cek){
-        if(AkarMatUp(Wahana1,i) != AkarMatUp(Wahana2,i)){
-          cek = false;
-        }
-      }
-      if(cek){
-        result = true;
-      }
-      else{
-        result = false;
-      }
-    }
-    else{
-      result = false;
-    }
-  }
-  else{
-    result = false;
-  }
-  return result;
+  // boolean result = false;
+  // if (IsEQKata(AkarNama(Wahana1),AkarNama(Wahana2)) && AkarHarga(Wahana1) == AkarHarga(Wahana2) && AkarKapasitas(Wahana1) == AkarKapasitas(Wahana2)){
+  //   if(AkarDurasi(Wahana1) == AkarDurasi(Wahana2) && IsEQKata(AkarDeskripsi(Wahana1),AkarDeskripsi(Wahana2)) && AkarCostUp(Wahana1) == AkarCostUp(Wahana2)){
+  //     int i = 0;
+  //     boolean cek = true;
+  //     while(i<5 && cek){
+  //       if(AkarMatUp(Wahana1,i) != AkarMatUp(Wahana2,i)){
+  //         cek = false;
+  //       }
+  //     }
+  //     if(cek){
+  //       result = true;
+  //     }
+  //     else{
+  //       result = false;
+  //     }
+  //   }
+  //   else{
+  //     result = false;
+  //   }
+  // }
+  // else{
+  //   result = false;
+  // }
+  // return result;
+  return IsEQKata(AkarNama(Wahana1),AkarNama(Wahana2));
 }

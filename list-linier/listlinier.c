@@ -10,7 +10,7 @@
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmpty (List L){
+boolean IsEmptyListLinier (List L){
 /* Mengirim true jika list kosong */
     /* KAMUS LOKAL */
 
@@ -19,7 +19,7 @@ boolean IsEmpty (List L){
 }
 
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmpty (List *L){
+void CreateEmptyListLinier (List *L){
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
     /* KAMUS LOKAL */
@@ -48,10 +48,10 @@ address Alokasi (infotype X){
         return Nil;
     }
 }
-void Dealokasi (address *P){
+void DealokasiListLinier (address *P){
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address P */
+/* Melakukan DealokasiListLinier/pengembalian address P */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
@@ -85,7 +85,7 @@ boolean FSearch (List L, address P){
     /* ALGORITMA */
     found = false;
 
-    if (!IsEmpty(L)) {
+    if (!IsEmptyListLinier(L)) {
         X = First(L);
         while (X != Nil && !found) {
             if (P == X) {
@@ -112,7 +112,7 @@ address SearchPrec (List L, infotype X){
     P = First(L);
     Prec = Nil;
 
-    if (!IsEmpty(L) && NbElmt(L) > 1) {
+    if (!IsEmptyListLinier(L) && NbElmtList(L) > 1) {
         while (Next(P) != Nil && Info(P) != X) {
             Prec = P;
             P = Next(P);
@@ -151,7 +151,7 @@ void InsVLast (List *L, infotype X){
     address P;
 
     /* ALGORITMA */
-    if (IsEmpty(*L)) {
+    if (IsEmptyListLinier(*L)) {
         InsVFirst(L, X);
     } else {
         P = Alokasi(X);
@@ -166,25 +166,25 @@ void InsVLast (List *L, infotype X){
 void DelVFirst (List *L, infotype *X){
 /* I.S. List L tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
-/*      dan alamat elemen pertama di-dealokasi */
+/*      dan alamat elemen pertama di-DealokasiListLinier */
     /* KAMUS LOKAL */
     address P;
     /* ALGORITMA */
     DelFirst(L, &P);
     *X = Info(P);
-    Dealokasi(&P);
+    DealokasiListLinier(&P);
 }
 void DelVLast (List *L, infotype *X){
 /* I.S. list tidak kosong */
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada X */
-/*      dan alamat elemen terakhir di-dealokasi */
+/*      dan alamat elemen terakhir di-DealokasiListLinier */
     /* KAMUS LOKAL */
     address Last;
 
     /* ALGORITMA */
     DelLast(L, &Last);
     *X = Info(Last);
-    Dealokasi(&Last);
+    DealokasiListLinier(&Last);
 }
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
@@ -215,7 +215,7 @@ void InsertLast (List *L, address P){
     address Last;
 
     /* ALGORITMA */
-    if (IsEmpty(*L)) {
+    if (IsEmptyListLinier(*L)) {
         InsertFirst(L, P);
     } else {
         Last = First(*L);
@@ -241,13 +241,13 @@ void DelFirst (List *L, address *P){
         First(*L) = Next(*P);
         Next(*P) = Nil;
     } else {
-        CreateEmpty(L);
+        CreateEmptyListLinier(L);
     }
 }
 void DelP (List *L, infotype X){
 /* I.S. Sembarang */
 /* F.S. Jika ada elemen list beraddress P, dengan Info(P)=X  */
-/* Maka P dihapus dari list dan di-dealokasi */
+/* Maka P dihapus dari list dan di-DealokasiListLinier */
 /* Jika ada lebih dari satu elemen list dengan Info bernilai X */
 /* maka yang dihapus hanya elemen pertama dengan Info = X */
 /* Jika tidak ada elemen list dengan Info(P)=X, maka list tetap */
@@ -258,7 +258,7 @@ void DelP (List *L, infotype X){
     boolean found=false;
 
     /* ALGORITMA */
-    if (!IsEmpty(*L)) {
+    if (!IsEmptyListLinier(*L)) {
     	P = First(*L);
     	if (Info(P) == X) {
     		DelVFirst(L, &A);
@@ -267,7 +267,7 @@ void DelP (List *L, infotype X){
     		while ((P != Nil) && !found) {
     			if (Info(P) == X) {
     				DelAfter(L, &P, Prec);
-    				Dealokasi(&P);
+    				DealokasiListLinier(&P);
     				found = true;
     			} else {
     				Prec = P;
@@ -300,7 +300,7 @@ void DelLast (List *L, address *P){
     if (First(*L) != Last) {
         Next(PrecLast) = Nil;
     } else {
-    	CreateEmpty(L);
+    	CreateEmptyListLinier(L);
     }
 }
 void DelAfter (List *L, address *Pdel, address Prec){
@@ -325,7 +325,7 @@ void PrintInfo (List L){
     /* KAMUS LOKAL */
     address P;
     /* ALGORITMA */
-    if (IsEmpty(L)) {
+    if (IsEmptyListLinier(L)) {
         printf("[]");
     } else {
         printf("[");
@@ -340,14 +340,14 @@ void PrintInfo (List L){
         }
     }
 }
-int NbElmt (List L){
+int NbElmtList (List L){
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
     /* KAMUS LOKAL */
     address P;
     int N=0;
 
     /* ALGORITMA */
-    if (IsEmpty(L)) {
+    if (IsEmptyListLinier(L)) {
         return 0;
     }
 
@@ -425,7 +425,7 @@ float Average (List L){
     sum = 0;
     count = 0;
 
-    if (!IsEmpty(L)) {
+    if (!IsEmptyListLinier(L)) {
         P = First(L);
 
         while (P != Nil) {  
@@ -441,12 +441,12 @@ float Average (List L){
 }
 /****************** PROSES TERHADAP LIST ******************/
 void DelAll (List *L){
-/* Delete semua elemen list dan alamat elemen di-dealokasi */
+/* Delete semua elemen list dan alamat elemen di-DealokasiListLinier */
     /* KAMUS LOKAL */
     infotype X;
 
     /* ALGORITMA */
-    while (!IsEmpty(*L)) {
+    while (!IsEmptyListLinier(*L)) {
         DelVFirst(L, &X);
     }
 }
@@ -455,15 +455,15 @@ void InversList (List *L){
 /* I.S. sembarang. */
 /* F.S. elemen list dibalik : */
 /* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
-/* Membalik elemen list, tanpa melakukan alokasi/dealokasi. */
+/* Membalik elemen list, tanpa melakukan alokasi/DealokasiListLinier. */
     /* KAMUS LOKAL */
     address P;
     List result;
 
     /* ALGORITMA */
-    if (!IsEmpty(*L) && NbElmt(*L)>1) {
-        CreateEmpty(&result);
-        while (!IsEmpty(*L)) {
+    if (!IsEmptyListLinier(*L) && NbElmtList(*L)>1) {
+        CreateEmptyListLinier(&result);
+        while (!IsEmptyListLinier(*L)) {
             DelLast(L, &P);
             InsertLast(&result, P);
         }
@@ -475,15 +475,15 @@ List FInversList (List L){
 /* Mengirimkan list baru, hasil invers dari L */
 /* dengan menyalin semua elemn list. Alokasi mungkin gagal. */
 /* Jika alokasi gagal, hasilnya list kosong */
-/* dan semua elemen yang terlanjur di-alokasi, harus didealokasi */
+/* dan semua elemen yang terlanjur di-alokasi, harus diDealokasiListLinier */
     /* KAMUS LOKAL */
     List result;
     boolean error = false;
     infotype X;
 
     /* ALGORITMA */
-    CreateEmpty(&result);
-    while(!error && !IsEmpty(L)) {
+    CreateEmptyListLinier(&result);
+    while(!error && !IsEmptyListLinier(L)) {
         DelVFirst(&L, &X);
         
         if (Alokasi(X) == Nil) {
@@ -502,11 +502,11 @@ List FInversList (List L){
 void CopyList (List *L1, List *L2){
 /* I.S. L1 sembarang. F.S. L2=L1 */
 /* L1 dan L2 "menunjuk" kepada list yang sama.*/
-/* Tidak ada alokasi/dealokasi elemen */
+/* Tidak ada alokasi/DealokasiListLinier elemen */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    CreateEmpty(L2);
+    CreateEmptyListLinier(L2);
     First(*L2) = First(*L1);
 }
 
@@ -514,7 +514,7 @@ List FCopyList (List L){
 /* Mengirimkan list yang merupakan salinan L */
 /* dengan melakukan alokasi. */
 /* Jika ada alokasi gagal, hasilnya list kosong dan */
-/* semua elemen yang terlanjur di-alokasi, harus didealokasi */
+/* semua elemen yang terlanjur di-alokasi, harus diDealokasiListLinier */
     /* KAMUS LOKAL */
     List result;
     boolean error = false;
@@ -522,7 +522,7 @@ List FCopyList (List L){
     address X;
 
     /* ALGORITMA */
-    CreateEmpty(&result);
+    CreateEmptyListLinier(&result);
     P = First(L);
 
     while(!error && P != Nil) {
@@ -545,7 +545,7 @@ List FCopyList (List L){
 void CpAlokList (List Lin, List *Lout){
 /* I.S. Lin sembarang. */
 /* F.S. Jika semua alokasi berhasil,maka Lout berisi hasil copy Lin */
-/* Jika ada alokasi yang gagal, maka Lout=Nil dan semua elemen yang terlanjur dialokasi, didealokasi */
+/* Jika ada alokasi yang gagal, maka Lout=Nil dan semua elemen yang terlanjur dialokasi, diDealokasiListLinier */
 /* dengan melakukan alokasi elemen. */
 /* Lout adalah list kosong jika ada alokasi elemen yang gagal */
     /* KAMUS LOKAL */
@@ -561,11 +561,11 @@ void Konkat (List L1, List L2, List * L3){
 /* F.S. L1 dan L2 tetap, L3 adalah hasil konkatenasi L1 & L2 */
 /* Jika semua alokasi berhasil, maka L3 adalah hasil konkatenasi*/
 /* Jika ada alokasi yang gagal, semua elemen yang sudah dialokasi */
-/* harus di-dealokasi dan L3=Nil*/
+/* harus di-DealokasiListLinier dan L3=Nil*/
 /* Konkatenasi dua buah list : L1 & L2 menghasilkan L3 yang "baru" */
 /* Elemen L3 adalah hasil alokasi elemen yang “baru”. */
 /* Jika ada alokasi yang gagal, maka L3 harus bernilai Nil*/
-/* dan semua elemen yang pernah dialokasi didealokasi */
+/* dan semua elemen yang pernah dialokasi diDealokasiListLinier */
     /* KAMUS LOKAL */
     boolean error;
     infotype X;
@@ -573,16 +573,16 @@ void Konkat (List L1, List L2, List * L3){
     /* ALGORITMA */
     error = false;
 
-    if (IsEmpty(L1) && IsEmpty(L2)) {
-        CreateEmpty(L3);
-    } else if (IsEmpty(L1) && !IsEmpty(L2)) {
+    if (IsEmptyListLinier(L1) && IsEmptyListLinier(L2)) {
+        CreateEmptyListLinier(L3);
+    } else if (IsEmptyListLinier(L1) && !IsEmptyListLinier(L2)) {
         CpAlokList(L2, L3);
-    } else if (!IsEmpty(L1) && IsEmpty(L2)) {
+    } else if (!IsEmptyListLinier(L1) && IsEmptyListLinier(L2)) {
         CpAlokList(L1, L3);
     } else {
         CpAlokList(L1, L3);
-        if (!IsEmpty(*L3)) {
-            while (!IsEmpty(L2) && !error) {
+        if (!IsEmptyListLinier(*L3)) {
+            while (!IsEmptyListLinier(L2) && !error) {
                 DelVFirst(&L2, &X);
                 
                 if (Alokasi(X) == Nil) {
@@ -604,14 +604,14 @@ void Konkat1 (List *L1, List *L2, List *L3){
 /* Konkatenasi dua buah list : L1 dan L2    */
 /* menghasilkan L3 yang baru (dengan elemen list L1 dan L2) */
 /* dan L1 serta L2 menjadi list kosong.*/
-/* Tidak ada alokasi/dealokasi pada prosedur ini */
+/* Tidak ada alokasi/DealokasiListLinier pada prosedur ini */
     /* KAMUS LOKAL */
     address P;
 
     /* ALGORITMA */
-    if (IsEmpty(*L1)) {
+    if (IsEmptyListLinier(*L1)) {
         First(*L3) = First(*L2);
-    } else if (IsEmpty(*L2)) {
+    } else if (IsEmptyListLinier(*L2)) {
         First(*L3) = First(*L1);
     } else {
         First(*L3) = First(*L1);
@@ -621,8 +621,8 @@ void Konkat1 (List *L1, List *L2, List *L3){
         }
         Next(P) = First(*L2);
     }
-    CreateEmpty(L1);
-    CreateEmpty(L2);
+    CreateEmptyListLinier(L1);
+    CreateEmptyListLinier(L2);
 }
 
 void PecahList (List *L1, List *L2, List L){
@@ -637,16 +637,16 @@ void PecahList (List *L1, List *L2, List L){
     int i, j;
 
     /* ALGORITMA */
-    CreateEmpty(L1);
-    CreateEmpty(L2);
+    CreateEmptyListLinier(L1);
+    CreateEmptyListLinier(L2);
 
-    if (!IsEmpty(L)) {
-        if (NbElmt(L) == 1) {
+    if (!IsEmptyListLinier(L)) {
+        if (NbElmtList(L) == 1) {
             DelVFirst(&L, &X);
             InsVFirst(L2, X);
         } else {
-            start = NbElmt(L)/2;
-            end = NbElmt(L) - start;
+            start = NbElmtList(L)/2;
+            end = NbElmtList(L) - start;
 
             for (i = 0; i < start; i++) {
                 DelVFirst(&L, &X);

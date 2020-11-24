@@ -34,7 +34,7 @@ typedef struct tNodeWahana{
 
 /* Definisi PohonBiner : */
 /* Pohon Biner kosong : P = Nil */
-typedef addrNode BinTree;
+typedef addrNodeWahana BinTree;
 
 /* *** PROTOTYPE *** */
 
@@ -67,12 +67,12 @@ void MakeTree(wahanatype Akar, BinTree L, BinTree R, BinTree *P);
    jika alokasi berhasil. P = Nil jika alokasi gagal. */
 
 /* Manajemen Memory */
-addrNode AlokNode(wahanatype X);
+addrNodeWahana AlokNode(wahanatype X);
 /* Mengirimkan addrNode hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka addrNode tidak Nil, dan misalnya menghasilkan P,
   maka Akar(P) = X, Left(P) = Nil, Right(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
-void DealokNode(addrNode P);
+void DealokNode(addrNodeWahana P);
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian addrNode P */
