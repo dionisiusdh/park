@@ -17,9 +17,12 @@
 #include "./jam/jam.h"
 #include "./stack/stack.h"
 #include "./array/array.h"
+#include "./Tree/bintree.h"
+#include "./Queue/prioqueue.h"
 
-/* ********* ADT ********* */
+/* ********* Aksi ********* */
 #include "./aksi/prepaksi.h"
+#include "./aksi/mainaksi.h"
 
 /******* DEKLARASI FUNGSI-FUNGSI UTAMA *******/
 
@@ -31,10 +34,10 @@ void initGame(Kata * Nama);
 void inputPerintah (Kata *Perintah);
 /* Membaca perintah dari user dalam bentuk kata */ 
 
-void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]);
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana);
 /* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah pada preparation phase */
 
-void cekPerintahMain(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]);
+void cekPerintahMain(Kata CurrentPerintah,Kata CurrentPerintah2, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]);
 /* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah pada main phase */
 
 void initMap();
@@ -54,6 +57,9 @@ void initWahana (BinTree *Wahana1, BinTree *Wahana2, BinTree *Wahana3);
 
 void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi);
 /*Menginisialisasi Inventory*/
+
+void initListWahana (ListWahana *LWahana);
+/* Inisiasi ListWahana berisi semua daftar wahana yang ada */
 
 /******* PROSEDUR DESKRIPSI *******/
 void printMap (MATRIKS M);

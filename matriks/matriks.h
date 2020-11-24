@@ -7,6 +7,9 @@
 #include "../boolean.h"
 #include "../point/point.h"
 #include "../Graph/graph.h"
+#include "../wahana/wahana.h"
+#include "../list-linier/listlinier.h"
+#include "../array/array.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 0
@@ -187,5 +190,18 @@ void UndoBuildWahana (MATRIKS* M);
 
 void BuildWahana (MATRIKS* M);
     /* Membangun setiap rancangan wahana 'w' di M menjadi wahana 'W' */
+
+/* **** GETTER INFORMASI WAHANA DI DEKAT PEMAIN**** */
+POINT GetTitikNearWahana (MATRIKS M);
+/* Mendapatkan titik wahana di sekitar pemain */
+
+POINT GetTitikNearRancanganWahana (MATRIKS M);
+/* Mendapatkan titik rancangan wahana di sekitar pemain */
+
+Wahana GetNearWahana (MATRIKS* M, ListWahana Wahana);
+/* Mendapatkan informasi wahana di sekitar pemain */
+
+void PrintInfoWahana (Wahana W);
+/* Mencetak informasi wahana disekitar pemain sesuai dengan spek */
 
 #endif

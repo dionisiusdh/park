@@ -1,5 +1,6 @@
 cd aksi
 gcc -std=c99 -c prepaksi.c
+gcc -std=c99 -c mainaksi.c
 cd ..
 cd array
 gcc -std=c99 -c array.c
@@ -36,5 +37,8 @@ cd ..
 cd Tree
 gcc -std=c99 -c bintree.c
 cd ..
-gcc -std=c99 -o main main.c ./Tree/bintree.o ./Graph/graph.o ./aksi/prepaksi.o ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
+cd wahana
+gcc -std=c99 -c wahana.c
+cd ..
+gcc -std=c99 -o main main.c ./aksi/mainaksi.o ./wahana/wahana.o ./Tree/bintree.o ./Graph/graph.o ./aksi/prepaksi.o ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
 ./main

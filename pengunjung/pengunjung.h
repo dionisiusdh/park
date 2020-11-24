@@ -39,4 +39,8 @@ void GetRandomWahana (PENGUNJUNG *P, int random);
 
 void TulisWahana (PENGUNJUNG P);
 
+boolean SearchPengunjung(PENGUNJUNG P, Kata Wahana);
+
+void DellPengunjung(PENGUNJUNG *P, Kata Wahana);
+
 #endif

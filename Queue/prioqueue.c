@@ -8,7 +8,7 @@
 boolean IsEmptyQueue (Queue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 {
-    return (Head(Q)==Nil) && (Tail(Q)==Nil);
+    return (Head(Q)==NilQueue) && (Tail(Q)==NilQueue);
 }
 
 boolean IsFullQueue (Queue Q)
@@ -43,8 +43,8 @@ void CreateEmptyQueue (Queue * Q, int Max)
 {   (*Q).T = (queuetype*) malloc ((Max+1)*sizeof(queuetype));
     if((*Q).T!=NULL){
         MaxElQueue(*Q) = Max;
-        Head(*Q) = Nil;
-        Tail(*Q) = Nil;
+        Head(*Q) = NilQueue;
+        Tail(*Q) = NilQueue;
     }
     else{
         MaxElQueue(*Q) = 0;
@@ -68,9 +68,9 @@ void AddQueue (Queue * Q, queuetype X)
         elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas */
 {
     if(IsEmptyQueue(*Q)){
-        (*Q).T[Nil+1] = X;
-        Head(*Q) = Nil+1;
-        Tail(*Q) = Nil+1;
+        (*Q).T[NilQueue+1] = X;
+        Head(*Q) = NilQueue+1;
+        Tail(*Q) = NilQueue+1;
     }
     else{
         if((Head(*Q)<=Tail(*Q)) && (Tail(*Q)<MaxElQueue(*Q)-1)) {
@@ -91,7 +91,7 @@ void AddQueue (Queue * Q, queuetype X)
                 i++;
             }
             if(i==MaxElQueue(*Q)){
-                i = Nil+1;
+                i = NilQueue+1;
                 while(PrioQueue(ElmtQueue(*Q,i))>PrioQueue(X)){
                     i++;
                 }
@@ -103,7 +103,7 @@ void AddQueue (Queue * Q, queuetype X)
             }
             else{
                 int j;
-                for(j=Tail(*Q)+1;j>Nil+1;j--){
+                for(j=Tail(*Q)+1;j>NilQueue+1;j--){
                     (*Q).T[j] = (*Q).T[j-1];
                 }
                 (*Q).T[j] = (*Q).T[MaxElQueue(*Q)-1];
@@ -116,8 +116,8 @@ void AddQueue (Queue * Q, queuetype X)
         }
         else if(Head(*Q)<=Tail(*Q) && Tail(*Q)==MaxElQueue(*Q)-1){
             if(PrioQueue(ElmtQueue(*Q,MaxElQueue(*Q)-1))>PrioQueue(X)){
-                (*Q).T[Nil+1] = X;
-                Tail(*Q) = Nil+1;
+                (*Q).T[NilQueue+1] = X;
+                Tail(*Q) = NilQueue+1;
             }
             else{
                 address i = Head(*Q);
@@ -125,37 +125,68 @@ void AddQueue (Queue * Q, queuetype X)
                     i++;
                 }
                 int j;
-                (*Q).T[Nil+1] = InfoTail(*Q);
+                (*Q).T[NilQueue+1] = InfoTail(*Q);
                 for(j=Tail(*Q);j>i;j--){
                     (*Q).T[j] = (*Q).T[j-1];
                 }
                 (*Q).T[i] = X;
-                Tail(*Q) = Nil+1;
+                Tail(*Q) = NilQueue+1;
             }
             Tail(*Q) += 1;   
         }
     }
 }
 
-void DelQueue (Queue * Q, queuetype * X)
+void DelQueue (Queue * Q, queuetype * X, Kata Wahana)
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
-/* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
+/* F.S. X = NilQueueai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
-{
-    if(NBElmtQueue(*Q)==1){
-        *X = InfoHead(*Q);
-        Head(*Q) = Nil;
-        Tail(*Q) = Nil;
+{   //KAMUS
+    int lokasi,i;
+    //ALGORITMA
+    lokasi = SearchQueue(*Q,Wahana);
+    if (lokasi!=0){
+        if (NBElmtQueue(*Q)==1){
+            *X = InfoHead(*Q);
+            Head(*Q) = NilQueue;
+            Tail(*Q) = NilQueue;
+        }
+        else{
+            if (lokasi < Head(*Q)){
+                *X = ElmtQueue(*Q,lokasi);
+                i = lokasi + 1;
+                while (i<=Tail(*Q)){
+                    ElmtQueue(*Q,i-1) = ElmtQueue(*Q,i);
+                }
+                if (Tail(*Q) == 1){
+                    Tail(*Q) = 5;
+                }
+                else{
+                    Tail(*Q) -= 1;
+                }
+            }
+            else if (lokasi > Head(*Q)){
+                if (Head(*Q) < Tail(*Q)){
+                    *X = ElmtQueue(*Q,lokasi);
+                }
+            }     
+        } 
     }
-    else if(Head(*Q)==MaxElQueue(*Q)-1){
-        *X = InfoHead(*Q);
-        Head(*Q) = Nil+1;
-    }
-    else{
-        *X = InfoHead(*Q);
-        Head(*Q)++;
-    }
+
+    // if(NBElmtQueue(*Q)==1){
+    //     *X = InfoHead(*Q);
+    //     Head(*Q) = NilQueue;
+    //     Tail(*Q) = NilQueue;
+    // }
+    // else if(Head(*Q)==MaxElQueue(*Q)-1){
+    //     *X = InfoHead(*Q);
+    //     Head(*Q) = NilQueue+1;
+    // }
+    // else{
+    //     *X = InfoHead(*Q);
+    //     Head(*Q)++;
+    // }
 }
 
 /* Operasi Tambahan */
@@ -195,25 +226,47 @@ void PrintQueue (Queue Q)
     }  
 }
 
-
-void TulisWahanaPengunjung (Queue Q) {
-    int i;
-    PENGUNJUNG P;
-
-    printf("(");
-    for (i=0;i<NeffPengunjung(Pengunjung(ElmtQueue(Q, i)));i++) {
-        if (i != NeffPengunjung(Pengunjung(ElmtQueue(Q, i)))) {
-            P = Pengunjung(ElmtQueue(Q, i));
-            PrintKata(ElmtPengunjung(P, i));
-            printf(", ");
-        } else {
-            P = Pengunjung(ElmtQueue(Q, i));
-            PrintKata(ElmtPengunjung(P, i));
+int SearchQueue (Queue Q, Kata Wahana){
+    //KAMUS LOKAL
+    int i=Head(Q);
+    boolean found = false;
+    //ALGORITMA
+    if (Head(Q) > Tail(Q)){
+        while (i<=MaxElQueue(Q) && !found){
+            if (SearchPengunjung(Pengunjung(ElmtQueue(Q,i)), Wahana)){
+                found = true;
+            }
+            else{
+                i++;
+            }
+        }
+        while (i<=Tail(Q) && !found){
+            if (SearchPengunjung(Pengunjung(ElmtQueue(Q,i)), Wahana)){
+                found = true;
+            }
+            else{
+                i++;
+            }
+        }
+        if (found == true){
+            return i;
+        }
+        else{
+            return 0;           
         }
     }
-    printf(")");
+    else {
+        while (i<=Tail(Q) && !found){
+            if (SearchPengunjung(Pengunjung(ElmtQueue(Q,i)), Wahana)){
+                found = true;
+            }
+            else{
+                i++;
+            }
+        }
+        return i;
+    }
 }
-
 
 void initQueue (Queue *Antrian) {
   // KAMUS LOKAL

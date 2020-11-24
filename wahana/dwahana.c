@@ -1,5 +1,7 @@
 #include "wahana.h"
 
+// gcc -std=c99 -o dwahana dwahana.c wahana.o ../mesin/mesinkata.o ../mesin/mesinkar.o ../Tree/bintree.o ../point/point.o ../list-linier/listlinier.o
+
 int main(){
     Wahana W1,W2;
     BinTree Wahana1,Wahana2,Wahana3;
@@ -9,8 +11,8 @@ int main(){
     ListWahana L;
     CreateEmptyListLinier(&Upgrade);
     BacaWahana(&Wahana1,&Wahana2,&Wahana3);
-    MakeWahana(&W1,Wahana1,Posisi,Upgrade);
-    MakeWahana(&W2,Wahana2,Posisi1,Upgrade1);
+    MakeWahana(&W1,Wahana1,Posisi,Upgrade,true);
+    MakeWahana(&W2,Wahana2,Posisi1,Upgrade1,true);
     TulisPOINT(GetPosisiWahana(W1));
     CreateEmptyListWahana(&L);
     InsertFirstWahana(&L,W1);

@@ -9,7 +9,7 @@
 #include "../boolean.h"
 #include "../pengunjung/pengunjung.h"
 
-#define Nil 0
+#define NilQueue 0
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
 
 /* Definisi elemen dan address */
@@ -69,7 +69,7 @@ void AddQueue (Queue * Q, queuetype X);
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer;
         elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas */
-void DelQueue (Queue * Q, queuetype * X);
+void DelQueue (Queue * Q, queuetype * X, Kata Wahana);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
@@ -86,8 +86,8 @@ void PrintQueue (Queue Q);
 #
 */
 
-void TulisWahanaPengunjung (Queue Q);
-/* Mencetak wahana yang ingin dikunjungi pengunjung */
+int SearchQueue (Queue Q, Kata Wahana);
+//Mencari posisi dari elemen pertama queue yang memiliki wahana di dalamnya
 
 void initQueue (Queue *Antrian);
 /* Menginisialisasikan antrian wahana */

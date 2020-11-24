@@ -1,13 +1,5 @@
 #include <stdio.h>
 #include "./prepaksi.h"
-#include "../array/array.h"
-#include "../mesin/mesinkar.h"
-#include "../mesin/mesinkata.h"
-#include "../Tree/bintree.h"
-#include "../stack/stack.h"
-#include "../Jam/jam.h"
-#include "../matriks/matriks.h"
-#include "../point/point.h"
 
 /* ********** MENU ********** */
 /* *********** BUY ***********  */
@@ -67,7 +59,7 @@ void Buy(TabInt *Inventory, TabInt *ListMaterial, Kata NamaBarang, int JumlahBar
 }
 
 /* *********** BUILD ***********  */
-void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid){
+void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid, ListWahana *LWahana){
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan yang dibutuhkan */
 /* F.S. Menampilkan ingin membangun apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         dibangun kemudian akan menyimpan perintah bangun ke dalam stack yang akan dijalankan saat execute.
@@ -76,8 +68,11 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
     Kata NamaWahana;
     wahanatype InfoWahana;
     int i;
+    Wahana W;
+    List Upgrade;
 
     /* ALGORITMA */
+
     // Print list wahana
     PrintNamaWahana(Wahana1, Wahana2, Wahana3);
     printf("$ ");
@@ -107,7 +102,22 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
 
     if (*Valid) {
         printf("Selamat, rancangan wahana anda bersimbol \'w\' telah ditambahkan\n");
-        PlaceWahana(Map, getPlayer(*Map));
+        PlaceRancanganWahana(Map, getPlayer(*Map));
+
+        // Mengganti list wahana
+        CreateEmptyListLinier(&Upgrade);
+        if (CurrentWahana == 1) {
+            GetInfoWahana(Wahana1, &InfoWahana);
+            MakeWahana(&W, Wahana1, GetTitikNearRancanganWahana(*Map), Upgrade, true);
+        } else if (CurrentWahana == 2) {
+            GetInfoWahana(Wahana2, &InfoWahana);
+            MakeWahana(&W, Wahana2, GetTitikNearRancanganWahana(*Map), Upgrade, true);
+        } else if (CurrentWahana == 3) {
+            GetInfoWahana(Wahana3, &InfoWahana);
+            MakeWahana(&W, Wahana3, GetTitikNearRancanganWahana(*Map), Upgrade, true);
+        } 
+        
+        InsertLastWahana(LWahana, W);
     }
 }
 
@@ -187,6 +197,8 @@ void MenuUpgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahan
 
     if(*Valid){
         printf("Upgrade Berhasil.\n");
+
+
     } 
 }
 
@@ -221,25 +233,29 @@ void Upgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, 
 
     // Place wahana di Map
     //PlaceWahana(Map, getPlayer(*Map));
-
 }
 
 /* ************ FUNGSI-FUNGSI PROGRAM ************ */
-void Undo (Stack * S, aksitype *X) {
+void Undo (Stack * S, aksitype *X, ListWahana *LWahana) {
 /* Melakukan undo dengan pop elemen dari stack */
     /* KAMUS LOKAL */
+    addressWahana Trash;
 
     /* ALGORITMA */
     if (!IsEmptyStack(*S)) {
         Pop(S, X);
         CurrentDuration(*S) = KurangJAM(Durasi(*X), CurrentDuration(*S));
+
+        if (IsEQKata(Aksi(*X), StringToKata("build",5))) {
+            DelLastWahana(LWahana, &Trash);
+        }
         printf("Berhasil undo.\n");
     } else {
         printf("Anda belum memasukkan aksi apapun.\n");
     }
 }
 
-void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *ListMaterial, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, boolean *prep_status, boolean *main_status){
+void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *ListMaterial, ListWahana *LWahana, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, boolean *prep_status, boolean *main_status){
 /* I.S. Terdapat stack perintah sembarang yang mungkin kosong */
 /* F.S. Semua perintah dijalankan satu per satu dari top hingga stack kosong, 
         kemudian fase berubah dari preparation ke main*/

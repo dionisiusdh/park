@@ -26,6 +26,7 @@ typedef struct {
     BinTree datawahana;  /* Berisi datawahana berjenis wahanatype dari bintree.h */
     POINT posisiwahana;  /* Berisi posisi wahana dalam bentuk (X,Y) dari point.h */
     List historyupgrade; /* Digunakan untuk melakukan tracking terhadap status upgrade wahana. Menggunakan list linier */
+    boolean statuswahana; /* Status wahana apakah sedang rusak atau tidak */
 } Wahana;
 
 typedef struct tElmtlistWahana *addressWahana;
@@ -40,9 +41,10 @@ typedef struct {
 
 /* Indeks yang digunakan [IdxMin..MaxEl-1] */
 /* ********** SELEKTOR ********** */
-#define Deskripsi(W) (W).datawahana
-#define Posisi(W) (W).posisiwahana
-#define History(W) (W).historyupgrade
+#define DeskripsiWahana(W) (W).datawahana
+#define PosisiWahana(W) (W).posisiwahana
+#define HistoryWahana(W) (W).historyupgrade
+#define StatusWahana(W) (W).statuswahana
 
 #define InfoWahana(P) (P)->infoWahana
 #define NextWahana(P) (P)->nextWahana
@@ -50,10 +52,9 @@ typedef struct {
 
 /* ^^^^^^^^^^ WAHANA ^^^^^^^^^^^ */
 
-
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create Wahana Baru  */
-void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade);
+void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade, boolean statuswahana);
 /* I.S. W, datawahana, posisiwahana, dan historyupgrade sudah terdefinisi */
 /* F.S. Wahana W terbentuk */
 
@@ -67,6 +68,12 @@ POINT GetPosisiWahana(Wahana W);
 List GetHistoryWahana(Wahana W);
 /* Sebuah Getter untuk mengembalikan history upgrade wahana dalam bentuk List */
 
+boolean GetStatusWahana(Wahana W);
+/* Sebuah Getter untuk mengembalikan status wahana dalam bentuk boolean */
+
+Wahana GetInfoWahanaAtTitik (ListWahana L, POINT P);
+/* Mengambil informasi wahana dari list wahana pada titik P */
+
 /* ********** SETTER ********** */
 void SetDataWahana(Wahana *W, BinTree X);
 /* Mengubah attribut datawahana pada W menjadi X */
@@ -76,6 +83,9 @@ void SetPosisiWahana(Wahana *W, POINT X);
 
 void SetHistoryWahana(Wahana *W, List X);
 /* Mengubah attribut historyupgrade pada W menjadi X */
+
+void SetStatusWahana(Wahana *W, boolean X);
+/* Mengubah status wahana dalam bentuk boolean */
 
 /* ^^^^^^^^^^ LIST WAHANA ^^^^^^^^^^^ */
 /* ********** KONSTRUKTOR ********** */
@@ -141,7 +151,6 @@ void DelAfterWahana (ListWahana *L, addressWahana *Pdel, addressWahana Prec);
 /* F.S. Menghapus Next(Prec): */
 /*      Pdel adalah alamat elemen list yang dihapus  */ 
 
-
 void DeleteWahana (ListWahana *L, Wahana W);
 /* I.S. Sembarang */
 /* F.S. Jika ada elemen list beraddress P, dengan info(P)=X  */
@@ -149,8 +158,18 @@ void DeleteWahana (ListWahana *L, Wahana W);
 /* Jika tidak ada elemen list dengan info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
 
+void DelLastWahana (ListWahana *L, addressWahana *P);
+/* I.S. List tidak kosong */
+/* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
+/*      Elemen list berkurang satu (mungkin menjadi kosong) */
+/* Last element baru adalah predesesor elemen terakhir yg lama, */
+
 void PrintListWahana (ListWahana L);
 /* I.S. ListWahana L terdefinisi */
 /* F.S. Menampilkan List Wahana dalam format : [(<NamaWahana>,<PosisiWahana>)]  */
+
+void PrintHistoryUpgradeWahana (Wahana W);
+/* I.S. ListWahana L terdefinisi */
+/* F.S. Menampilkan List Wahana dalam format : <NamaWahana> -> <NamaWahana2> */
 
 #endif

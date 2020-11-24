@@ -3,6 +3,8 @@
 #include <math.h>
 #include "boolean.h"
 #include "main.h"
+
+/* ********* ADT ********* */
 #include "./mesin/mesinkar.h"
 #include "./mesin/mesinkata.h"
 #include "./matriks/matriks.h"
@@ -10,9 +12,12 @@
 #include "./jam/jam.h"
 #include "./stack/stack.h"
 #include "./array/array.h"
-#include "./aksi/prepaksi.h"
 #include "./Tree/bintree.h"
 #include "./Queue/prioqueue.h"
+
+/* ********* Aksi ********* */
+#include "./aksi/prepaksi.h"
+#include "./aksi/mainaksi.h"
 
 // gcc -std=c99 -o main main.c ./aksi/prepaksi.o ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
 
@@ -72,7 +77,10 @@ int main() {
 
   /* Nama Pemain dan Saldonya (Money) */
   Kata NamaPlayer;
-  Kata CurrentPerintah;
+  Kata CurrentPerintah,CurrentPerintah1,CurrentPerintah2;
+  
+  /* Informasi wahana yang ada */
+  ListWahana LWahana;
 
   /* Tree Wahana */
   BinTree Wahana1;
@@ -97,9 +105,7 @@ int main() {
   
   initGame(&NamaPlayer);
 
-  // Wahana buat testing aja, bisa dihapus nnti
-  PlaceWahana(&MapActive, getPlayer(MapActive));
-  BuildWahana(&MapActive);
+  initListWahana(&LWahana);
 
   while (!exit_status) {
     //Inisialisasi day ke-berapa
@@ -120,20 +126,21 @@ int main() {
       // Show description
       JCurrent = TambahJAM(JClose, CurrentDuration(S));
       Remaining = KurangJAM(JCurrent, JOpen);
-      println("Preparation Phase Day %d\n",day);
+      printf("Preparation Phase Day %d\n",day);
       prepDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
 
       // Input perintah
       printf("Masukkan Perintah: \n$ ");
       inputPerintah(&CurrentPerintah);
-      cekPerintahPrep(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList);
+      cekPerintahPrep(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana);
     }
 
     while (!prep_status && main_status) {
-      println("Preparation Phase Day %d\n",day);
+      printf("Preparation Phase Day %d\n",day);
       mainDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining);
-      printf("Selamat datang di main phase yang belum terimplementasikan :\") ");
-      cekPerintahMain(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList);
+      CurrentPerintah = concatNama();
+      Bagi2Kata(CurrentPerintah,&CurrentPerintah1,&CurrentPerintah2);
+      cekPerintahMain(CurrentPerintah1, CurrentPerintah2, &MapActive, &S, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList);
     }
   }
 
@@ -175,7 +182,7 @@ void inputPerintah(Kata *Perintah){
   *Perintah = CKata;
 }
 
-void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]) {
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana) {
     aksitype CurrentAksi;
     aksitype AksiTypeTrash;
     boolean Valid = true;
@@ -249,7 +256,7 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
       } else if (IsEQKata(CurrentPerintah,StringToKata("build",5))){
           Aksi(CurrentAksi) = StringToKata("build",5);
           Durasi(CurrentAksi) = DetikToJAM(GetValue(ListAksi, CurrentPerintah));
-          MenuBuild(Map1, InventoryCopy, Wahana1, Wahana2, Wahana3, &CurrentWahana, &Valid);
+          MenuBuild(Map1, InventoryCopy, Wahana1, Wahana2, Wahana3, &CurrentWahana, &Valid, LWahana);
           InfoJumlahAksi(CurrentAksi) = CurrentWahana;
           if (Valid) {
             AddAksi(S, CurrentAksi);
@@ -271,17 +278,20 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
             printf("Anda sedang tidak berada di dekat wahana.\n");
           }
       } else if (IsEQKata(CurrentPerintah,StringToKata("undo",4))){
-        Undo(S, &AksiTypeTrash);
+        Undo(S, &AksiTypeTrash, LWahana);
       } else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
-        Execute(Map1, S, Money, Inventory, ListMaterial, Wahana1, Wahana2, Wahana3, prep_status, main_status);
+        Execute(Map1, S, Money, Inventory, ListMaterial, LWahana, Wahana1, Wahana2, Wahana3, prep_status, main_status);
       }
       else if (IsEQKata(CurrentPerintah,StringToKata("main",4))){
         *prep_status = false;
         *main_status = true;
       }
+      else if (IsEQKata(CurrentPerintah,StringToKata("exit",4))){
+        *exit_status = true;
+      }
 }
 
-void cekPerintahMain(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]) {
+void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4]) {
     aksitype CurrentAksi;
     aksitype AksiTypeTrash;
 
@@ -342,17 +352,33 @@ void cekPerintahMain(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
             Player = getPlayer(*Map1);
           }
         }
-      } else if (IsEQKata(CurrentPerintah,StringToKata("serve",5))) {
+      } 
+      else if (IsEQKata(CurrentPerintah,StringToKata("serve",5))) {
+        POINT Player = getPlayer(*Map1);
+        if (isNearAntrian(*Map1, Player)){
+          //Masih lom kelar
+        }
+        else{
+          printf("Anda tidak berada di dekat antrian.\n");    
+        }
+      } 
+      else if (IsEQKata(CurrentPerintah,StringToKata("repair",6))) {
+      //List wahana yang rusak
+      //Kalo player deket wahana yang rusak bisa repair
+      //List wahana rusak dibaruin
+      } 
+      else if (IsEQKata(CurrentPerintah,StringToKata("detail",6))) {
+      
+      } 
+      else if (IsEQKata(CurrentPerintah,StringToKata("office",6))) {
       //
-      } else if (IsEQKata(CurrentPerintah,StringToKata("repair",6))) {
-      //
-      } else if (IsEQKata(CurrentPerintah,StringToKata("detail",6))) {
-      //
-      } else if (IsEQKata(CurrentPerintah,StringToKata("office",6))) {
-      //
-      } else if (IsEQKata(CurrentPerintah,StringToKata("prepare",7))){
+      } 
+      else if (IsEQKata(CurrentPerintah,StringToKata("prepare",7))){
         *prep_status = true;
         *main_status = false;
+      }
+      else if (IsEQKata(CurrentPerintah,StringToKata("exit",7))){
+        *exit_status = true;
       }
 }
 
@@ -390,6 +416,27 @@ void initWahana (BinTree *Wahana1, BinTree *Wahana2, BinTree *Wahana3) {
   BacaWahana(Wahana1, Wahana2, Wahana3);
 }
 
+void initListWahana (ListWahana *LWahana) {
+/* Inisiasi ListWahana berisi semua daftar wahana yang ada */
+
+    CreateEmptyListWahana(&LWahana);
+    /*
+    Wahana W1,W2;
+    BinTree Wahana1,Wahana2,Wahana3;
+    POINT Posisi = MakePOINT(2,3);
+    POINT Posisi1 = MakePOINT(4,5);
+    List Upgrade,Upgrade1;
+    ListWahana L;
+    CreateEmptyListLinier(&Upgrade);
+    BacaWahana(&Wahana1,&Wahana2,&Wahana3);
+    MakeWahana(&W1,Wahana1,Posisi,Upgrade,true);
+    MakeWahana(&W2,Wahana2,Posisi1,Upgrade1,true);
+    TulisPOINT(GetPosisiWahana(W1));
+    CreateEmptyListWahana(&L);
+    InsertFirstWahana(&L,W1);
+    InsertLastWahana(&L,W2);
+    InsertLastWahana(&L,W2);*/
+}
 
 /* *************** MAP **************** */
 void printMap (MATRIKS M) {

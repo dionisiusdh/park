@@ -455,8 +455,7 @@ void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* Acti
 
 /* ********** POSITION CHECKER ********** */
 boolean isNearWahana (MATRIKS M, POINT P) {
-     //KAMUS LOKAL
-    int i,j;
+    //KAMUS LOKAL
 
     //ALGORITMA
     if (Elmt(M, Absis(P)+1, Ordinat(P)) == 'W') {
@@ -632,5 +631,84 @@ void BuildWahana (MATRIKS* M) {
                 Elmt(*M, i, j) = 'W';
             }
         }
+    }
+}
+
+/* **** GETTER INFORMASI WAHANA DI DEKAT PEMAIN**** */
+POINT GetTitikNearWahana (MATRIKS M) {
+    POINT P;
+
+    P = getPlayer(M);
+
+    if (isNearWahana(M, getPlayer(M))) {
+        if (Elmt(M, Absis(P)+1, Ordinat(P)) == 'W') {
+            return MakePOINT(Absis(P)+1, Ordinat(P));
+        } else if (Elmt(M, Absis(P)-1, Ordinat(P)) == 'W') {
+            return MakePOINT(Absis(P)-1, Ordinat(P));
+        } else if (Elmt(M, Absis(P), Ordinat(P)+1) == 'W') {
+            return MakePOINT(Absis(P), Ordinat(P)+1);
+        } else if (Elmt(M, Absis(P), Ordinat(P)-1) == 'W') {
+            return MakePOINT(Absis(P), Ordinat(P)-1);
+        } else if (Elmt(M, Absis(P)+1, Ordinat(P)+1) == 'W') {
+            return MakePOINT(Absis(P)+1, Ordinat(P)+1);
+        } else if (Elmt(M, Absis(P)+1, Ordinat(P)-1) == 'W') {
+            return MakePOINT(Absis(P)+1, Ordinat(P)-1);
+        } else if (Elmt(M, Absis(P)-1, Ordinat(P)+1) == 'W') {
+            return MakePOINT(Absis(P)-1, Ordinat(P)+1);
+        } else if (Elmt(M, Absis(P)-1, Ordinat(P)-1) == 'W') {
+            return MakePOINT(Absis(P)-1, Ordinat(P)-1);
+        }
+    }
+    return MakePOINT(0,0);
+}
+
+POINT GetTitikNearRancanganWahana (MATRIKS M) {
+/* Mendapatkan titik rancangan wahana di sekitar pemain */
+    POINT P;
+
+    P = getPlayer(M);
+
+    if (isNearWahana(M, getPlayer(M))) {
+        if (Elmt(M, Absis(P)+1, Ordinat(P)) == 'w') {
+            return MakePOINT(Absis(P)+1, Ordinat(P));
+        } else if (Elmt(M, Absis(P)-1, Ordinat(P)) == 'w') {
+            return MakePOINT(Absis(P)-1, Ordinat(P));
+        } else if (Elmt(M, Absis(P), Ordinat(P)+1) == 'w') {
+            return MakePOINT(Absis(P), Ordinat(P)+1);
+        } else if (Elmt(M, Absis(P), Ordinat(P)-1) == 'w') {
+            return MakePOINT(Absis(P), Ordinat(P)-1);
+        } else if (Elmt(M, Absis(P)+1, Ordinat(P)+1) == 'w') {
+            return MakePOINT(Absis(P)+1, Ordinat(P)+1);
+        } else if (Elmt(M, Absis(P)+1, Ordinat(P)-1) == 'w') {
+            return MakePOINT(Absis(P)+1, Ordinat(P)-1);
+        } else if (Elmt(M, Absis(P)-1, Ordinat(P)+1) == 'w') {
+            return MakePOINT(Absis(P)-1, Ordinat(P)+1);
+        } else if (Elmt(M, Absis(P)-1, Ordinat(P)-1) == 'w') {
+            return MakePOINT(Absis(P)-1, Ordinat(P)-1);
+        }
+    }
+    return MakePOINT(0,0);
+}
+
+Wahana GetNearWahana (MATRIKS* M, ListWahana Wahana) {
+/* Mendapatkan informasi wahana di sekitar pemain */
+    return GetInfoWahanaAtTitik(Wahana, GetTitikNearWahana(*M));
+}
+
+void PrintInfoWahana (Wahana W) {
+/* Mencetak informasi wahana disekitar pemain sesuai dengan spek */
+    printf("Nama: ");
+    PrintKata(AkarNama(DeskripsiWahana(W)));
+    printf("Lokasi: ");
+    TulisPOINT(PosisiWahana(W));
+    printf("Upgrade(s): ");
+    printf("[]");                           // BELOMMMMMMMMMMMMMMMMMMMMMM
+    printf("History: ");
+    PrintHistoryUpgradeWahana(W);           // BELOMMMMMMMMMMMMMMMMMMMMMM
+    printf("Status: ");
+    if (StatusWahana(W)) {
+        printf("Berfungsi");
+    } else {
+        printf("Rusak");
     }
 }

@@ -3,13 +3,14 @@
 #include "./wahana.h"
 
 /* ********** KONSTRUKTOR ********** */
-void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade){
+void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade, boolean statuswahana){
     /* KAMUS */
 
     /* ALGORITMA */
-    Deskripsi(*W) = datawahana;
-    Posisi(*W) = posisiwahana;
-    History(*W) = historyupgrade;
+    DeskripsiWahana(*W) = datawahana;
+    PosisiWahana(*W) = posisiwahana;
+    HistoryWahana(*W) = historyupgrade;
+    StatusWahana(*W) = statuswahana;
 }
 
 /* ********** GETTER ********** */
@@ -28,7 +29,7 @@ POINT GetPosisiWahana(Wahana W)
     /* KAMUS */
 
     /* ALGORITMA */
-    return Posisi(W);
+    return PosisiWahana(W);
 }
 
 List GetHistoryWahana(Wahana W)
@@ -37,7 +38,35 @@ List GetHistoryWahana(Wahana W)
     /* KAMUS */
 
     /* ALGORITMA */
-    return History(W);
+    return HistoryWahana(W);
+}
+
+boolean GetStatusWahana(Wahana W)
+/* Sebuah Getter untuk mengembalikan status wahana dalam bentuk boolean */
+{
+    /* KAMUS */
+
+    /* ALGORITMA */
+    return StatusWahana(W);
+}
+
+Wahana GetInfoWahanaAtTitik (ListWahana L, POINT P)
+/* Mengambil informasi wahana dari list wahana pada titik P */
+{
+    /* KAMUS LOKAL */
+    addressWahana A;
+    boolean found = false;
+
+    /* ALGORITMA */
+    A = FirstWahana(L);
+
+    while (A != Nil) {
+        if(EQ(PosisiWahana(InfoWahana(A)),P)){
+            return InfoWahana(A);
+        }
+        A = NextWahana(A);
+    }
+
 }
 
 /* ********** SETTER ********** */
@@ -47,7 +76,7 @@ void SetDataWahana(Wahana *W, BinTree X)
     /* KAMUS */
 
     /* ALGORITMA */
-    Deskripsi(*W) = X;
+    DeskripsiWahana(*W) = X;
 }
 
 void SetPosisiWahana(Wahana *W, POINT X)
@@ -56,7 +85,7 @@ void SetPosisiWahana(Wahana *W, POINT X)
     /* KAMUS */
 
     /* ALGORITMA */
-    Posisi(*W) = X;
+    PosisiWahana(*W) = X;
 }
 
 void SetHistoryWahana(Wahana *W, List X)
@@ -65,7 +94,16 @@ void SetHistoryWahana(Wahana *W, List X)
     /* KAMUS */
 
     /* ALGORITMA */
-    History(*W) = X;
+    HistoryWahana(*W) = X;
+}
+
+void SetStatusWahana(Wahana *W, boolean X)
+/* Mengubah status wahana dalam bentuk boolean */
+{
+    /* KAMUS */
+
+    /* ALGORITMA */
+    StatusWahana(*W) = X;
 }
 
 /* ^^^^^^^^^^ LIST WAHANA ^^^^^^^^^^^ */
@@ -125,7 +163,7 @@ void DealokasiWahana (addressWahana *P)
 
 boolean IsWahanaSama (Wahana W1, Wahana W2)
 {
-    return (IsWahanaTypeSama(Deskripsi(W1),(Deskripsi(W2))) && EQ(Posisi(W1),Posisi(W2)) && First(History(W1)) == First(History(W2)));
+    return (IsWahanaTypeSama(Deskripsi(W1),(Deskripsi(W2))) && EQ(PosisiWahana(W1),PosisiWahana(W2)));
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
@@ -160,14 +198,13 @@ boolean SearchPosisiWahana (ListWahana L, POINT P)
     A = FirstWahana(L);
 
     while (A != Nil && !found) {
-        if(EQ(Posisi(InfoWahana(A)),P)){
+        if(EQ(PosisiWahana(InfoWahana(A)),P)){
             found = true;
         }
         else{
             A = NextWahana(A);
         }
     }
-
     return found;
 }
 
@@ -286,6 +323,33 @@ void DeleteWahana (ListWahana *L, Wahana W)
     }
 }
 
+void DelLastWahana (ListWahana *L, addressWahana *P){
+/* I.S. List tidak kosong */
+/* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
+/*      Elemen list berkurang satu (mungkin menjadi kosong) */
+/* Last element baru adalah predesesor elemen terakhir yg lama, */
+/* jika ada */
+    /* KAMUS LOKAL */
+    addressWahana Last, PrecLast;
+
+    /* ALGORITMA */
+    Last = FirstWahana(*L);
+    PrecLast = Nil;
+
+    while (NextWahana(Last) != Nil) {
+        PrecLast = Last;
+        Last = NextWahana(Last);
+    }
+
+    *P = Last;
+
+    if (FirstWahana(*L) != Last) {
+        NextWahana(PrecLast) = Nil;
+    } else {
+    	CreateEmptyListWahana(L);
+    }
+}
+
 void PrintListWahana (ListWahana L)
 /* I.S. ListWahana L terdefinisi */
 /* F.S. Menampilkan List Wahana dalam format : [(<NamaWahana>,<PosisiWahana>)]  */
@@ -301,12 +365,23 @@ void PrintListWahana (ListWahana L)
         printf("[");
         while (P != Nil){
             printf("(");
-            PrintKata(AkarNama(Deskripsi(InfoWahana(P))));
+            PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
             printf(",");
-            TulisPOINT(Posisi(InfoWahana(P)));
+            TulisPOINT(PosisiWahana(InfoWahana(P)));
             printf(")");
             P = NextWahana(P);
         }
         printf("]");
     }
+}
+
+void PrintHistoryUpgradeWahana (Wahana W) {
+/* I.S. ListWahana L terdefinisi */
+/* F.S. Menampilkan List Wahana dalam format : <NamaWahana> -> <NamaWahana2> */
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
+
+    // BELUM DIIMPLEMENTASIKAN
+    printf("[]");
 }

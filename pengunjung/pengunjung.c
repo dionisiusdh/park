@@ -69,3 +69,31 @@ void TulisWahana (PENGUNJUNG P) {
     }
     printf(")");
 }
+
+boolean SearchPengunjung(PENGUNJUNG P, Kata Wahana){
+    int i=0;
+    boolean found = false;
+    while (i<NeffPengunjung(P) && !found){
+        if (IsEQKata(ElmtPengunjung(P,i), Wahana)){
+            found = true;
+        }
+        i++;
+    }
+    return found;
+}
+
+void DellPengunjung(PENGUNJUNG *P, Kata Wahana){
+    int i=0;
+    boolean found = false;
+    while (i<NeffPengunjung(*P) && !found){
+        if (IsEQKata(ElmtPengunjung(*P,i),Wahana)){
+            found = true;
+        }
+        i++;
+    }
+    while (i<NeffPengunjung(*P)){
+        ElmtPengunjung(*P,i-1) = ElmtPengunjung(*P,i);
+        i++; 
+    }
+    NeffPengunjung(*P)--; 
+}

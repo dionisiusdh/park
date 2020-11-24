@@ -12,6 +12,7 @@
 #include "../Jam/jam.h"
 #include "../matriks/matriks.h"
 #include "../point/point.h"
+#include "../wahana/wahana.h"
 
 /* ********** MENU ********** */
 /* *********** BUY ***********  */
@@ -26,7 +27,7 @@ void Buy(TabInt *Inventory, TabInt *ListMaterial, Kata NamaBarang, int JumlahBar
 /* Mengurangi money dengan nilai total harga material dikali JumlahBarang */
 
 /* *********** BUILD ***********  */
-void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid);
+void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid, ListWahana *LWahana);
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan yang dibutuhkan */
 /* F.S. Menampilkan ingin membangun apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         dibangun kemudian akan menyimpan perintah bangun ke dalam stack yang akan dijalankan saat execute.
@@ -48,12 +49,12 @@ atau waktu tidak cukup, maka akan menampilkan error ke layar pengguna. Apabila k
 maka akan memasukkan perintah eksekusi ke dalam stack (Memakan Waktu) */
 
 /* *********** UNDO AND EXECUTE ***********  */
-void Undo (Stack * S, aksitype *X);
+void Undo (Stack * S, aksitype *X, ListWahana *LWahana);
 /* I.S. Terdapat stack perintah sembarang, T mungkin kosong */
 /* F.S. Top stack perintah T telah di pop (Current top hilang, perintah paling atas pada stack menjadi new top),
         apabila I.S. kosong maka tidak dilakukan apa-apa (TidakMemakan Waktu) */
 
-void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *ListMaterial, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, boolean *prep_status, boolean *main_status);
+void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *ListMaterial, ListWahana *LWahana, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, boolean *prep_status, boolean *main_status);
 /* I.S. Terdapat stack perintah sembarang yang mungkin kosong */
 /* F.S. Semua perintah dijalankan satu per satu dari top hingga stack kosong, 
         kemudian fase berubah dari preparation ke main*/
