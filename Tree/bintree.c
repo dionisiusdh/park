@@ -264,217 +264,6 @@ int Tinggi(BinTree P)
   }
 }
 
-// /* *** Operasi lain *** */
-// void AddDaunTerkiri(BinTree *P, wahanatype X)
-// /* I.S. P boleh kosong */
-// /* F.S. P bertambah simpulnya, dengan X sebagai simpul daun terkiri */
-// {
-//   if (IsTreeEmpty(*P))
-//   {
-//     *P = Tree(X, Nil, Nil);
-//   }
-//   else
-//   {
-//     AddDaunTerkiri(&Left(*P), X);
-//   }
-// }
-
-// void AddDaun(BinTree *P, wahanatype X, wahanatype Y, boolean Kiri)
-// /* I.S. P tidak kosong, X adalah salah satu daun Pohon Biner P */
-// /* F.S. P bertambah simpulnya, dengan Y sebagai anak kiri X (jika Kiri = true), atau
-//         sebagai anak Kanan X (jika Kiri = false) */
-// /*		Jika ada > 1 daun bernilai X, diambil daun yang paling kiri */
-// {
-//   if (IsTreeOneElmt(*P) && Akar(*P) == X)
-//     if (Kiri)
-//       Left(*P) = Tree(Y, Nil, Nil);
-//     else
-//       Right(*P) = Tree(Y, Nil, Nil);
-//   else
-//   {
-//     if (SearchTree(Left(*P), X))
-//       AddDaun(&Left(*P), X, Y, Kiri);
-//     else
-//       AddDaun(&Right(*P), X, Y, Kiri);
-//   }
-// }
-
-// void DelDaunTerkiri(BinTree *P, wahanatype *X)
-// /* I.S. P tidak kosong */
-// /* F.S. P dihapus daun terkirinya, dan didealokasi, dengan X adalah info yang semula
-//         disimpan pada daun terkiri yang dihapus */
-// {
-//   if (IsTreeOneElmt(*P))
-//   {
-//     *X = Akar(*P);
-//     addrNode temp = *P;
-//     *P = Nil;
-//     DealokNode(temp);
-//   }
-//   else
-//   {
-//     if (IsUnerRight(*P))
-//     {
-//       DelDaunTerkiri(&Right(*P), X);
-//     }
-//     else
-//     {
-//       DelDaunTerkiri(&Left(*P), X);
-//     }
-//   }
-// }
-
-// void DelDaun(BinTree *P, wahanatype X)
-// /* I.S. P tidak kosong, minimum ada 1 daun bernilai X. */
-// /* F.S. Semua daun bernilai X dihapus dari P. */
-// {
-//   if (!IsTreeEmpty(*P))
-//   {
-
-//     if (IsTreeOneElmt(*P) && Akar(*P) == X)
-//     {
-//       (*P) = Nil;
-//       DealokNode(*P);
-//     }
-//     else
-//     {
-//       DelDaun(&Left(*P), X);
-//       DelDaun(&Right(*P), X);
-//     }
-//   }
-// }
-
-// List MakeListDaun(BinTree P)
-// /* Jika P adalah pohon kosong, maka menghasilkan list kosong. */
-// /* Jika P bukan pohon kosong: menghasilkan list yang elemennya adalah semua daun pohon P,
-//    jika semua alokasi list berhasil.
-//    Daun terkiri menjadi elemen pertama dari list, diikuti elemen kanannya, dst.
-//    Menghasilkan list kosong jika ada alokasi yang gagal. */
-// {
-//   if (IsTreeEmpty(P))
-//     return Nil;
-//   else if (IsTreeOneElmt(P))
-//     return Alokasi(Akar(P));
-//   else
-//   {
-//     List Left = MakeListDaun(Left(P));
-//     List Right = MakeListDaun(Right(P));
-//     return Concat(Left, Right);
-//   }
-// }
-
-// List MakeListPreorder(BinTree P)
-// /* Jika P adalah pohon kosong, maka menghasilkan list kosong. */
-// /* Jika P bukan pohon kosong: menghasilkan list yang elemennya adalah semua elemen pohon P
-//    dengan urutan preorder, jika semua alokasi berhasil.
-//    Menghasilkan list kosong jika ada alokasi yang gagal. */
-// {
-//   if (IsTreeEmpty(P))
-//     return Nil;
-//   else
-//   {
-//     List Left = MakeListPreorder(Left(P));
-//     List Right = MakeListPreorder(Right(P));
-
-//     return Concat(Konso(Akar(P), Left), Right);
-//   }
-// }
-
-// List MakeListLevel(BinTree P, int N)
-// /* Jika P adalah pohon kosong, maka menghasilkan list kosong. */
-// /* Jika P bukan pohon kosong: menghasilkan list yang elemennya adalah semua elemen pohon P
-//    yang levelnya=N, jika semua alokasi berhasil.
-//    Elemen terkiri menjadi elemen pertama dari list, diikuti elemen kanannya, dst.
-//    Menghasilkan list kosong jika ada alokasi yang gagal. */
-// {
-//   if (IsTreeEmpty(P))
-//     return Nil;
-//   else if (N == 1)
-//     return Alokasi(Akar(P));
-//   else
-//   {
-//     List Left = MakeListLevel(Left(P), N - 1);
-//     List Right = MakeListLevel(Right(P), N - 1);
-
-//     return Concat(Left, Right);
-//   }
-// }
-
-// /* *** Binary  Search  Tree  *** */
-// boolean BSearch(BinTree P, wahanatype X)
-// /* Mengirimkan true jika ada node dari P yang bernilai X */
-// {
-//   return SearchTree(Left(P), X) | SearchTree(Right(P), X);
-// }
-
-// void InsSearch(BinTree *P, wahanatype X)
-// /* Menghasilkan sebuah pohon Binary Search Tree P dengan tambahan simpul X. Belum ada simpul P yang bernilai X. */
-// {
-//   if (IsTreeEmpty(*P))
-//   {
-//     MakeTree(X, Nil, Nil, P);
-//   }
-//   else
-//   {
-//     if (X > Akar(*P))
-//     {
-//       InsSearch(&Right(*P), X);
-//     }
-//     else if (X < Akar(*P))
-//     {
-//       InsSearch(&Left(*P), X);
-//     }
-//   }
-// }
-
-// void DelNode(BinTree *P)
-// {
-//   addrNode q;
-//   if (Right(*P) != Nil)
-//   {
-//     DelNode(&Right(*P));
-//   }
-//   else
-//   {
-//     q = *P;
-//     *P = Left(*P);
-//   }
-// }
-
-// void DelBtree(BinTree *P, wahanatype X)
-// /* I.S. Pohon P tidak  kosong */
-// /* F.S. Nilai X yang dihapus pasti ada */
-// /* Sebuah node dengan nilai X dihapus */
-// {
-//   addrNode q;
-//   if (X < Akar(*P))
-//   {
-//     DelBtree(&Left(*P), X);
-//   }
-//   else if (X > Akar(*P))
-//   {
-//     DelBtree(&Right(*P), X);
-//   }
-//   else if (X == Akar(*P))
-//   {
-//     q = Tree(Akar(*P), Left(*P), Right(*P));
-//     if (Right(q) == Nil)
-//     {
-//       (*P) = Left(q);
-//     }
-//     else if (Left(q) == Nil)
-//     {
-//       (*P) = Right(q);
-//     }
-//     else
-//     {
-//       DelNode(&Left(q));
-//       free(&q);
-//     }
-//   }
-// }
-
-
 void BacaWahana(BinTree *WahanaTree1, BinTree *WahanaTree2, BinTree *WahanaTree3)
 /* Membaca Wahana dan Deskripsinya dari file wahana.txt */
 {
@@ -619,58 +408,22 @@ void BacaWahana(BinTree *WahanaTree1, BinTree *WahanaTree2, BinTree *WahanaTree3
 }
 
 void GetInfoWahana (BinTree Wahana, wahanatype *InfoWahana){
-  *InfoWahana = Akar(Wahana);
+    *InfoWahana = Akar(Wahana);
 }
 
 void PrintNamaWahana (BinTree Wahana1, BinTree Wahana2, BinTree Wahana3){
-  printf("Ingin Membangun Apa?\n");
-  printf("List :\n");
-  PrintKata(AkarNama(Wahana1));
-  printf("\n");
-  PrintKata(AkarNama(Wahana2));
-  printf("\n");
-  PrintKata(AkarNama(Wahana3));
-  printf("\n");
-}
-
-void PrintNamaUpgradeWahana (BinTree Wahana){
-/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
-  printf("Ingin Melakukan Upgrade Apa?\n");
-  printf("List :\n");
-  printf("   -  ");
-  PrintKata(AkarNama(Left(Wahana)));
-  printf("\n   -  ");
-  PrintKata(AkarNama(Right(Wahana)));
-  printf("\n");
+    printf("Ingin Membangun Apa?\n");
+    printf("List :\n");
+    PrintKata(AkarNama(Wahana1));
+    printf("\n");
+    PrintKata(AkarNama(Wahana2));
+    printf("\n");
+    PrintKata(AkarNama(Wahana3));
+    printf("\n");
 }
 
 boolean IsWahanaTypeSama (BinTree Wahana1, BinTree Wahana2)
 /* Mengembalikan true apabila Wahana1 = Wahana2, dan false apabila tidak */
 {
-  // boolean result = false;
-  // if (IsEQKata(AkarNama(Wahana1),AkarNama(Wahana2)) && AkarHarga(Wahana1) == AkarHarga(Wahana2) && AkarKapasitas(Wahana1) == AkarKapasitas(Wahana2)){
-  //   if(AkarDurasi(Wahana1) == AkarDurasi(Wahana2) && IsEQKata(AkarDeskripsi(Wahana1),AkarDeskripsi(Wahana2)) && AkarCostUp(Wahana1) == AkarCostUp(Wahana2)){
-  //     int i = 0;
-  //     boolean cek = true;
-  //     while(i<5 && cek){
-  //       if(AkarMatUp(Wahana1,i) != AkarMatUp(Wahana2,i)){
-  //         cek = false;
-  //       }
-  //     }
-  //     if(cek){
-  //       result = true;
-  //     }
-  //     else{
-  //       result = false;
-  //     }
-  //   }
-  //   else{
-  //     result = false;
-  //   }
-  // }
-  // else{
-  //   result = false;
-  // }
-  // return result;
-  return IsEQKata(AkarNama(Wahana1),AkarNama(Wahana2));
+    return IsEQKata(AkarNama(Wahana1),AkarNama(Wahana2));
 }

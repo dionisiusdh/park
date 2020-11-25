@@ -1,7 +1,6 @@
 /* ADT Pohon Biner */
 /* Implementasi dengan menggunakan pointer */
-/* Penamaan type wahanatype, type addrNode, dan beberapa fungsi disesuikan 
-   karena melibatkan modul list rekursif. */
+/* Penamaan type wahanatype, type addrNode, dan beberapa fungsi disesuikan karena melibatkan modul list rekursif. */
 
 #ifndef _BINTREE_H_
 #define _BINTREE_H_
@@ -152,52 +151,6 @@ int Tinggi(BinTree P);
 /* Pohon Biner mungkin kosong. Tinggi pohon kosong = 0.
    Mengirim "height" yaitu tinggi dari pohon */
 
-// /* *** Operasi lain *** */
-// void AddDaunTerkiri(BinTree *P, wahanatype X);
-// /* I.S. P boleh kosong */
-// /* F.S. P bertambah simpulnya, dengan X sebagai simpul daun terkiri */
-// void AddDaun(BinTree *P, wahanatype X, wahanatype Y, boolean Kiri);
-// /* I.S. P tidak kosong, X adalah salah satu daun Pohon Biner P */
-// /* F.S. P bertambah simpulnya, dengan Y sebagai anak kiri X (jika Kiri = true), atau
-//         sebagai anak Kanan X (jika Kiri = false) */
-// /*		Jika ada > 1 daun bernilai X, diambil daun yang paling kiri */
-// void DelDaunTerkiri(BinTree *P, wahanatype *X);
-// /* I.S. P tidak kosong */
-// /* F.S. P dihapus daun terkirinya, dan didealokasi, dengan X adalah info yang semula
-//         disimpan pada daun terkiri yang dihapus */
-// void DelDaun(BinTree *P, wahanatype X);
-// /* I.S. P tidak kosong, minimum ada 1 daun bernilai X. */
-// /* F.S. Semua daun bernilai X dihapus dari P. */
-// List MakeListDaun(BinTree P);
-// /* Jika P adalah pohon kosong, maka menghasilkan list kosong. */
-// /* Jika P bukan pohon kosong: menghasilkan list yang elemennya adalah semua daun pohon P,
-//    jika semua alokasi list berhasil.
-//    Daun terkiri menjadi elemen pertama dari list, diikuti elemen kanannya, dst.
-//    Menghasilkan list kosong jika ada alokasi yang gagal. */
-// List MakeListPreorder(BinTree P);
-// /* Jika P adalah pohon kosong, maka menghasilkan list kosong. */
-// /* Jika P bukan pohon kosong: menghasilkan list yang elemennya adalah semua elemen pohon P
-//    dengan urutan preorder, jika semua alokasi berhasil.
-//    Menghasilkan list kosong jika ada alokasi yang gagal. */
-// List MakeListLevel(BinTree P, int N);
-// /* Jika P adalah pohon kosong, maka menghasilkan list kosong. */
-// /* Jika P bukan pohon kosong: menghasilkan list yang elemennya adalah semua elemen pohon P
-//    yang levelnya=N, jika semua alokasi berhasil.
-//    Elemen terkiri menjadi elemen pertama dari list, diikuti elemen kanannya, dst.
-//    Menghasilkan list kosong jika ada alokasi yang gagal. */
-
-// /* *** Binary  Search  Tree  *** */
-// boolean BSearch(BinTree P, wahanatype X);
-// /* Mengirimkan true jika ada node dari P yang bernilai X */
-
-// void InsSearch(BinTree *P, wahanatype X);
-// /* Menghasilkan sebuah pohon Binary Search Tree P dengan tambahan simpul X. Belum ada simpul P yang bernilai X. */
-
-// void DelBtree(BinTree *P, wahanatype X);
-// /* I.S. Pohon P tidak  kosong */
-// /* F.S. Nilai X yang dihapus pasti ada */
-// /* Sebuah node dengan nilai X dihapus */
-
 void BacaWahana(BinTree *WahanaTree1, BinTree *WahanaTree2, BinTree *WahanaTree3);
 /* Membaca Wahana dan Deskripsinya dari file wahana.txt */
 
@@ -206,9 +159,6 @@ void GetInfoWahana (BinTree Wahana, wahanatype *InfoWahana);
 
 void PrintNamaWahana (BinTree Wahana1, BinTree Wahana2, BinTree Wahana3);
 /* Menampilkan List Nama Wahana yang bisa dibangun ke Layar */
-
-void PrintNamaUpgradeWahana (BinTree Wahana);
-/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
 
 boolean IsWahanaTypeSama (BinTree Wahana1, BinTree Wahana2);
 /* Mengembalikan true apabila Wahana1 = Wahana2, dan false apabila tidak */

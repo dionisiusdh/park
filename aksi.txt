@@ -1,8 +1,8 @@
 build 3600
 upgrade 3600
 buy 900
-undo 0
-execute 0
+serve 1800
+repair 3600
 w 10
 a 10
 s 10

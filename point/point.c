@@ -62,3 +62,37 @@ void TulisPOINT (POINT P){
     // ALGORITMA
     printf("(%d,%d)",Absis(P),Ordinat(P));
 }
+
+boolean AreTwoPointsNear (POINT P1, POINT P2) {
+    /* true jika P1 dan P2 berada dalam suatu kotak 3x3 yang sama */
+    /* false jika P1 dan P2 sama */
+    int X1 = Absis(P1); int Y1 = Ordinat(P1);
+    int X2 = Absis(P2); int Y2 = Ordinat(P2);
+    if (X1 == X2-1 && Y1 == Y2) {
+        return true;
+    }
+    else if (X1 == X2-1 && Y1 == Y2+1) {
+        return true;
+    }
+    else if (X1 == X2 && Y1 == Y2+1) {
+        return true;
+    }
+    else if (X1 == X2+1 && Y1 == Y2+1) {
+        return true;
+    }
+    else if (X1 == X2+1 && Y1 == Y2) {
+        return true;
+    }
+    else if (X1 == X2+1 && Y1 == Y2-1) {
+        return true;
+    }
+    else if (X1 == X2 && Y1 == Y2-1) {
+        return true;
+    }
+    else if (X1 == X2-1 && Y1 == Y2-1) {
+        return true;
+    }
+    else  {
+        return false;
+    }
+}

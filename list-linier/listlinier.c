@@ -5,7 +5,7 @@
 
 /* File : listlinier.c */
 /* contoh ADT list berkait dengan representasi fisik pointer  */
-/* Representasi address dengan pointer */
+/* Representasi addressList dengan pointer */
 /* infotype adalah integer */
 
 /* PROTOTYPE */
@@ -29,16 +29,16 @@ void CreateEmptyListLinier (List *L){
 }
 
 /****************** Manajemen Memori ******************/
-address Alokasi (infotype X){
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
+addressList Alokasi (infotype X){
+/* Mengirimkan addressList hasil alokasi sebuah elemen */
+/* Jika alokasi berhasil, maka addressList tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
 
     /* ALGORITMA */
-    P = (address) malloc (sizeof(ElmtList));
+    P = (addressList) malloc (sizeof(ElmtList));
 
     if (P != Nil) {
         Info(P) = X;
@@ -48,10 +48,10 @@ address Alokasi (infotype X){
         return Nil;
     }
 }
-void DealokasiListLinier (address *P){
+void DealokasiListLinier (addressList *P){
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
-/* Melakukan DealokasiListLinier/pengembalian address P */
+/* Melakukan DealokasiListLinier/pengembalian addressList P */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
@@ -59,12 +59,12 @@ void DealokasiListLinier (address *P){
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address Search (List L, infotype X){
+addressList Search (List L, infotype X){
 /* Mencari apakah ada elemen list dengan Info(P)= X */
-/* Jika ada, mengirimkan address elemen tersebut. */
+/* Jika ada, mengirimkan addressList elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
 
     /* ALGORITMA */
     P = First(L);
@@ -75,12 +75,12 @@ address Search (List L, infotype X){
 
     return P;
 }
-boolean FSearch (List L, address P){
+boolean FSearch (List L, addressList P){
 /* Mencari apakah ada elemen list yang beralamat P */
 /* Mengirimkan true jika ada, false jika tidak ada */
     /* KAMUS LOKAL */
     boolean found;
-    address X;
+    addressList X;
 
     /* ALGORITMA */
     found = false;
@@ -97,16 +97,16 @@ boolean FSearch (List L, address P){
 
     return found;
 }
-address SearchPrec (List L, infotype X){
-/* Mengirimkan address elemen sebelum elemen yang nilainya=X */
+addressList SearchPrec (List L, infotype X){
+/* Mengirimkan addressList elemen sebelum elemen yang nilainya=X */
 /* Mencari apakah ada elemen list dengan Info(P)=X */
-/* Jika ada, mengirimkan address Prec, dengan Next(Prec)=P dan Info(P)=X. */
+/* Jika ada, mengirimkan addressList Prec, dengan Next(Prec)=P dan Info(P)=X. */
 /* Jika tidak ada, mengirimkan Nil */
 /* Jika P adalah elemen pertama, maka Prec=Nil */
 /* Search dengan spesifikasi seperti ini menghindari */
 /* traversal ulang jika setelah Search akan dilakukan operasi lain */
     /* KAMUS LOKAL */
-    address P, Prec;
+    addressList P, Prec;
 
     /* ALGORITMA */
     P = First(L);
@@ -133,7 +133,7 @@ void InsVFirst (List *L, infotype X){
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
 
     /* ALGORITMA */
     P = Alokasi(X);
@@ -148,7 +148,7 @@ void InsVLast (List *L, infotype X){
 /* menambahkan elemen list di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
 
     /* ALGORITMA */
     if (IsEmptyListLinier(*L)) {
@@ -168,7 +168,7 @@ void DelVFirst (List *L, infotype *X){
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-DealokasiListLinier */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
     /* ALGORITMA */
     DelFirst(L, &P);
     *X = Info(P);
@@ -179,7 +179,7 @@ void DelVLast (List *L, infotype *X){
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen terakhir di-DealokasiListLinier */
     /* KAMUS LOKAL */
-    address Last;
+    addressList Last;
 
     /* ALGORITMA */
     DelLast(L, &Last);
@@ -189,16 +189,16 @@ void DelVLast (List *L, infotype *X){
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertFirst (List *L, address P){
+void InsertFirst (List *L, addressList P){
 /* I.S. Sembarang, P sudah dialokasi  */
-/* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
+/* F.S. Menambahkan elemen ber-addressList P sebagai elemen pertama */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
     Next(P) = First(*L);
     First(*L) = P;
 }
-void InsertAfter (List *L, address P, address Prec){
+void InsertAfter (List *L, addressList P, addressList Prec){
 /* I.S. Prec pastilah elemen list dan bukan elemen terakhir, */
 /*      P sudah dialokasi  */
 /* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
@@ -208,11 +208,11 @@ void InsertAfter (List *L, address P, address Prec){
     Next(P) = Next(Prec);
     Next(Prec) = P;
 }
-void InsertLast (List *L, address P){
+void InsertLast (List *L, addressList P){
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
     /* KAMUS LOKAL */
-    address Last;
+    addressList Last;
 
     /* ALGORITMA */
     if (IsEmptyListLinier(*L)) {
@@ -227,7 +227,7 @@ void InsertLast (List *L, address P){
 }
 
 /*** PENGHAPUSAN SEBUAH ELEMEN ***/
-void DelFirst (List *L, address *P){
+void DelFirst (List *L, addressList *P){
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
@@ -246,14 +246,14 @@ void DelFirst (List *L, address *P){
 }
 void DelP (List *L, infotype X){
 /* I.S. Sembarang */
-/* F.S. Jika ada elemen list beraddress P, dengan Info(P)=X  */
+/* F.S. Jika ada elemen list beraddressList P, dengan Info(P)=X  */
 /* Maka P dihapus dari list dan di-DealokasiListLinier */
 /* Jika ada lebih dari satu elemen list dengan Info bernilai X */
 /* maka yang dihapus hanya elemen pertama dengan Info = X */
 /* Jika tidak ada elemen list dengan Info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
     /* KAMUS LOKAL */
-    address P, Prec;
+    addressList P, Prec;
     infotype A;
     boolean found=false;
 
@@ -277,14 +277,14 @@ void DelP (List *L, infotype X){
     	}
     }
 }
-void DelLast (List *L, address *P){
+void DelLast (List *L, addressList *P){
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
 /* Last element baru adalah predesesor elemen terakhir yg lama, */
 /* jika ada */
     /* KAMUS LOKAL */
-    address Last, PrecLast;
+    addressList Last, PrecLast;
 
     /* ALGORITMA */
     Last = First(*L);
@@ -303,7 +303,7 @@ void DelLast (List *L, address *P){
     	CreateEmptyListLinier(L);
     }
 }
-void DelAfter (List *L, address *Pdel, address Prec){
+void DelAfter (List *L, addressList *Pdel, addressList Prec){
 /* I.S. List tidak kosong. Prec adalah anggota list  */
 /* F.S. Menghapus Next(Prec): */
 /*      Pdel adalah alamat elemen list yang dihapus  */
@@ -323,7 +323,7 @@ void PrintInfo (List L){
 /* Jika list kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
     /* ALGORITMA */
     if (IsEmptyListLinier(L)) {
         printf("[]");
@@ -343,7 +343,7 @@ void PrintInfo (List L){
 int NbElmtList (List L){
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
     int N=0;
 
     /* ALGORITMA */
@@ -366,7 +366,7 @@ infotype Max (List L){
 /* Mengirimkan nilai Info(P) yang maksimum */
     /* KAMUS LOKAL */
     infotype max;
-    address P;
+    addressList P;
 
     /* ALGORITMA */
     max = Info(First(L));
@@ -381,8 +381,8 @@ infotype Max (List L){
 
     return max;
 }
-address AdrMax (List L){
-/* Mengirimkan address P, dengan info(P) yang bernilai maksimum */
+addressList AdrMax (List L){
+/* Mengirimkan addressList P, dengan info(P) yang bernilai maksimum */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
@@ -392,7 +392,7 @@ infotype Min (List L) {
 /* Mengirimkan nilai Info(P) yang minimum */
     /* KAMUS LOKAL */
     infotype min;
-    address P;
+    addressList P;
 
     /* ALGORITMA */
     min = Info(First(L));
@@ -407,8 +407,8 @@ infotype Min (List L) {
 
     return min;
 }
-address AdrMin (List L){
-/* Mengirimkan address P, dengan info(P) yang bernilai minimum */
+addressList AdrMin (List L){
+/* Mengirimkan addressList P, dengan info(P) yang bernilai minimum */
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
@@ -418,7 +418,7 @@ address AdrMin (List L){
 float Average (List L){
 /* Mengirimkan nilai rata-rata info(P) */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
     float sum, count;
 
     /* ALGORITMA */
@@ -457,7 +457,7 @@ void InversList (List *L){
 /* Elemen terakhir menjadi elemen pertama, dan seterusnya. */
 /* Membalik elemen list, tanpa melakukan alokasi/DealokasiListLinier. */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
     List result;
 
     /* ALGORITMA */
@@ -518,8 +518,8 @@ List FCopyList (List L){
     /* KAMUS LOKAL */
     List result;
     boolean error = false;
-    address P;
-    address X;
+    addressList P;
+    addressList X;
 
     /* ALGORITMA */
     CreateEmptyListLinier(&result);
@@ -606,7 +606,7 @@ void Konkat1 (List *L1, List *L2, List *L3){
 /* dan L1 serta L2 menjadi list kosong.*/
 /* Tidak ada alokasi/DealokasiListLinier pada prosedur ini */
     /* KAMUS LOKAL */
-    address P;
+    addressList P;
 
     /* ALGORITMA */
     if (IsEmptyListLinier(*L1)) {

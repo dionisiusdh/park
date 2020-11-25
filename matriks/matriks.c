@@ -302,7 +302,7 @@ POINT getPlayerTransportedPosition (MATRIKS MDest, POINT GDest) {
 
 /* ********** MOVEMENT ********** */
 /* Titik 0,0 berada di pojok kiri atas matriks */
-void moveUp (MATRIKS *M) {
+void moveUp (MATRIKS *M, POINT Office) {
 /* Menggerakan player ke atas */
 
     //KAMUS LOKAL
@@ -320,14 +320,18 @@ void moveUp (MATRIKS *M) {
     yNew = y;
 
     if (!hitWall(M, xNew, yNew)) {  
-        Elmt(*M, x, y) = '-';
+        if (isInOffice(getPlayer(*M), Office)) {
+            Elmt(*M, x, y) = 'O';
+        } else {
+            Elmt(*M, x, y) = '-';
+        }
         Elmt(*M, xNew, yNew) = 'P';
     } else {
         printf("Anda menabrak dinding!\n");
     }
 }
 
-void moveDown (MATRIKS *M) {
+void moveDown (MATRIKS *M, POINT Office) {
 /* Menggerakan player ke bawah */
 
     //KAMUS LOKAL
@@ -345,14 +349,18 @@ void moveDown (MATRIKS *M) {
     yNew = y;
 
     if (!hitWall(M, xNew, yNew)) {  
-        Elmt(*M, x, y) = '-';
+        if (isInOffice(getPlayer(*M), Office)) {
+            Elmt(*M, x, y) = 'O';
+        } else {
+            Elmt(*M, x, y) = '-';
+        }
         Elmt(*M, xNew, yNew) = 'P';
     } else {
         printf("Anda menabrak dinding!\n");
     }
 }
 
-void moveLeft (MATRIKS *M) {
+void moveLeft (MATRIKS *M, POINT Office) {
 /* Menggerakan player ke kiri */
 
     //KAMUS LOKAL
@@ -370,14 +378,18 @@ void moveLeft (MATRIKS *M) {
     yNew = y-1;
 
     if (!hitWall(M, xNew, yNew)) {  
-        Elmt(*M, x, y) = '-';
+        if (isInOffice(getPlayer(*M), Office)) {
+            Elmt(*M, x, y) = 'O';
+        } else {
+            Elmt(*M, x, y) = '-';
+        }
         Elmt(*M, xNew, yNew) = 'P';
     } else {
         printf("Anda menabrak dinding!\n");
     }
 }
 
-void moveRight (MATRIKS *M) {
+void moveRight (MATRIKS *M, POINT Office) {
 /* Menggerakan player ke kanan */
 
     //KAMUS LOKAL
@@ -395,7 +407,11 @@ void moveRight (MATRIKS *M) {
     yNew = y+1;
 
     if (!hitWall(M, xNew, yNew)) {  
-        Elmt(*M, x, y) = '-';
+        if (isInOffice(getPlayer(*M), Office)) {
+            Elmt(*M, x, y) = 'O';
+        } else {
+            Elmt(*M, x, y) = '-';
+        }
         Elmt(*M, xNew, yNew) = 'P';
     } else {
         printf("Anda menabrak dinding!\n");
@@ -447,9 +463,6 @@ void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* Acti
     Elmt(*MActive, Absis(*Player), Ordinat(*Player)) = 'P';
     
     *ActiveMap = ReturnMapDest(&G, *ActiveMap, MoveCommand);
-    //}
-    //}
-    //}
 }
 
 
@@ -659,7 +672,7 @@ POINT GetTitikNearWahana (MATRIKS M) {
             return MakePOINT(Absis(P)-1, Ordinat(P)-1);
         }
     }
-    return MakePOINT(0,0);
+    return MakePOINT(-1,-1);
 }
 
 POINT GetTitikNearRancanganWahana (MATRIKS M) {

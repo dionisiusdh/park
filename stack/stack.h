@@ -20,13 +20,13 @@ typedef struct {
     int harga; /* Harga dari aksi yang akan dilakukan */
     JAM durasi; /* Durasi aksi */
 } aksitype;
-typedef int address;   /* indeks tabel */
+typedef int addressStack;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct { 
   aksitype T[MaxEl]; /* tabel penyimpan elemen */
-  address TOP;  /* alamat TOP: elemen puncak */
+  addressStack TOP;  /* alamat TOP: elemen puncak */
   int TotalAksi; /* Total jumlah semua aksi dalam stack */
   int TotalBiaya; /* Total seluruh biaya aksi dalam stack */
   JAM CurrentDuration; /* Total durasi aksi-aksi yang ada pada kondisi sekarang */

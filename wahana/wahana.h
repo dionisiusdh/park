@@ -1,8 +1,8 @@
 /* MODUL ADT Wahana (ADT Tambahan) */
 /* Berisi definisi dan semua primitif pemrosesan wahana */
 
-#ifndef WAHANA_H
-#define WAHANA_H
+#ifndef ADTWAHANA_H
+#define ADTWAHANA_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +26,8 @@ typedef struct {
     BinTree datawahana;  /* Berisi datawahana berjenis wahanatype dari bintree.h */
     POINT posisiwahana;  /* Berisi posisi wahana dalam bentuk (X,Y) dari point.h */
     List historyupgrade; /* Digunakan untuk melakukan tracking terhadap status upgrade wahana. Menggunakan list linier */
-    boolean statuswahana; /* Status wahana apakah sedang rusak atau tidak */
+    boolean statuswahana; /* Status wahana apakah sedang rusak (false) atau tidak (true) */
+    int mapwahana;           /* Wahana berada di map berapa */
 } Wahana;
 
 typedef struct tElmtlistWahana *addressWahana;
@@ -45,6 +46,7 @@ typedef struct {
 #define PosisiWahana(W) (W).posisiwahana
 #define HistoryWahana(W) (W).historyupgrade
 #define StatusWahana(W) (W).statuswahana
+#define MapWahana(W) (W).mapwahana
 
 #define InfoWahana(P) (P)->infoWahana
 #define NextWahana(P) (P)->nextWahana
@@ -54,7 +56,7 @@ typedef struct {
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create Wahana Baru  */
-void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade, boolean statuswahana);
+void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade, boolean statuswahana, int mapwahana);
 /* I.S. W, datawahana, posisiwahana, dan historyupgrade sudah terdefinisi */
 /* F.S. Wahana W terbentuk */
 
@@ -71,6 +73,15 @@ List GetHistoryWahana(Wahana W);
 boolean GetStatusWahana(Wahana W);
 /* Sebuah Getter untuk mengembalikan status wahana dalam bentuk boolean */
 
+boolean GetStatusNamaWahana(ListWahana *LWahana, Kata NamaWahana);
+/* Mengubah status wahana dalam bentuk boolean berdasarkan nama wahana */
+
+int GetMapWahana(Wahana W);
+/* Sebuah Getter untuk mengembalikan nomor wahana dalam bentuk integer */
+
+ListWahana GetWahanaNearPlayer (ListWahana L, POINT P, int CurrentMap);
+/* Mengembalikan ListWahana yang ada di sekitar Player */
+
 Wahana GetInfoWahanaAtTitik (ListWahana L, POINT P);
 /* Mengambil informasi wahana dari list wahana pada titik P */
 
@@ -86,6 +97,12 @@ void SetHistoryWahana(Wahana *W, List X);
 
 void SetStatusWahana(Wahana *W, boolean X);
 /* Mengubah status wahana dalam bentuk boolean */
+
+void SetStatusNamaWahana(ListWahana *LWahana, Kata NamaWahana, boolean X);
+/* Mengubah status wahana dalam bentuk boolean berdasarkan nama wahana */
+
+void SetMapWahana(Wahana *W, int X);
+/* Mengubah map wahana dalam bentuk integer */
 
 /* ^^^^^^^^^^ LIST WAHANA ^^^^^^^^^^^ */
 /* ********** KONSTRUKTOR ********** */
@@ -171,5 +188,18 @@ void PrintListWahana (ListWahana L);
 void PrintHistoryUpgradeWahana (Wahana W);
 /* I.S. ListWahana L terdefinisi */
 /* F.S. Menampilkan List Wahana dalam format : <NamaWahana> -> <NamaWahana2> */
+
+void PrintNamaUpgradeWahana (ListWahana AvailableWahanas);
+/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
+
+void PrintOpsiUpgradeWahana (Wahana UpgradeWahana);
+/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
+
+addressWahana GetWahanaByIndex (ListWahana L, int i);
+/* Mengambil Wahana pada ListWahana L dengan index i (index pertama = 0) */
+
+boolean BrokenRandomizer ();
+/* Menghasilkan true or false secara acak untuk membuat sebuah wahana rusak, jika true, wahana akan rusak */
+/* 20% Wahana akan rusak */
 
 #endif

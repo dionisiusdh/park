@@ -356,3 +356,62 @@ void BacaAksi (TabInt *ListAksi)
   }
   printf("\n");
 }
+
+boolean SearchArray(TabInt ListWahana, Kata X)
+/*Mencari apakah ada elemen X pada ListWahana*/{
+    /* KAMUS */
+    int i=0;
+    boolean found = false;
+    
+    /* ALGORITMA */
+    while (i<NeffArray(ListWahana) && !found){
+        if (IsEQKata(Nama(ElmtArray(ListWahana, i)), X)) {
+            found = true;
+        }
+        else{
+            i++;
+        }
+    }
+    return found;
+}
+
+TabInt InitKapasitas(ListWahana L){
+    //KAMUS
+    addressWahana P;
+    TabInt Kapasitas;
+    ElArrayType X;
+    //ALGORITMA
+    MakeEmpty(&Kapasitas);
+    P = FirstWahana(L);
+    while (P!= Nil){
+        Nama(X) = AkarNama(DeskripsiWahana(InfoWahana(P)));
+        Value(X) = AkarKapasitas(DeskripsiWahana(InfoWahana(P)));
+        AddAsLastEl(&Kapasitas,X);
+    }
+    return Kapasitas;
+}
+
+boolean KapasitasFull(TabInt Kapasitas, Kata Wahana)
+/*Mengecek apakah wahana yang dinaiki sudah penuh atau value dari list kapasitas 0*/
+{   //KAMUS
+    //ALGORITMA
+    boolean full = true;
+    if (SearchArray(Kapasitas,Wahana)){
+        int i=0;
+        boolean found = false;
+        
+        /* ALGORITMA */
+        while (i<NeffArray(Kapasitas) && !found){
+            if (IsEQKata(Nama(ElmtArray(Kapasitas, i)), Wahana)) {
+                if (Value(ElmtArray(Kapasitas, i)) == 0){
+                    full = true;
+                }
+                found = true;
+            }
+            else{
+                i++;
+            }
+        }
+    }
+    return full;
+}

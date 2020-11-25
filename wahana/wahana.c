@@ -3,7 +3,7 @@
 #include "./wahana.h"
 
 /* ********** KONSTRUKTOR ********** */
-void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade, boolean statuswahana){
+void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade, boolean statuswahana, int mapwahana){
     /* KAMUS */
 
     /* ALGORITMA */
@@ -11,6 +11,7 @@ void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyu
     PosisiWahana(*W) = posisiwahana;
     HistoryWahana(*W) = historyupgrade;
     StatusWahana(*W) = statuswahana;
+    MapWahana(*W) = mapwahana;
 }
 
 /* ********** GETTER ********** */
@@ -50,6 +51,28 @@ boolean GetStatusWahana(Wahana W)
     return StatusWahana(W);
 }
 
+boolean GetStatusNamaWahana(ListWahana *LWahana, Kata NamaWahana)
+/* Mengambil status wahana dalam bentuk boolean berdasarkan nama wahana */
+{
+    /* KAMUS */
+
+    /* ALGORITMA */
+    addressWahana P = FirstWahana(*LWahana);
+    while (!IsEQKata(NamaWahana, AkarNama(DeskripsiWahana(InfoWahana(P))))){
+        P = NextWahana(P);
+    }
+    return StatusWahana(InfoWahana(P));
+}
+
+int GetMapWahana(Wahana W)
+/* Sebuah Getter untuk mengembalikan nomor wahana dalam bentuk integer */
+{
+    /* KAMUS */
+
+    /* ALGORITMA */
+    return MapWahana(W);
+}
+
 Wahana GetInfoWahanaAtTitik (ListWahana L, POINT P)
 /* Mengambil informasi wahana dari list wahana pada titik P */
 {
@@ -67,6 +90,25 @@ Wahana GetInfoWahanaAtTitik (ListWahana L, POINT P)
         A = NextWahana(A);
     }
 
+}
+
+ListWahana GetWahanaNearPlayer (ListWahana L, POINT P, int CurrentMap) {
+/* Mengembalikan ListWahana yang ada di sekitar Player */
+    ListWahana LNear;
+    CreateEmptyListWahana(&LNear);
+    
+    addressWahana PWahana = FirstWahana(L);
+    while (PWahana != Nil) {
+        if (MapWahana(InfoWahana(PWahana)) != CurrentMap) {
+            PWahana = NextWahana(PWahana);
+            continue;
+        }
+        if (AreTwoPointsNear(PosisiWahana(InfoWahana(PWahana)), P)) {
+            InsertFirstWahana(&LNear, InfoWahana(PWahana));
+        }
+        PWahana = NextWahana(PWahana);
+    }
+    return LNear;
 }
 
 /* ********** SETTER ********** */
@@ -104,6 +146,28 @@ void SetStatusWahana(Wahana *W, boolean X)
 
     /* ALGORITMA */
     StatusWahana(*W) = X;
+}
+
+void SetStatusNamaWahana(ListWahana *LWahana, Kata NamaWahana, boolean X)
+/* Mengubah status wahana dalam bentuk boolean berdasarkan nama wahana */
+{
+    /* KAMUS */
+
+    /* ALGORITMA */
+    addressWahana P = FirstWahana(*LWahana);
+    while (!IsEQKata(NamaWahana, AkarNama(DeskripsiWahana(InfoWahana(P))))){
+        P = NextWahana(P);
+    }
+    StatusWahana(InfoWahana(P)) = X;
+}
+
+void SetMapWahana(Wahana *W, int X)
+/* Mengubah map wahana dalam bentuk integer */
+{
+    /* KAMUS */
+
+    /* ALGORITMA */
+    MapWahana(*W) = X;
 }
 
 /* ^^^^^^^^^^ LIST WAHANA ^^^^^^^^^^^ */
@@ -163,7 +227,7 @@ void DealokasiWahana (addressWahana *P)
 
 boolean IsWahanaSama (Wahana W1, Wahana W2)
 {
-    return (IsWahanaTypeSama(Deskripsi(W1),(Deskripsi(W2))) && EQ(PosisiWahana(W1),PosisiWahana(W2)));
+    return (IsWahanaTypeSama(Deskripsi(W1),(Deskripsi(W2))) && EQ(PosisiWahana(W1),PosisiWahana(W2)) && MapWahana(W1) == MapWahana(W2));
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
@@ -368,6 +432,8 @@ void PrintListWahana (ListWahana L)
             PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
             printf(",");
             TulisPOINT(PosisiWahana(InfoWahana(P)));
+            printf(",");
+            printf("%d",MapWahana(InfoWahana(P)));
             printf(")");
             P = NextWahana(P);
         }
@@ -384,4 +450,77 @@ void PrintHistoryUpgradeWahana (Wahana W) {
 
     // BELUM DIIMPLEMENTASIKAN
     printf("[]");
+}
+
+void PrintNamaUpgradeWahana (ListWahana AvailableWahanas){
+/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
+    /* KAMUS LOKAL */
+    addressWahana P;
+    int i;
+
+    /* ALGORITMA */
+    printf("Wahana Apa yang Ingin Anda Upgrade?\n");
+    printf("List :\n");
+    P = FirstWahana(AvailableWahanas);
+    i = 1;
+    while (P != Nil) {
+        printf("%d. ",i);
+        PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
+        printf(" ");
+        TulisPOINT(PosisiWahana(InfoWahana(P)));
+        printf("\n");
+        i++;
+        P = NextWahana(P);
+    }
+}
+
+void PrintOpsiUpgradeWahana (Wahana UpgradeWahana)
+/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
+{
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
+    printf("Upgrade Apa yang ingin Anda Lakukan?\n");
+    printf("List :\n");
+    printf("  1. ");
+    PrintKata(AkarNama(Left(Deskripsi(UpgradeWahana))));
+    printf("\n  2. ");
+    PrintKata(AkarNama(Right(Deskripsi(UpgradeWahana))));
+}
+
+addressWahana GetWahanaByIndex (ListWahana L, int i)
+/* Mengambil Wahana pada ListWahana L dengan index i (index pertama = 0) */
+{
+    /* KAMUS LOKAL */
+    addressWahana P;
+    int j;
+
+    /* ALGORITMA */
+    P = FirstWahana(L);
+    j = 0;
+    while (j < i) {
+        if (j != i) {
+            P = NextWahana(P);
+        }
+        j++;
+    }
+    return P;
+}
+
+boolean BrokenRandomizer () {
+/* Menghasilkan true or false secara acak untuk membuat sebuah wahana rusak, jika true, wahana akan rusak */
+/* 20% Wahana akan rusak */
+    /* KAMUS LOKAL */
+    int randomNumber;
+
+    /* ALGORITMA */
+    srand(time(NULL));
+    randomNumber = rand()%10;
+
+    if (randomNumber > 7) {
+        return false;
+    } else {
+        return true;
+    }
+
 }

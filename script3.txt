@@ -1,0 +1,44 @@
+cd aksi
+gcc -std=c99 -c prepaksi.c
+gcc -std=c99 -c mainaksi.c
+cd ..
+cd array
+gcc -std=c99 -c array.c
+gcc -std=c99 -c timeserve.c
+cd ..
+cd Jam
+gcc -std=c99 -c jam.c
+cd ..
+cd list-linier
+gcc -std=c99 -c listlinier.c
+cd ..
+cd matriks
+gcc -std=c99 -c matriks.c
+cd ..
+cd mesin
+gcc -std=c99 -c mesinkar.c
+gcc -std=c99 -c mesinkata.c
+cd ..
+cd pengunjung
+gcc -std=c99 -c pengunjung.c
+cd ..
+cd point
+gcc -std=c99 -c point.c
+cd ..
+cd queue
+gcc -std=c99 -c prioqueue.c
+cd ..
+cd stack
+gcc -std=c99 -c stack.c
+cd ..
+cd Graph
+gcc -std=c99 -c graph.c
+cd ..
+cd Tree
+gcc -std=c99 -c bintree.c
+cd ..
+cd wahana
+gcc -std=c99 -c wahana.c
+cd ..
+gcc -std=c99 -o main main.c ./array/timeserve.o ./Queue/prioqueue.o ./aksi/mainaksi.o ./wahana/wahana.o ./Tree/bintree.o ./Graph/graph.o ./aksi/prepaksi.o ./mesin/mesinkar.o ./mesin/mesinkata.o ./matriks/matriks.o ./point/point.o ./jam/jam.o ./stack/stack.o ./array/array.o
+./main

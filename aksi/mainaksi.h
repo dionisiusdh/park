@@ -12,27 +12,20 @@
 #include "../Jam/jam.h"
 #include "../matriks/matriks.h"
 #include "../point/point.h"
-
-/* ********** MENU ********** */
-void MenuMain();
-/* I.S. Sembarang */
-/* F.S. Menampilkan peta terkini dan menampilkan informasi dasar seperti nama, nominal uang yang dimiliki,
-        waktu sekarang, waktu tutup, waktu tersisa hingga waktu tutup, serta pengunjung yang ada pada antrian.  */
+#include "../Queue/prioqueue.h"
 
 /* ********** AKSI ********** */
-void Serve();
+void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana,TabInt *Kapasitas);
 
-void Repair();
+void Repair(MATRIKS *Map, ListWahana *LWahana);
 
-void Detail();
+void Detail(MATRIKS *Map, ListWahana LWahana);
 
 /* ********** OFFICE ********** */
-void MenuOffice();
+void MenuOffice(MATRIKS *Map, ListWahana *LWahana);
 
-void Details();
+void DetailsOffice(ListWahana *LWahana);
 
-void Report();
-
-void Exit();
+void ReportOffice(ListWahana *LWahana);
 
 #endif

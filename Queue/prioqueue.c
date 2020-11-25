@@ -94,9 +94,9 @@ void AddQueue (Queue * Q, queuetype X)
 }
 
 void DelQueue (Queue * Q, queuetype * X, Kata Wahana)
-/* Proses: Menghapus X pada Q dengan aturan FIFO */
+/* Proses: Menghapus X pada Q yang di dalamnya terdapat Nama Wahana aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
-/* F.S. X = NilQueueai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
+/* F.S. X = NilQueue elemen disetor di X dihilangkan dari queue tetapi queue rata kiri ; 
         Q mungkin kosong */
 {   //KAMUS
     int lokasi,i;
@@ -107,6 +107,9 @@ void DelQueue (Queue * Q, queuetype * X, Kata Wahana)
         ElmtQueue(*Q,i) = ElmtQueue(*Q,i+1); 
     }
     Tail(*Q) -= 1;
+    if (Tail(*Q) == NilQueue){
+        Head(*Q) = NilQueue;
+    }
 }
 
 /* Operasi Tambahan */
@@ -145,12 +148,12 @@ int SearchQueue (Queue Q, Kata Wahana)
         else{
             i++;
         }
-        if (found){
-            return i;
-        }
-        else{
-            return NilQueue;
-        }
+    }
+    if (found){
+        return i;
+    }
+    else{
+        return NilQueue;
     }
 }
 

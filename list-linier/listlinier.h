@@ -1,6 +1,6 @@
 /* File : listlinier.h */
 /* contoh ADT list berkait dengan representasi fisik pointer  */
-/* Representasi address dengan pointer */
+/* Representasi addressList dengan pointer */
 /* infotype adalah integer */
 
 #ifndef listlinier_H
@@ -11,19 +11,19 @@
 #define Nil NULL
 
 typedef int infotype;
-typedef struct tElmtlist *address;
+typedef struct tElmtlist *addressList;
 typedef struct tElmtlist { 
 	infotype info;
-	address next;
+	addressList next;
 } ElmtList;
 typedef struct {
-	address First;
+	addressList First;
 } List;
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
-/* Setiap elemen dengan address P dapat diacu Info(P), Next(P) */
-/* Elemen terakhir list : jika addressnya Last, maka Next(Last)=Nil */
+/* Setiap elemen dengan addressList P dapat diacu Info(P), Next(P) */
+/* Elemen terakhir list : jika addressListnya Last, maka Next(Last)=Nil */
 #define Info(P) (P)->info
 #define Next(P) (P)->next
 #define First(L) ((L).First)
@@ -39,28 +39,28 @@ void CreateEmptyListLinier (List *L);
 /* F.S. Terbentuk list kosong */
 
 /****************** Manajemen Memori ******************/
-address Alokasi (infotype X);
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
+addressList Alokasi (infotype X);
+/* Mengirimkan addressList hasil alokasi sebuah elemen */
+/* Jika alokasi berhasil, maka addressList tidak nil, dan misalnya */
 /* menghasilkan P, maka info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
-void DealokasiListLinier (address *P);
+void DealokasiListLinier (addressList *P);
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address P */
+/* Melakukan dealokasi/pengembalian addressList P */
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address Search (List L, infotype X);
+addressList Search (List L, infotype X);
 /* Mencari apakah ada elemen list dengan info(P)= X */
-/* Jika ada, mengirimkan address elemen tersebut. */
+/* Jika ada, mengirimkan addressList elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
-boolean FSearch (List L, address P);
+boolean FSearch (List L, addressList P);
 /* Mencari apakah ada elemen list yang beralamat P */
 /* Mengirimkan true jika ada, false jika tidak ada */
-address SearchPrec (List L, infotype X);
-/* Mengirimkan address elemen sebelum elemen yang nilainya=X */
+addressList SearchPrec (List L, infotype X);
+/* Mengirimkan addressList elemen sebelum elemen yang nilainya=X */
 /* Mencari apakah ada elemen list dengan Info(P)=X */
-/* Jika ada, mengirimkan address Prec, dengan Next(Prec)=P dan Info(P)=X. */
+/* Jika ada, mengirimkan addressList Prec, dengan Next(Prec)=P dan Info(P)=X. */
 /* Jika tidak ada, mengirimkan Nil */
 /* Jika P adalah elemen pertama, maka Prec=Nil */
 /* Search dengan spesifikasi seperti ini menghindari */
@@ -90,36 +90,36 @@ void DelVLast (List *L, infotype *X);
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertFirst (List *L, address P);
+void InsertFirst (List *L, addressList P);
 /* I.S. Sembarang, P sudah dialokasi  */
-/* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
-void InsertAfter (List *L, address P, address Prec);
+/* F.S. Menambahkan elemen ber-addressList P sebagai elemen pertama */
+void InsertAfter (List *L, addressList P, addressList Prec);
 /* I.S. Prec pastilah elemen list dan bukan elemen terakhir, */
 /*      P sudah dialokasi  */
 /* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
-void InsertLast (List *L, address P);
+void InsertLast (List *L, addressList P);
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 
 /*** PENGHAPUSAN SEBUAH ELEMEN ***/
-void DelFirst (List *L, address *P);
+void DelFirst (List *L, addressList *P);
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
 /* First element yg baru adalah suksesor elemen pertama yang lama */
 void DelP (List *L, infotype X);
 /* I.S. Sembarang */
-/* F.S. Jika ada elemen list beraddress P, dengan info(P)=X  */
+/* F.S. Jika ada elemen list beraddressListList P, dengan info(P)=X  */
 /* Maka P dihapus dari list dan di-dealokasi */
 /* Jika tidak ada elemen list dengan info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
-void DelLast (List *L, address *P);
+void DelLast (List *L, addressList *P);
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
 /* Last element baru adalah predesesor elemen terakhir yg lama, */
 /* jika ada */
-void DelAfter (List *L, address *Pdel, address Prec);
+void DelAfter (List *L, addressList *Pdel, addressList Prec);
 /* I.S. List tidak kosong. Prec adalah anggota list  */
 /* F.S. Menghapus Next(Prec): */
 /*      Pdel adalah alamat elemen list yang dihapus  */
@@ -137,12 +137,12 @@ int NbElmtList (List L);
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
 infotype Max (List L);
 /* Mengirimkan nilai info(P) yang maksimum */
-address AdrMax (List L);
-/* Mengirimkan address P, dengan info(P) yang bernilai maksimum */
+addressList AdrMax (List L);
+/* Mengirimkan addressList P, dengan info(P) yang bernilai maksimum */
 infotype Min (List L);
 /* Mengirimkan nilai info(P) yang minimum */
-address AdrMin (List L);
-/* Mengirimkan address P, dengan info(P) yang bernilai minimum */
+addressList AdrMin (List L);
+/* Mengirimkan addressList P, dengan info(P) yang bernilai minimum */
 float Average (List L);
 /* Mengirimkan nilai rata-rata info(P) */
 

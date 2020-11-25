@@ -45,4 +45,6 @@ void TulisPOINT (POINT P);
 /* I.S. P terdefinisi */
 /* F.S. P tertulis di layar dengan format "(X,Y)" */
 
+boolean AreTwoPointsNear (POINT P1, POINT P2);
+
 #endif

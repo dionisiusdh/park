@@ -124,16 +124,16 @@ POINT getPlayerTransportedPosition (MATRIKS MDest, POINT GDest);
 
 
 /* ********** Movement Player ********** */
-void moveUp (MATRIKS *M);
+void moveUp (MATRIKS *M, POINT Office);
 /* Menggerakan player ke atas 1 tile */
 
-void moveDown (MATRIKS *M);
+void moveDown (MATRIKS *M, POINT Office);
 /* Menggerakan player ke bawah 1 tile */
 
-void moveLeft (MATRIKS *M);
+void moveLeft (MATRIKS *M, POINT Office);
 /* Menggerakan player ke kiri 1 tile */
 
-void moveRight (MATRIKS *M);
+void moveRight (MATRIKS *M, POINT Office);
 /* Menggerakan player ke kanan 1 tile */
 
 boolean hitWall (MATRIKS *M, int xNew, int yNew);

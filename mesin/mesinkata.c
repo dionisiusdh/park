@@ -90,36 +90,39 @@ int KataToInteger (Kata K)
 {
   int i;
   int hasil = 0;
-  for(i=0;i<K.Length;i++){
-      if(K.TabKata[i] == '0'){
+  for (i=0;i<K.Length;i++) {
+      if (K.TabKata[i] == '0') {
         hasil = hasil*10+0;
       }
-      else if(K.TabKata[i] == '1'){
+      else if (K.TabKata[i] == '1') {
         hasil = hasil*10+1;
       }
-      else if(K.TabKata[i] == '2'){
+      else if (K.TabKata[i] == '2') {
         hasil = hasil*10+2;
       }
-      else if(K.TabKata[i] == '3'){
+      else if (K.TabKata[i] == '3') {
         hasil = hasil*10+3;
       }
-      else if(K.TabKata[i] == '4'){
+      else if (K.TabKata[i] == '4') {
         hasil = hasil*10+4;
       }
-      else if(K.TabKata[i] == '5'){
+      else if (K.TabKata[i] == '5') {
         hasil = hasil*10+5;
       }
-      else if(K.TabKata[i] == '6'){
+      else if (K.TabKata[i] == '6') {
         hasil = hasil*10+6;
       }
-      else if(K.TabKata[i] == '7'){
+      else if (K.TabKata[i] == '7') {
         hasil = hasil*10+7;
       }
-      else if(K.TabKata[i] == '8'){
+      else if (K.TabKata[i] == '8') {
         hasil = hasil*10+8;
       }
-      else if(K.TabKata[i] == '9'){
+      else if (K.TabKata[i] == '9') {
         hasil = hasil*10+9;
+      }
+      else {
+        hasil = hasil*10+0;
       }
   }
   return hasil;

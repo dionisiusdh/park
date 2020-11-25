@@ -10,6 +10,7 @@
 #include "../boolean.h"
 #include "../mesin/mesinkata.h"
 #include "../mesin/mesinkar.h"
+#include "../wahana/wahana.h"
 
 /*  Kamus Umum */
 #define IdxMin 0
@@ -47,7 +48,6 @@ typedef struct
 #define ElmtArray(T, i) (T).TI[(i)]
 #define Nama(E) (E).nama
 #define Value(E) (E).value
-#define ValueDurasi(E) (E).value_durasi
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
@@ -140,5 +140,14 @@ void BacaMaterial (TabInt *ListMaterial);
 
 void BacaAksi (TabInt *ListAksi);
 /* Membaca Aksi dan Waktu yang dibutuhkan dari file aksi.txt */
+
+boolean SearchArray(TabInt ListWahana, Kata X);
+/*Mencari apakah ada elemen X pada ListWahana*/
+
+TabInt InitKapasitas(ListWahana L);
+/*Menginisialisasi Kapasitas dari Wahana dalam bentuk TabInt*/
+
+boolean KapasitasFull(TabInt Kapasitas, Kata Wahana);
+/*Mengecek apakah wahana yang dinaiki sudah penuh atau value dari list kapasitas 0*/
 
 #endif

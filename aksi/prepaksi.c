@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "./prepaksi.h"
+#include "prepaksi.h"
 
 /* ********** MENU ********** */
 /* *********** BUY ***********  */
@@ -72,7 +72,6 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
     List Upgrade;
 
     /* ALGORITMA */
-
     // Print list wahana
     PrintNamaWahana(Wahana1, Wahana2, Wahana3);
     printf("$ ");
@@ -103,18 +102,20 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
     if (*Valid) {
         printf("Selamat, rancangan wahana anda bersimbol \'w\' telah ditambahkan\n");
         PlaceRancanganWahana(Map, getPlayer(*Map));
-
+        
         // Mengganti list wahana
+        int MapWahana = 1; // Biar ga error dulu
         CreateEmptyListLinier(&Upgrade);
+
         if (CurrentWahana == 1) {
             GetInfoWahana(Wahana1, &InfoWahana);
-            MakeWahana(&W, Wahana1, GetTitikNearRancanganWahana(*Map), Upgrade, true);
+            MakeWahana(&W, Wahana1, GetTitikNearRancanganWahana(*Map), Upgrade, true, MapWahana);
         } else if (CurrentWahana == 2) {
             GetInfoWahana(Wahana2, &InfoWahana);
-            MakeWahana(&W, Wahana2, GetTitikNearRancanganWahana(*Map), Upgrade, true);
+            MakeWahana(&W, Wahana2, GetTitikNearRancanganWahana(*Map), Upgrade, true, MapWahana);
         } else if (CurrentWahana == 3) {
             GetInfoWahana(Wahana3, &InfoWahana);
-            MakeWahana(&W, Wahana3, GetTitikNearRancanganWahana(*Map), Upgrade, true);
+            MakeWahana(&W, Wahana3, GetTitikNearRancanganWahana(*Map), Upgrade, true, MapWahana);
         } 
         
         InsertLastWahana(LWahana, W);
@@ -146,42 +147,60 @@ void Build(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, Bi
 }
 
 /* *********** UPGRADE ***********  */
-void MenuUpgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, boolean *Valid, int *CurrentUpgrade){
+void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahana, ListWahana *LUpgrade, POINT Player, Map CurrentMap){
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan dan uang yang dibutuhkan*/
 /* F.S. Menampilkan ingin upgrade apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
         Apabila bahan bangunan tidak cukup atau waktu tidak cukup atau uang tidak cukup, maka akan ditampilkan error (Memakan Waktu) */
     /* KAMUS */
-    Kata NamaUpgrade;
-    BinTree CurrentTree, CurrentUpgradeTree;
+    Kata NomorUpgrade;
+    BinTree CurrentTree, CurrentUpgradeTree, CurrentFinalUpgradeTree;
     wahanatype InfoWahana;
     *Valid = true;
-    int i;
+    Wahana tempUpgrade;
+    ListWahana LWahanaNearby;
+    int i, NomorUpgrade, NomorOpsiUpgrade;
 
     /* ALGORITMA */
-    // Inisialisasi CurrentUpgrade
+    // Mencari Wahana apa saja yang ada (sudah di-build) di sekitar posisi pemain
+    LWahanaNearby = GetWahanaNearPlayer(*CurrentDataWahana, Player, CurrentMap);
+
     *CurrentUpgrade = 0; // Jika sampai akhir fungsi CurrentUpgrade masih bernilai 0, maka tidak ada upgrade yang terjadi.
     // Print list wahana
-    if (CurrentWahana == 1){
-        CurrentTree = Wahana1;
-        PrintNamaUpgradeWahana(Wahana1);
-    } else if (CurrentWahana == 2){
-        CurrentTree = Wahana2;
-        PrintNamaUpgradeWahana(Wahana2);
-    } else if (CurrentWahana == 3){
-        CurrentTree = Wahana3;
-        PrintNamaUpgradeWahana(Wahana3);
-    }
+    PrintNamaUpgradeWahana(LWahanaNearby);
+    printf("Petunjuk : Harap Masukan Nomor Upgrade (misal 1).\n");
     printf("$ ");
     STARTKATA();
-    NamaUpgrade = CKata;
+    NomorUpgrade = KataToInteger(CKata);
+
+    while (NomorUpgrade < 1) {
+        printf("Maaf upgrade tersebut tidak tersedia, harap masukan nomor upgrade (misal 1).\n");
+        printf("$ ");
+        ADVKATA();
+        NomorUpgrade = KataToInteger(CKata);
+    }
+
+    CurrentUpgradeTree = Left(Deskripsi(InfoWahana(GetWahanaByIndex(LWahanaNearby,NomorUpgrade-1))));
+
+    PrintOpsiUpgradeWahana(CurrentUpgradeTree);
+    printf("Petunjuk : Harap Masukan Nomor Opsi Upgrade (misal 1).\n");
+    printf("$ ");
+    STARTKATA();
+    NomorOpsiUpgrade = KataToInteger(CKata);
+
+    while (NomorOpsiUpgrade < 1 && NomorOpsiUpgrade > 2) {
+        printf("Maaf opsi upgrade tersebut tidak tersedia, harap masukan nomor opsi upgrade (misal 1).\n");
+        printf("$ ");
+        ADVKATA();
+        NomorOpsiUpgrade = KataToInteger(CKata);
+    }
 
     // Cek input
-    if (IsEQKata(NamaUpgrade, AkarNama(Left(CurrentTree)))) {
+    if (NomorOpsiUpgrade == 1) {
         CurrentUpgradeTree = Left(CurrentTree);
         *CurrentUpgrade = 1; // Menandai Upgrade Left
         GetInfoWahana(Left(CurrentTree), &InfoWahana);
-    } else if (IsEQKata(NamaUpgrade, AkarNama(Right(CurrentTree)))) {
+    } else if (NomorOpsiUpgrade == 2) {
         CurrentUpgradeTree = Right(CurrentTree);
         *CurrentUpgrade = 2; // Menandai Upgrade Right
         GetInfoWahana(Right(CurrentTree), &InfoWahana);
@@ -197,8 +216,8 @@ void MenuUpgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahan
 
     if(*Valid){
         printf("Upgrade Berhasil.\n");
-
-
+        MakeWahana(&tempUpgrade, CurrentUpgradeTree, );
+        InsertLastWahana(&L,);
     } 
 }
 
@@ -271,6 +290,8 @@ void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *List
                 Buy(Inventory, ListMaterial, InfoNamaAksi(X), InfoJumlahAksi(X));
             } else if (IsEQKata(Aksi(X),StringToKata("build",5))){
                 Build(Map, Inventory, Wahana1, Wahana2, Wahana3, InfoJumlahAksi(X));
+            } else if (IsEQKata(Aksi(X),StringToKata("upgrade",7))){
+                // Upgrade()
             }
         }
 
