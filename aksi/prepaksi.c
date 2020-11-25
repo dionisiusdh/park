@@ -178,7 +178,7 @@ void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahan
         printf("$ ");
         ADVKATA();
         NomorUpgrade = KataToInteger(CKata);
-    }
+    } 
 
     CurrentUpgradeTree = Left(Deskripsi(InfoWahana(GetWahanaByIndex(LWahanaNearby,NomorUpgrade-1))));
 
