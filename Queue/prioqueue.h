@@ -1,6 +1,6 @@
 /* File : prioqueue.h */
 /* Definisi ADT Priority Queue dengan representasi array secara eksplisit dan alokasi dinamik */
-/* Model Implementasi Versi III dengan circular buffer */
+/* Model Implementasi Versi I */
 /* Elemen queue terurut mengecil berdasarkan elemen prio */
 
 #ifndef prioqueue_H
@@ -9,7 +9,7 @@
 #include "../boolean.h"
 #include "../pengunjung/pengunjung.h"
 
-#define NilQueue 0
+#define NilQueue -1
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
 
 /* Definisi elemen dan address */
@@ -26,7 +26,6 @@ typedef struct { queuetype * T;   /* tabel penyimpan elemen */
                  int MaxElQueue;     /* Max elemen queue */
                } Queue;
 /* Definisi Queue kosong: HEAD=Nil; TAIL=Nil. */
-/* Catatan implementasi: T[0] tidak pernah dipakai */
 
 /* ********* AKSES (Selektor) ********* */
 /* Jika e adalah infotype dan Q adalah Queue, maka akses elemen : */

@@ -25,12 +25,7 @@ int NBElmtQueue (Queue Q)
         return 0;
     }
     else{
-        if(Head(Q)<=Tail(Q)){
-            return Tail(Q)-Head(Q)+1;
-        }
-        else{
-            return (MaxElQueue(Q)-Head(Q)+1+Tail(Q));
-        }
+        return Tail(Q)-Head(Q)+1;
     }
 }
 /* *** Kreator *** */
@@ -40,7 +35,7 @@ void CreateEmptyQueue (Queue * Q, int Max)
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
 /* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
-{   (*Q).T = (queuetype*) malloc ((Max+1)*sizeof(queuetype));
+{   (*Q).T = (queuetype*) malloc ((Max)*sizeof(queuetype));
     if((*Q).T!=NULL){
         MaxElQueue(*Q) = Max;
         Head(*Q) = NilQueue;
@@ -64,76 +59,37 @@ void DeAlokasiQueue (Queue * Q)
 void AddQueue (Queue * Q, queuetype X)
 /* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut mengecil berdasarkan prio */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
-/* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer;
+/* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme list rata kiri;
         elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas */
-{
+{   //KAMUS
+    int i;
+    boolean add;
+    queuetype temp1,temp2;
+    //ALGORITMA
     if(IsEmptyQueue(*Q)){
-        (*Q).T[NilQueue+1] = X;
-        Head(*Q) = NilQueue+1;
-        Tail(*Q) = NilQueue+1;
+        ElmtQueue(*Q,0) = X;
+        Head(*Q) = 0;
+        Tail(*Q) = 0;
     }
     else{
-        if((Head(*Q)<=Tail(*Q)) && (Tail(*Q)<MaxElQueue(*Q)-1)) {
-            address i = Head(*Q);
-            while(PrioQueue(ElmtQueue(*Q,i))>PrioQueue(X)){
-                i++;
-            }
-            int j;
-            for(j=Tail(*Q)+1;j>i;j--){
-                (*Q).T[j] = (*Q).T[j-1];
-            }
-            (*Q).T[i] = X;
-            Tail(*Q) += 1;
-        }
-        else if((Head(*Q)>Tail(*Q))) {
-            address i = Head(*Q);
-            while(PrioQueue(ElmtQueue(*Q,i))>PrioQueue(X) && i<MaxElQueue(*Q)){
-                i++;
-            }
-            if(i==MaxElQueue(*Q)){
-                i = NilQueue+1;
-                while(PrioQueue(ElmtQueue(*Q,i))>PrioQueue(X)){
-                    i++;
-                }
-                int j;
-                for(j=Tail(*Q)+1;j>i;j--){
-                    (*Q).T[j] = (*Q).T[j-1];
-                }
-                (*Q).T[i] = X;
+        i = Head(*Q);
+        add = false;
+        temp1 = X;
+        while (i<=Tail(*Q) && !add){
+            if (PrioQueue(ElmtQueue(*Q,i)) < PrioQueue(X)){
+                add = true;;
             }
             else{
-                int j;
-                for(j=Tail(*Q)+1;j>NilQueue+1;j--){
-                    (*Q).T[j] = (*Q).T[j-1];
-                }
-                (*Q).T[j] = (*Q).T[MaxElQueue(*Q)-1];
-                for(j=MaxElQueue(*Q)-1;j>i;j--){
-                    (*Q).T[j] = (*Q).T[j-1];
-                }
-                (*Q).T[i] = X;
+                i++;
             }
-            Tail(*Q) += 1;
         }
-        else if(Head(*Q)<=Tail(*Q) && Tail(*Q)==MaxElQueue(*Q)-1){
-            if(PrioQueue(ElmtQueue(*Q,MaxElQueue(*Q)-1))>PrioQueue(X)){
-                (*Q).T[NilQueue+1] = X;
-                Tail(*Q) = NilQueue+1;
-            }
-            else{
-                address i = Head(*Q);
-                while(PrioQueue(ElmtQueue(*Q,i))>PrioQueue(X)){
-                    i++;
-                }
-                int j;
-                (*Q).T[NilQueue+1] = InfoTail(*Q);
-                for(j=Tail(*Q);j>i;j--){
-                    (*Q).T[j] = (*Q).T[j-1];
-                }
-                (*Q).T[i] = X;
-                Tail(*Q) = NilQueue+1;
-            }
-            Tail(*Q) += 1;   
+        while (i<=Tail(*Q)){
+            temp2 = ElmtQueue(*Q,i);
+            ElmtQueue(*Q,i) = temp1;
+            temp1 = temp2; 
         }
+        Tail(*Q) += 1;
+        ElmtQueue(*Q,Tail(*Q)) = temp1;
     }
 }
 
@@ -145,48 +101,12 @@ void DelQueue (Queue * Q, queuetype * X, Kata Wahana)
 {   //KAMUS
     int lokasi,i;
     //ALGORITMA
+    *X = ElmtQueue(*Q,lokasi);
     lokasi = SearchQueue(*Q,Wahana);
-    if (lokasi!=0){
-        if (NBElmtQueue(*Q)==1){
-            *X = InfoHead(*Q);
-            Head(*Q) = NilQueue;
-            Tail(*Q) = NilQueue;
-        }
-        else{
-            if (lokasi < Head(*Q)){
-                *X = ElmtQueue(*Q,lokasi);
-                i = lokasi + 1;
-                while (i<=Tail(*Q)){
-                    ElmtQueue(*Q,i-1) = ElmtQueue(*Q,i);
-                }
-                if (Tail(*Q) == 1){
-                    Tail(*Q) = 5;
-                }
-                else{
-                    Tail(*Q) -= 1;
-                }
-            }
-            else if (lokasi > Head(*Q)){
-                if (Head(*Q) < Tail(*Q)){
-                    *X = ElmtQueue(*Q,lokasi);
-                }
-            }     
-        } 
+    for (i=lokasi; i<Tail(*Q); i++){
+        ElmtQueue(*Q,i) = ElmtQueue(*Q,i+1); 
     }
-
-    // if(NBElmtQueue(*Q)==1){
-    //     *X = InfoHead(*Q);
-    //     Head(*Q) = NilQueue;
-    //     Tail(*Q) = NilQueue;
-    // }
-    // else if(Head(*Q)==MaxElQueue(*Q)-1){
-    //     *X = InfoHead(*Q);
-    //     Head(*Q) = NilQueue+1;
-    // }
-    // else{
-    //     *X = InfoHead(*Q);
-    //     Head(*Q)++;
-    // }
+    Tail(*Q) -= 1;
 }
 
 /* Operasi Tambahan */
@@ -205,66 +125,32 @@ void PrintQueue (Queue Q)
     //ALGORITMA
     printf("Antrian [%d/5]\n", NBElmtQueue(Q));
 
-    if (Tail(Q)<Head(Q)){
-        for (i= Head(Q); i<=NBElmtQueue(Q); i++){
-            TulisWahana(Pengunjung(ElmtQueue(Q,i)));
-            printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
-            printf(" | Customer %c\n", NamaPengunjung(ElmtQueue(Q,i)));
-        }
-        for (i= 1; i<=Tail(Q); i++){
-            TulisWahana(Pengunjung(ElmtQueue(Q,i)));
-            printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
-            printf(" | Customer %c\n",NamaPengunjung(ElmtQueue(Q,i)));
-        }
-    }
-    else{
-        for(i=Head(Q);i<=Tail(Q);i++){
-            TulisWahana(Pengunjung(ElmtQueue(Q,i)));
-            printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
-            printf(" | Customer %c\n",NamaPengunjung(ElmtQueue(Q,i)));
-        }
+    for (i= Head(Q); i<=Tail(Q); i++){
+        TulisWahana(Pengunjung(ElmtQueue(Q,i)));
+        printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
+        printf(" | Customer %c\n",NamaPengunjung(ElmtQueue(Q,i)));
     }  
 }
 
-int SearchQueue (Queue Q, Kata Wahana){
-    //KAMUS LOKAL
-    int i=Head(Q);
+int SearchQueue (Queue Q, Kata Wahana)
+//Mencari posisi dari elemen pertama queue yang memiliki wahana di dalamnya
+{   //KAMUS
+    int i = Head(Q);
     boolean found = false;
     //ALGORITMA
-    if (Head(Q) > Tail(Q)){
-        while (i<=MaxElQueue(Q) && !found){
-            if (SearchPengunjung(Pengunjung(ElmtQueue(Q,i)), Wahana)){
-                found = true;
-            }
-            else{
-                i++;
-            }
+    while (i<=Tail(Q) && !found){
+        if (SearchPengunjung(Pengunjung(ElmtQueue(Q,i)), Wahana)){
+            found = true;
         }
-        while (i<=Tail(Q) && !found){
-            if (SearchPengunjung(Pengunjung(ElmtQueue(Q,i)), Wahana)){
-                found = true;
-            }
-            else{
-                i++;
-            }
+        else{
+            i++;
         }
-        if (found == true){
+        if (found){
             return i;
         }
         else{
-            return 0;           
+            return NilQueue;
         }
-    }
-    else {
-        while (i<=Tail(Q) && !found){
-            if (SearchPengunjung(Pengunjung(ElmtQueue(Q,i)), Wahana)){
-                found = true;
-            }
-            else{
-                i++;
-            }
-        }
-        return i;
     }
 }
 
@@ -288,6 +174,6 @@ void initQueue (Queue *Antrian) {
     i++;
     nama++;
   }
-  Head(*Antrian) = 1;
+  Head(*Antrian) = 0;
   Tail(*Antrian) = i-1;
 }
