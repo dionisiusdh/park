@@ -474,7 +474,7 @@ void PrintNamaUpgradeWahana (ListWahana AvailableWahanas){
     }
 }
 
-void PrintOpsiUpgradeWahana (Wahana UpgradeWahana)
+void PrintOpsiUpgradeWahana (BinTree UpgradeWahana)
 /* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
 {
     /* KAMUS LOKAL */
@@ -483,9 +483,9 @@ void PrintOpsiUpgradeWahana (Wahana UpgradeWahana)
     printf("Upgrade Apa yang ingin Anda Lakukan?\n");
     printf("List :\n");
     printf("  1. ");
-    PrintKata(AkarNama(Left(Deskripsi(UpgradeWahana))));
+    PrintKata(AkarNama(Left(UpgradeWahana)));
     printf("\n  2. ");
-    PrintKata(AkarNama(Right(Deskripsi(UpgradeWahana))));
+    PrintKata(AkarNama(Right(UpgradeWahana)));
 }
 
 addressWahana GetWahanaByIndex (ListWahana L, int i)

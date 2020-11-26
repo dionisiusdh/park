@@ -192,7 +192,7 @@ void PrintHistoryUpgradeWahana (Wahana W);
 void PrintNamaUpgradeWahana (ListWahana AvailableWahanas);
 /* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
 
-void PrintOpsiUpgradeWahana (Wahana UpgradeWahana);
+void PrintOpsiUpgradeWahana (BinTree UpgradeWahana);
 /* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
 
 addressWahana GetWahanaByIndex (ListWahana L, int i);

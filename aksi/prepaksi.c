@@ -153,19 +153,20 @@ void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahan
         di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
         Apabila bahan bangunan tidak cukup atau waktu tidak cukup atau uang tidak cukup, maka akan ditampilkan error (Memakan Waktu) */
     /* KAMUS */
-    Kata NomorUpgrade;
     BinTree CurrentTree, CurrentUpgradeTree, CurrentFinalUpgradeTree;
+    POINT PosisiWahana;
     wahanatype InfoWahana;
     *Valid = true;
     Wahana tempUpgrade;
+    List historyUpgrade;
     ListWahana LWahanaNearby;
-    int i, NomorUpgrade, NomorOpsiUpgrade;
+    int i, NomorUpgrade, NomorOpsiUpgrade, MapWahanaUpgrade;
 
     /* ALGORITMA */
     // Mencari Wahana apa saja yang ada (sudah di-build) di sekitar posisi pemain
     LWahanaNearby = GetWahanaNearPlayer(*CurrentDataWahana, Player, CurrentMap);
 
-    *CurrentUpgrade = 0; // Jika sampai akhir fungsi CurrentUpgrade masih bernilai 0, maka tidak ada upgrade yang terjadi.
+    // *CurrentUpgrade = 0; // Jika sampai akhir fungsi CurrentUpgrade masih bernilai 0, maka tidak ada upgrade yang terjadi.
     // Print list wahana
     PrintNamaUpgradeWahana(LWahanaNearby);
     printf("Petunjuk : Harap Masukan Nomor Upgrade (misal 1).\n");
@@ -180,7 +181,9 @@ void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahan
         NomorUpgrade = KataToInteger(CKata);
     } 
 
-    CurrentUpgradeTree = Left(Deskripsi(InfoWahana(GetWahanaByIndex(LWahanaNearby,NomorUpgrade-1))));
+    PosisiWahana = PosisiWahana(InfoWahana(GetWahanaByIndex(LWahanaNearby,NomorUpgrade-1)));
+    MapWahanaUpgrade = MapWahana(InfoWahana(GetWahanaByIndex(LWahanaNearby,NomorUpgrade-1)));
+    CurrentUpgradeTree = DeskripsiWahana(InfoWahana(GetWahanaByIndex(LWahanaNearby,NomorUpgrade-1)));
 
     PrintOpsiUpgradeWahana(CurrentUpgradeTree);
     printf("Petunjuk : Harap Masukan Nomor Opsi Upgrade (misal 1).\n");
@@ -197,12 +200,10 @@ void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahan
 
     // Cek input
     if (NomorOpsiUpgrade == 1) {
-        CurrentUpgradeTree = Left(CurrentTree);
-        *CurrentUpgrade = 1; // Menandai Upgrade Left
+        CurrentFinalUpgradeTree = Left(CurrentTree);
         GetInfoWahana(Left(CurrentTree), &InfoWahana);
     } else if (NomorOpsiUpgrade == 2) {
-        CurrentUpgradeTree = Right(CurrentTree);
-        *CurrentUpgrade = 2; // Menandai Upgrade Right
+        CurrentFinalUpgradeTree = Right(CurrentTree);
         GetInfoWahana(Right(CurrentTree), &InfoWahana);
     }
     
@@ -216,8 +217,8 @@ void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahan
 
     if(*Valid){
         printf("Upgrade Berhasil.\n");
-        MakeWahana(&tempUpgrade, CurrentUpgradeTree, );
-        InsertLastWahana(&L,);
+        MakeWahana(&tempUpgrade, CurrentFinalUpgradeTree, PosisiWahana, historyUpgrade, false, MapWahanaUpgrade);
+        InsertLastWahana(&L, tempUpgrade);
     } 
 }
 
