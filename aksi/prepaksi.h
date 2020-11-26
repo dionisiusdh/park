@@ -13,6 +13,8 @@
 #include "../matriks/matriks.h"
 #include "../point/point.h"
 #include "../wahana/wahana.h"
+#include "../pengunjung/pengunjung.h"
+#include "../list-linier/listlinier.h"
 
 /* ********** MENU ********** */
 /* *********** BUY ***********  */
@@ -36,25 +38,25 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
 void Build(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana);
 
 /* *********** UPGRADE ***********  */
-void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahana, ListWahana *LUpgrade, POINT Player, Map CurrentMap);
+void MenuUpgrade(TabInt *Inventory, ListWahana CurrentDataWahana, ListWahana *LUpgrade, POINT Player, Map CurrentMap, boolean *Valid);
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan dan uang yang dibutuhkan*/
 /* F.S. Menampilkan ingin upgrade apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
         Apabila bahan bangunan tidak cukup atau waktu tidak cukup atau uang tidak cukup, maka akan ditampilkan error (Memakan Waktu) */
 
-void Upgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, int CurrentUpgrade);
+void Upgrade(MATRIKS *Map, TabInt *Inventory, ListWahana *LUpgrade, ListWahana *LWahana);
 /* I.S. Pemain berada di sekitar wahana yang dapat di-upgrade */
 /* F.S. Menampikan daftar upgrade yang mungkin untuk wahana tersebut ke layar. Apabila material yang dimiliki tidak cukup
 atau waktu tidak cukup, maka akan menampilkan error ke layar pengguna. Apabila kedua syarat (waktu dan material) terpenuhi,
 maka akan memasukkan perintah eksekusi ke dalam stack (Memakan Waktu) */
 
 /* *********** UNDO AND EXECUTE ***********  */
-void Undo (Stack * S, aksitype *X, ListWahana *LWahana);
+void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana);
 /* I.S. Terdapat stack perintah sembarang, T mungkin kosong */
 /* F.S. Top stack perintah T telah di pop (Current top hilang, perintah paling atas pada stack menjadi new top),
         apabila I.S. kosong maka tidak dilakukan apa-apa (TidakMemakan Waktu) */
 
-void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *ListMaterial, ListWahana *LWahana, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, boolean *prep_status, boolean *main_status);
+void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *ListMaterial, ListWahana *LWahana, ListWahana *LUpgrade, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, boolean *prep_status, boolean *main_status);
 /* I.S. Terdapat stack perintah sembarang yang mungkin kosong */
 /* F.S. Semua perintah dijalankan satu per satu dari top hingga stack kosong, 
         kemudian fase berubah dari preparation ke main*/

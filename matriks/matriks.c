@@ -681,24 +681,22 @@ POINT GetTitikNearRancanganWahana (MATRIKS M) {
 
     P = getPlayer(M);
 
-    if (isNearWahana(M, getPlayer(M))) {
-        if (Elmt(M, Absis(P)+1, Ordinat(P)) == 'w') {
-            return MakePOINT(Absis(P)+1, Ordinat(P));
-        } else if (Elmt(M, Absis(P)-1, Ordinat(P)) == 'w') {
-            return MakePOINT(Absis(P)-1, Ordinat(P));
-        } else if (Elmt(M, Absis(P), Ordinat(P)+1) == 'w') {
-            return MakePOINT(Absis(P), Ordinat(P)+1);
-        } else if (Elmt(M, Absis(P), Ordinat(P)-1) == 'w') {
-            return MakePOINT(Absis(P), Ordinat(P)-1);
-        } else if (Elmt(M, Absis(P)+1, Ordinat(P)+1) == 'w') {
-            return MakePOINT(Absis(P)+1, Ordinat(P)+1);
-        } else if (Elmt(M, Absis(P)+1, Ordinat(P)-1) == 'w') {
-            return MakePOINT(Absis(P)+1, Ordinat(P)-1);
-        } else if (Elmt(M, Absis(P)-1, Ordinat(P)+1) == 'w') {
-            return MakePOINT(Absis(P)-1, Ordinat(P)+1);
-        } else if (Elmt(M, Absis(P)-1, Ordinat(P)-1) == 'w') {
-            return MakePOINT(Absis(P)-1, Ordinat(P)-1);
-        }
+    if (Elmt(M, Absis(P)+1, Ordinat(P)) == 'w') {
+        return MakePOINT(Absis(P)+1, Ordinat(P));
+    } else if (Elmt(M, Absis(P)-1, Ordinat(P)) == 'w') {
+        return MakePOINT(Absis(P)-1, Ordinat(P));
+    } else if (Elmt(M, Absis(P), Ordinat(P)+1) == 'w') {
+        return MakePOINT(Absis(P), Ordinat(P)+1);
+    } else if (Elmt(M, Absis(P), Ordinat(P)-1) == 'w') {
+        return MakePOINT(Absis(P), Ordinat(P)-1);
+    } else if (Elmt(M, Absis(P)+1, Ordinat(P)+1) == 'w') {
+        return MakePOINT(Absis(P)+1, Ordinat(P)+1);
+    } else if (Elmt(M, Absis(P)+1, Ordinat(P)-1) == 'w') {
+        return MakePOINT(Absis(P)+1, Ordinat(P)-1);
+    } else if (Elmt(M, Absis(P)-1, Ordinat(P)+1) == 'w') {
+        return MakePOINT(Absis(P)-1, Ordinat(P)+1);
+    } else if (Elmt(M, Absis(P)-1, Ordinat(P)-1) == 'w') {
+        return MakePOINT(Absis(P)-1, Ordinat(P)-1);
     }
     return MakePOINT(0,0);
 }
@@ -724,4 +722,9 @@ void PrintInfoWahana (Wahana W) {
     } else {
         printf("Rusak");
     }
+}
+
+void setTitik (MATRIKS *Map, POINT P, char X) {
+// Mengubah titik P pada Map menjadi X
+    Elmt(*Map, Absis(P), Ordinat(P)) = X;
 }

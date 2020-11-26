@@ -175,6 +175,13 @@ void DeleteWahana (ListWahana *L, Wahana W);
 /* Jika tidak ada elemen list dengan info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
 
+void DeleteWahanaByPosition (ListWahana *L, POINT P, int MapWahana);
+/* I.S. Sembarang */
+/* F.S. Jika ada elemen list beraddress P, dengan info(P)=X  */
+/* Maka P dihapus dari list dan di-dealokasi */
+/* Jika tidak ada elemen list dengan info(P)=X, maka list tetap */
+/* List mungkin menjadi kosong karena penghapusan */
+
 void DelLastWahana (ListWahana *L, addressWahana *P);
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
@@ -197,6 +204,9 @@ void PrintOpsiUpgradeWahana (BinTree UpgradeWahana);
 
 addressWahana GetWahanaByIndex (ListWahana L, int i);
 /* Mengambil Wahana pada ListWahana L dengan index i (index pertama = 0) */
+
+addressWahana GetAddressByWahana (ListWahana L, Wahana W);
+/* Mengembalikan address dari Wahana W di dalam ListWahana */
 
 boolean BrokenRandomizer ();
 /* Menghasilkan true or false secara acak untuk membuat sebuah wahana rusak, jika true, wahana akan rusak */

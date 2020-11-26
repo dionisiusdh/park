@@ -12,6 +12,9 @@
 #include "../Jam/jam.h"
 #include "../matriks/matriks.h"
 #include "../point/point.h"
+#include "../wahana/wahana.h"
+#include "../pengunjung/pengunjung.h"
+#include "../list-linier/listlinier.h"
 #include "../Queue/prioqueue.h"
 
 /* ********** AKSI ********** */

@@ -204,4 +204,7 @@ Wahana GetNearWahana (MATRIKS* M, ListWahana Wahana);
 void PrintInfoWahana (Wahana W);
 /* Mencetak informasi wahana disekitar pemain sesuai dengan spek */
 
+void setTitik (MATRIKS *Map, POINT P, char X);
+// Mengubah titik P pada Map menjadi X
+
 #endif

@@ -90,6 +90,7 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
         GetInfoWahana(Wahana3, &InfoWahana);
     }
     
+    // Cek ketersediaan material
     for (i=0;i<5;i++) {
         if (WahanaMatUp(InfoWahana, i) > Value(ElmtArray(*Inventory, i))) {
             *Valid = false;
@@ -107,17 +108,16 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
         int MapWahana = 1; // Biar ga error dulu
         CreateEmptyListLinier(&Upgrade);
 
-        if (CurrentWahana == 1) {
+        if (*CurrentWahana == 1) {
             GetInfoWahana(Wahana1, &InfoWahana);
             MakeWahana(&W, Wahana1, GetTitikNearRancanganWahana(*Map), Upgrade, true, MapWahana);
-        } else if (CurrentWahana == 2) {
+        } else if (*CurrentWahana == 2) {
             GetInfoWahana(Wahana2, &InfoWahana);
             MakeWahana(&W, Wahana2, GetTitikNearRancanganWahana(*Map), Upgrade, true, MapWahana);
-        } else if (CurrentWahana == 3) {
+        } else if (*CurrentWahana == 3) {
             GetInfoWahana(Wahana3, &InfoWahana);
             MakeWahana(&W, Wahana3, GetTitikNearRancanganWahana(*Map), Upgrade, true, MapWahana);
         } 
-        
         InsertLastWahana(LWahana, W);
     }
 }
@@ -147,7 +147,7 @@ void Build(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, Bi
 }
 
 /* *********** UPGRADE ***********  */
-void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahana, ListWahana *LUpgrade, POINT Player, Map CurrentMap){
+void MenuUpgrade(TabInt *Inventory, ListWahana CurrentDataWahana, ListWahana *LUpgrade, POINT Player, Map CurrentMap, boolean *Valid){
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan dan uang yang dibutuhkan*/
 /* F.S. Menampilkan ingin upgrade apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
@@ -164,7 +164,7 @@ void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahan
 
     /* ALGORITMA */
     // Mencari Wahana apa saja yang ada (sudah di-build) di sekitar posisi pemain
-    LWahanaNearby = GetWahanaNearPlayer(*CurrentDataWahana, Player, CurrentMap);
+    LWahanaNearby = GetWahanaNearPlayer(CurrentDataWahana, Player, CurrentMap);
 
     // *CurrentUpgrade = 0; // Jika sampai akhir fungsi CurrentUpgrade masih bernilai 0, maka tidak ada upgrade yang terjadi.
     // Print list wahana
@@ -218,48 +218,38 @@ void MenuUpgrade(TabInt *Inventory, boolean *Valid, ListWahana *CurrentDataWahan
     if(*Valid){
         printf("Upgrade Berhasil.\n");
         MakeWahana(&tempUpgrade, CurrentFinalUpgradeTree, PosisiWahana, historyUpgrade, false, MapWahanaUpgrade);
-        InsertLastWahana(&L, tempUpgrade);
+        InsertLastWahana(LUpgrade, tempUpgrade);
     } 
 }
 
-void Upgrade(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana, int CurrentUpgrade){
+void Upgrade(MATRIKS *Map, TabInt *Inventory, ListWahana *LUpgrade, ListWahana *LWahana){
     /* KAMUS */
-    wahanatype InfoWahana;
-    BinTree CurrentTree, CurrentUpgradeTree;
+    wahanatype InfoWahanaType;
+    addressWahana P, wahanaUpgrade;
     int i;
 
     /* ALGORITMA */
     // Mengambil info wahana berdasarkan current wahana yang ingin dibangun
-    if (CurrentWahana == 1) {
-        CurrentTree = Wahana1;
-    } else if (CurrentWahana == 2) {
-        CurrentTree = Wahana2;
-    } else if (CurrentWahana == 3) {
-        CurrentTree = Wahana3;
-    } 
+    P = FirstWahana(*LUpgrade);
+    while (P != Nil) {
+        DelFirstWahana(LUpgrade, &wahanaUpgrade);
+        DeleteWahanaByPosition(LWahana, PosisiWahana(InfoWahana(wahanaUpgrade)), MapWahana(InfoWahana(wahanaUpgrade)));
+        InsertLastWahana(LWahana, InfoWahana(wahanaUpgrade));
 
-    if (CurrentUpgrade == 1) {
-        CurrentUpgradeTree = Left(CurrentTree);
-        GetInfoWahana(Left(CurrentTree), &InfoWahana);
-    } else if (CurrentUpgrade == 2) {
-        CurrentUpgradeTree = Right(CurrentTree);
-        GetInfoWahana(Right(CurrentTree), &InfoWahana);
+        // Mengurangkan jumlah item di inventory sesuai dengan bahan yang diperlukan dan mengurangkan jumlah uang di money sesuai yang dibutuhkan
+        
+        for (i=0;i<5;i++) {
+            Value(ElmtArray(*Inventory, i)) -= AkarMatUp(DeskripsiWahana(InfoWahana(wahanaUpgrade)), i);
+        }
+        P = NextWahana(P);
     }
-
-    // Mengurangkan jumlah item di inventory sesuai dengan bahan yang diperlukan dan mengurangkan jumlah uang di money sesuai yang dibutuhkan
-    for (i=0;i<5;i++) {
-        Value(ElmtArray(*Inventory, i)) -= WahanaMatUp(InfoWahana, i);
-    }
-
-    // Place wahana di Map
-    //PlaceWahana(Map, getPlayer(*Map));
 }
 
 /* ************ FUNGSI-FUNGSI PROGRAM ************ */
-void Undo (Stack * S, aksitype *X, ListWahana *LWahana) {
+void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana) {
 /* Melakukan undo dengan pop elemen dari stack */
     /* KAMUS LOKAL */
-    addressWahana Trash;
+    addressWahana Trash,P;
 
     /* ALGORITMA */
     if (!IsEmptyStack(*S)) {
@@ -267,6 +257,11 @@ void Undo (Stack * S, aksitype *X, ListWahana *LWahana) {
         CurrentDuration(*S) = KurangJAM(Durasi(*X), CurrentDuration(*S));
 
         if (IsEQKata(Aksi(*X), StringToKata("build",5))) {
+            P = FirstWahana(*LWahana);
+            while (NextWahana(P) != Nil) {
+                P = NextWahana(P);
+            }
+            setTitik(Map, PosisiWahana(InfoWahana(P)), '-'); 
             DelLastWahana(LWahana, &Trash);
         }
         printf("Berhasil undo.\n");
@@ -275,7 +270,7 @@ void Undo (Stack * S, aksitype *X, ListWahana *LWahana) {
     }
 }
 
-void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *ListMaterial, ListWahana *LWahana, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, boolean *prep_status, boolean *main_status){
+void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *ListMaterial, ListWahana *LWahana, ListWahana *LUpgrade, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, boolean *prep_status, boolean *main_status){
 /* I.S. Terdapat stack perintah sembarang yang mungkin kosong */
 /* F.S. Semua perintah dijalankan satu per satu dari top hingga stack kosong, 
         kemudian fase berubah dari preparation ke main*/
@@ -292,7 +287,7 @@ void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *List
             } else if (IsEQKata(Aksi(X),StringToKata("build",5))){
                 Build(Map, Inventory, Wahana1, Wahana2, Wahana3, InfoJumlahAksi(X));
             } else if (IsEQKata(Aksi(X),StringToKata("upgrade",7))){
-                // Upgrade()
+                Upgrade(Map, Inventory, LUpgrade, LWahana);
             }
         }
 

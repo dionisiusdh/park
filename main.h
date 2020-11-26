@@ -20,6 +20,8 @@
 #include "./Tree/bintree.h"
 #include "./Queue/prioqueue.h"
 #include "./array/timeserve.h"
+#include "./pengunjung/pengunjung.h"
+#include "./wahana/wahana.h"
 
 /* ********* Aksi ********* */
 #include "./aksi/prepaksi.h"
@@ -35,7 +37,7 @@ void initGame(Kata * Nama);
 void inputPerintah (Kata *Perintah);
 /* Membaca perintah dari user dalam bentuk kata */ 
 
-void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office);
+void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, ListWahana *LUpgrade, POINT Office);
 /* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah pada preparation phase */
 
 void cekPerintahMain(Kata CurrentPerintah,Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office);
@@ -59,7 +61,7 @@ void initWahana (BinTree *Wahana1, BinTree *Wahana2, BinTree *Wahana3);
 void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi);
 /*Menginisialisasi Inventory*/
 
-void initListWahana (ListWahana *LWahana);
+void initListWahana (ListWahana *LWahana, ListWahana *LUpgrade);
 /* Inisiasi ListWahana berisi semua daftar wahana yang ada */
 
 void initStack (Stack *S, JAM MaxDuration);

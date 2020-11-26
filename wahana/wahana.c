@@ -1,6 +1,7 @@
 // Realisasi Dari wahana.h
 
 #include "./wahana.h"
+#include <time.h>
 
 /* ********** KONSTRUKTOR ********** */
 void MakeWahana(Wahana *W, BinTree datawahana, POINT posisiwahana, List historyupgrade, boolean statuswahana, int mapwahana){
@@ -21,7 +22,7 @@ BinTree GetDataWahana(Wahana W)
     /* KAMUS */
 
     /* ALGORITMA */
-    return Deskripsi(W);
+    return DeskripsiWahana(W);
 }
 
 POINT GetPosisiWahana(Wahana W)
@@ -227,7 +228,7 @@ void DealokasiWahana (addressWahana *P)
 
 boolean IsWahanaSama (Wahana W1, Wahana W2)
 {
-    return (IsWahanaTypeSama(Deskripsi(W1),(Deskripsi(W2))) && EQ(PosisiWahana(W1),PosisiWahana(W2)) && MapWahana(W1) == MapWahana(W2));
+    return (IsWahanaTypeSama(DeskripsiWahana(W1),(DeskripsiWahana(W2))) && EQ(PosisiWahana(W1),PosisiWahana(W2)) && MapWahana(W1) == MapWahana(W2));
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
@@ -387,6 +388,40 @@ void DeleteWahana (ListWahana *L, Wahana W)
     }
 }
 
+void DeleteWahanaByPosition (ListWahana *L, POINT Posisi, int MapWahana)
+/* I.S. Sembarang */
+/* F.S. Jika ada elemen list beraddress P, dengan info(P)=X  */
+/* Maka P dihapus dari list dan di-dealokasi */
+/* Jika tidak ada elemen list dengan info(P)=X, maka list tetap */
+/* List mungkin menjadi kosong karena penghapusan */
+{
+    /* KAMUS LOKAL */
+    addressWahana P, Prec;
+    addressWahana A;
+    boolean found = false;
+
+    /* ALGORITMA */
+    if (!IsEmptyListWahana(*L)) {
+    	P = FirstWahana(*L);
+    	if (EQ(PosisiWahana(InfoWahana(P)),Posisi) && MapWahana(InfoWahana(P)) == MapWahana){
+    		DelFirstWahana(L, &A);
+    	} else {
+    		Prec = Nil;
+    		while ((P != Nil) && !found) {
+    			if (EQ(PosisiWahana(InfoWahana(P)),Posisi) && MapWahana(InfoWahana(P)) == MapWahana) {
+    				DelAfterWahana(L, &P, Prec);
+    				DealokasiWahana(&P);
+    				found = true;
+    			} else {
+    				Prec = P;
+    				P = NextWahana(P);
+    			}
+    		}
+    	}
+    }
+}
+
+
 void DelLastWahana (ListWahana *L, addressWahana *P){
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
@@ -503,6 +538,26 @@ addressWahana GetWahanaByIndex (ListWahana L, int i)
             P = NextWahana(P);
         }
         j++;
+    }
+    return P;
+}
+
+addressWahana GetAddressByWahana (ListWahana L, Wahana W)
+/* Mengembalikan address dari Wahana W di dalam ListWahana */
+{
+    /* KAMUS LOKAL */
+    addressWahana P;
+    boolean flag = false;
+
+    /* ALGORITMA */
+    P = FirstWahana(L);
+    while (P != Nil && !flag) {
+        if (IsWahanaSama(InfoWahana(P),W)) {
+            flag = true;
+        }
+        else {
+            P = NextWahana(P);
+        }
     }
     return P;
 }

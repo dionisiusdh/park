@@ -11,7 +11,16 @@ boolean IsEmptyTime(TabTime T)
 //Mengecek apakah TabTime kosong / Neff-nya 0 atau tidak
 {   //KAMUS
     //ALGORITMA
-    return (Neff(T) == 0);
+    return (NeffTime(T) == 0);
+}
+
+ElArrayTime GetTime(int Current, Kata Wahana, queuetype X)
+//Mendapatkan dan menyusun ElArrayTime
+{   //KAMUS
+    ElArrayTime E;
+    //ALGORITMA
+    Value(E) = X;
+    return E;
 }
 void AddTime(TabTime *T, ElArrayTime X)
 //Menambah sebuah elemen ElArrayTime ke dalam array yang diurutkan berdasarkan time Elemen dari terkecil ke terbesar
@@ -26,7 +35,7 @@ void AddTime(TabTime *T, ElArrayTime X)
     else{
         temp1 = X;
         for (i=0; i< NeffTime(*T); i++){
-            if (Time(ElmtTime(*T,i)) > time(temp1)){
+            if (Time(ElmtTime(*T,i)) > Time(temp1)){
                 temp2 = ElmtTime(*T,i);
                 ElmtTime(*T,i) = temp1;
                 temp1 = temp2;

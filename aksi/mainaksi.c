@@ -8,7 +8,6 @@
 void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana,TabInt *Kapasitas) {
     /* KAMUS */
     boolean rusak;
-    Kata NamaWahana;
     queuetype X;
     int lokasi = SearchQueue(*Q,NamaWahana); //Lokasi dari elemen queue dengan nama wahana di dalamnya
 
@@ -49,7 +48,6 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana,TabInt *Kapasitas) {
             printf(" rusak sehingga tidak dapat digunakan.\n");
         }
     }
-     
 }
 
 void Repair(MATRIKS *Map, ListWahana *LWahana) {
@@ -111,7 +109,7 @@ void MenuOffice(MATRIKS *Map, ListWahana *LWahana) {
             if (IsEQKata(CKata, StringToKata("Details", 7))) {
                 DetailsOffice(LWahana);
             } else if (IsEQKata(CKata, StringToKata("Report", 6))) {
-                Report(LWahana);
+                ReportOffice(LWahana);
             } else if (IsEQKata(CKata, StringToKata("Exit", 4))) {
                 exitOffice = true;
             } else {

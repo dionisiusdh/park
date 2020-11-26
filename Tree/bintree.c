@@ -279,7 +279,7 @@ void BacaWahana(BinTree *WahanaTree1, BinTree *WahanaTree2, BinTree *WahanaTree3
   int JUMLAH_WAHANA = 3;
   int JUMLAH_UPGRADE_PER_WAHANA = 3;
 
-  PFile = fopen("../wahana.txt", "r");
+  PFile = fopen("./wahana.txt", "r");
 
   if (PFile != NULL){
       i = 0;
