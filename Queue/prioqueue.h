@@ -66,8 +66,8 @@ void DeAlokasiQueue (Queue * Q);
 void AddQueue (Queue * Q, queuetype X);
 /* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut mengecil berdasarkan prio */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
-/* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer;
-        elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas */
+/* F.S. X menjadi elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas. 
+        Apabila jumlah wahana yang dimiliki oleh X adalah 0, elemen tidak ditambahkan ke dalam queue */
 void DelQueue (Queue * Q, queuetype * X, Kata Wahana);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */

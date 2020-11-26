@@ -33,6 +33,8 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana,TabInt *Kapasitas) {
                 }
                 else{
                     PrioQueue(X) += 1;
+                    DellPengunjung(&Pengunjung(X),NamaWahana);
+                    KurangKapasitas(Kapasitas,NamaWahana);
                 }
             }
             else{

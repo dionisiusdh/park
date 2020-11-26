@@ -59,37 +59,39 @@ void DeAlokasiQueue (Queue * Q)
 void AddQueue (Queue * Q, queuetype X)
 /* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut mengecil berdasarkan prio */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
-/* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme list rata kiri;
-        elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas */
+/* F.S. X menjadi elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas. 
+        Apabila jumlah wahana yang dimiliki oleh X adalah 0, elemen tidak ditambahkan ke dalam queue */
 {   //KAMUS
     int i;
     boolean add;
     queuetype temp1,temp2;
     //ALGORITMA
-    if(IsEmptyQueue(*Q)){
-        ElmtQueue(*Q,0) = X;
-        Head(*Q) = 0;
-        Tail(*Q) = 0;
-    }
-    else{
-        i = Head(*Q);
-        add = false;
-        temp1 = X;
-        while (i<=Tail(*Q) && !add){
-            if (PrioQueue(ElmtQueue(*Q,i)) < PrioQueue(X)){
-                add = true;;
-            }
-            else{
-                i++;
-            }
+    if (NeffPengunjung(Pengunjung(X)) != 0){
+        if(IsEmptyQueue(*Q)){
+            ElmtQueue(*Q,0) = X;
+            Head(*Q) = 0;
+            Tail(*Q) = 0;
         }
-        while (i<=Tail(*Q)){
-            temp2 = ElmtQueue(*Q,i);
-            ElmtQueue(*Q,i) = temp1;
-            temp1 = temp2; 
+        else{
+            i = Head(*Q);
+            add = false;
+            temp1 = X;
+            while (i<=Tail(*Q) && !add){
+                if (PrioQueue(ElmtQueue(*Q,i)) < PrioQueue(X)){
+                    add = true;;
+                }
+                else{
+                    i++;
+                }
+            }
+            while (i<=Tail(*Q)){
+                temp2 = ElmtQueue(*Q,i);
+                ElmtQueue(*Q,i) = temp1;
+                temp1 = temp2; 
+            }
+            Tail(*Q) += 1;
+            ElmtQueue(*Q,Tail(*Q)) = temp1;
         }
-        Tail(*Q) += 1;
-        ElmtQueue(*Q,Tail(*Q)) = temp1;
     }
 }
 

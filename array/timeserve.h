@@ -1,11 +1,35 @@
-//ADT Tambahan untuk fungsi serve
-//ADT berisi array yang digunakan untuk enqueue elemen infotype ke dalam queue apabila waktu untuk bermain sudah selesai
+/*ADT untuk keep track waktu dari proses serve pelanggan, kapan mereka turun*/
 
 #ifndef TIMESERVE_H
 #define TIMESERVE_H
 
-#include "../boolean.h"
 #include "../queue/prioqueue.h"
 
-#endif
+typedef struct {
+    int time;  /* Waktu pelanggan turun dari wahana dalam detik */
+    queuetype value;  /* Harga material */
+} ElArrayTime;
 
+typedef struct {
+  ElArrayTime TI[100]; /* memori tempat penyimpan elemen (container) */
+  int Neff;   /* >=0, banyaknya elemen efektif */
+} TabTime;
+
+/* ********** SELEKTOR ********** */
+#define NeffTime(T) (T).Neff
+#define TI(T) (T).TI
+#define ElmtTime(T, i) (T).TI[(i)]
+#define Time(E) (E).time
+#define Value(E) (E).value
+
+/* ********** KONSTRUKTOR ********** */
+void MakeTimeEmpty(TabTime *T);
+//Membuat sebuah TabTime baru yang Neff-nya 0
+boolean IsEmptyTime(TabTime T);
+//Mengecek apakah TabTime kosong / Neff-nya 0 atau tidak
+void AddTime(TabTime *T, ElArrayTime X);
+//Menambah sebuah elemen ElArrayTime ke dalam array yang diurutkan berdasarkan value Elemen dari terkecil ke terbesar 
+void DellTime(TabTime *T);
+//Menghapus elemen pertama dari ElArrayTime
+
+#endif

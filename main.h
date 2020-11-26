@@ -19,6 +19,7 @@
 #include "./array/array.h"
 #include "./Tree/bintree.h"
 #include "./Queue/prioqueue.h"
+#include "./array/timeserve.h"
 
 /* ********* Aksi ********* */
 #include "./aksi/prepaksi.h"

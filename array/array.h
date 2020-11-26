@@ -24,8 +24,7 @@ typedef struct {
     Kata nama;  /* Nama material / aksi */
     int value;  /* Harga material */
 } ElArrayType;
-typedef struct
-{
+typedef struct {
   ElArrayType TI[100]; /* memori tempat penyimpan elemen (container) */
   int Neff;   /* >=0, banyaknya elemen efektif */
   int MaxElArray;  /* ukuran elemen */
@@ -144,10 +143,19 @@ void BacaAksi (TabInt *ListAksi);
 boolean SearchArray(TabInt ListWahana, Kata X);
 /*Mencari apakah ada elemen X pada ListWahana*/
 
+int SearchBArray(TabInt ListWahana, Kata X);
+/*Mencari lokasi dari elemen X pada ListWahana. Apabila tidak ada, mengembalikan -1*/
+
 TabInt InitKapasitas(ListWahana L);
 /*Menginisialisasi Kapasitas dari Wahana dalam bentuk TabInt*/
 
 boolean KapasitasFull(TabInt Kapasitas, Kata Wahana);
 /*Mengecek apakah wahana yang dinaiki sudah penuh atau value dari list kapasitas 0*/
+
+void TambahKapasitas(TabInt *Kapasitas, Kata Wahana);
+/*Menambah kapasitas dari TabInt Kapasitas Wahana*/
+
+void KurangKapasitas(TabInt *Kapasitas, Kata Wahana);
+/*Mengurangi kapasitas dari TabInt Kapasitas Wahana*/
 
 #endif

@@ -357,7 +357,7 @@ void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMain
 
         POINT Player = getPlayer(*Map1);
         if (isNearAntrian(*Map1, Player)){
-          //Masih lom kelar
+          //Serve()
         }
         else{
           printf("Anda tidak berada di dekat antrian.\n");    

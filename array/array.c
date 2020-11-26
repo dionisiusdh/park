@@ -375,6 +375,29 @@ boolean SearchArray(TabInt ListWahana, Kata X)
     return found;
 }
 
+int SearchBArray(TabInt ListWahana, Kata X)
+/*Mencari lokasi dari elemen X pada ListWahana. Apabila tidak ada, mengembalikan -1*/
+{   /* KAMUS */
+    int i=0;
+    boolean found = false;
+    
+    /* ALGORITMA */
+    while (i<NeffArray(ListWahana) && !found){
+        if (IsEQKata(Nama(ElmtArray(ListWahana, i)), X)) {
+            found = true;
+        }
+        else{
+            i++;
+        }
+    }
+    if (found){
+        return i;
+    }
+    else{
+        return -1;
+    }
+}
+
 TabInt InitKapasitas(ListWahana L){
     //KAMUS
     addressWahana P;
@@ -396,11 +419,10 @@ boolean KapasitasFull(TabInt Kapasitas, Kata Wahana)
 {   //KAMUS
     //ALGORITMA
     boolean full = true;
+    int i=0;
+    boolean found = false;
+    /* ALGORITMA */
     if (SearchArray(Kapasitas,Wahana)){
-        int i=0;
-        boolean found = false;
-        
-        /* ALGORITMA */
         while (i<NeffArray(Kapasitas) && !found){
             if (IsEQKata(Nama(ElmtArray(Kapasitas, i)), Wahana)) {
                 if (Value(ElmtArray(Kapasitas, i)) == 0){
@@ -414,4 +436,18 @@ boolean KapasitasFull(TabInt Kapasitas, Kata Wahana)
         }
     }
     return full;
+}
+
+void TambahKapasitas(TabInt *Kapasitas, Kata Wahana){
+    //KAMUS
+    int i = SearchBArray(*Kapasitas,Wahana);
+    //ALGORITMA
+    Value(ElmtArray(*Kapasitas, i)) += 1;
+}
+
+void KurangKapasitas(TabInt *Kapasitas, Kata Wahana){
+    //KAMUS
+    int i = SearchBArray(*Kapasitas,Wahana);
+    //ALGORITMA
+    Value(ElmtArray(*Kapasitas, i)) -= 1;
 }
