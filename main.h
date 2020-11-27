@@ -17,6 +17,7 @@
 #include "./jam/jam.h"
 #include "./stack/stack.h"
 #include "./array/array.h"
+#include "./array/timeserve.h"
 #include "./Tree/bintree.h"
 #include "./Queue/prioqueue.h"
 #include "./array/timeserve.h"
@@ -40,7 +41,7 @@ void inputPerintah (Kata *Perintah);
 void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, ListWahana *LUpgrade, POINT Office);
 /* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah pada preparation phase */
 
-void cekPerintahMain(Kata CurrentPerintah,Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office);
+void cekPerintahMain(Kata CurrentPerintah,Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office, Queue *Antrian, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM JCurrent);
 /* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah pada main phase */
 
 void initMap();
@@ -66,9 +67,6 @@ void initListWahana (ListWahana *LWahana, ListWahana *LUpgrade);
 
 void initStack (Stack *S, JAM MaxDuration);
 /* Inisiasi stack kosong dengan durasi maksimum MaxDuration */
-
-void initAntrian (Queue *Antrian);
-/* Inisialisasi Queue, Antrian kosong */
 
 /******* PROSEDUR DESKRIPSI *******/
 void printMap (MATRIKS M);

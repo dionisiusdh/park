@@ -34,7 +34,7 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, T
                     PrioQueue(X) += 1;
                     DellPengunjung(&Pengunjung(X),NamaWahana);
                     KurangKapasitas(Kapasitas,NamaWahana);
-                    AddTime(Waktu,GetTime(JAMToDetik(Current),NamaWahana,X,Durasi));
+                    AddTime(Waktu,GetTime(Current,NamaWahana,X,Durasi));
                 }
             }
             else{
