@@ -414,6 +414,22 @@ TabInt InitKapasitas(ListWahana L){
     return Kapasitas;
 }
 
+TabInt InitDurasi(ListWahana L){
+    //KAMUS
+    addressWahana P;
+    TabInt Durasi;
+    ElArrayType X;
+    //ALGORITMA
+    MakeEmpty(&Durasi);
+    P = FirstWahana(L);
+    while (P!= Nil){
+        Nama(X) = AkarNama(DeskripsiWahana(InfoWahana(P)));
+        Value(X) = AkarDurasi(DeskripsiWahana(InfoWahana(P)));
+        AddAsLastEl(&Durasi,X);
+    }
+    return Durasi;
+}
+
 boolean KapasitasFull(TabInt Kapasitas, Kata Wahana)
 /*Mengecek apakah wahana yang dinaiki sudah penuh atau value dari list kapasitas 0*/
 {   //KAMUS

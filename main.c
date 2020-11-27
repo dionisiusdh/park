@@ -56,6 +56,13 @@ int main() {
   TabInt ListAksi;
   TabInt ListMaterial; 
 
+  /* *********** Informasi Kapasitas dan Durasi Wahana *********** */
+  TabInt Kapasitas;
+  TabInt Durasi;
+
+  /* Waktu Keluarnya Pemain Dari Wahana */
+  TabTime Waktu;
+
   /* Nama Pemain dan Saldonya (Money) */
   Kata NamaPlayer;
   Kata CurrentPerintah,CurrentPerintah1,CurrentPerintah2;
@@ -85,7 +92,6 @@ int main() {
   initAllList(&Inventory, &ListMaterial, &ListAksi);
   initWahana(&Wahana1, &Wahana2, &Wahana3);
   initListWahana(&LWahana, &LUpgrade);
-  initAntrian(&Antrian);
   initStack(&S, MaxDuration);
 
   while (!exit_status) {
@@ -123,10 +129,33 @@ int main() {
       cekPerintahPrep(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana, &LUpgrade, POffice);
     }
 
+    //Inisialisasi Bagian Serve Main Phase (Kapasitas Wahana, Durasi Wahana, Waktu Selesai Wahana, & Antrian)
+    initQueue(&Antrian);
+    Kapasitas = InitKapasitas(LWahana);
+    Durasi = InitDurasi(LWahana);
+    MakeTimeEmpty(&Waktu);
+
     while (!prep_status && main_status) {
       // Jam dan durasi
       JCurrent = TambahJAM(JOpen, TotalMainDuration);
       Remaining = KurangJAM(JCurrent, JClose);
+
+      //KAMUS TAMBAHAN
+      queuetype X;
+      boolean keluar_wahana = true;
+    
+      //Cek untuk serve apakah pemain sudah turun dari wahana atau belum
+      while (!IsEmptyTime(Waktu) && keluar_wahana){
+        if (Time(ElmtTime(Waktu,0)) <= JAMToDetik(JCurrent)){
+          DellTime(&Waktu,&X);
+          if (!PengunjungPulang(X)){
+            AddQueue(&Antrian,X);
+          }
+        }
+        else{
+          keluar_wahana = false;
+        }
+      }
       
       // Show description
       printf("Main Phase Day %d\n",day);
@@ -136,7 +165,7 @@ int main() {
       inputPerintah(&CurrentPerintah);
       CurrentPerintah = concatNama();
       Bagi2Kata(CurrentPerintah,&CurrentPerintah1,&CurrentPerintah2);
-      cekPerintahMain(CurrentPerintah1, CurrentPerintah2, &TotalMainDuration, &MapActive, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana, POffice);
+      cekPerintahMain(CurrentPerintah1, CurrentPerintah2, &TotalMainDuration, &MapActive, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana, POffice,&Antrian,&Kapasitas,&Waktu,Durasi,JCurrent);
     }
   }
 
@@ -289,7 +318,7 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
       }
 }
 
-void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office) {
+void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office, Queue *Antrian, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM JCurrent) {
     aksitype CurrentAksi;
     aksitype AksiTypeTrash;
 
@@ -358,7 +387,7 @@ void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMain
 
         POINT Player = getPlayer(*Map1);
         if (isNearAntrian(*Map1, Player)){
-          //Serve()
+          Serve(Antrian,LWahana,CurrentPerintah2,Kapasitas,Waktu, Durasi,JCurrent);
         }
         else{
           printf("Anda tidak berada di dekat antrian.\n");    
@@ -444,11 +473,6 @@ void initListWahana (ListWahana *LWahana, ListWahana *LUpgrade) {
 void initStack (Stack *S, JAM MaxDuration) {
 /* Inisiasi stack kosong dengan durasi maksimum MaxDuration */
   CreateEmpty(S, MaxDuration);
-}
-
-void initAntrian (Queue *Antrian) {
-/* Inisialisasi Queue, Antrian kosong */
-  CreateEmptyQueue(Antrian, 0);
 }
 
 /* *************** MAP **************** */

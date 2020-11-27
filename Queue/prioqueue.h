@@ -91,5 +91,4 @@ int SearchQueue (Queue Q, Kata Wahana);
 void initQueue (Queue *Antrian);
 /* Menginisialisasikan antrian wahana */
 
-
 #endif

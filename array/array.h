@@ -149,6 +149,9 @@ int SearchBArray(TabInt ListWahana, Kata X);
 TabInt InitKapasitas(ListWahana L);
 /*Menginisialisasi Kapasitas dari Wahana dalam bentuk TabInt*/
 
+TabInt InitDurasi(ListWahana L);
+/*Menginisialisasi Durasi dari Wahana dalam bentuk TabInt*/
+
 boolean KapasitasFull(TabInt Kapasitas, Kata Wahana);
 /*Mengecek apakah wahana yang dinaiki sudah penuh atau value dari list kapasitas 0*/
 

@@ -16,9 +16,10 @@
 #include "../pengunjung/pengunjung.h"
 #include "../list-linier/listlinier.h"
 #include "../Queue/prioqueue.h"
+#include "../array/timeserve.h"
 
 /* ********** AKSI ********** */
-void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana,TabInt *Kapasitas);
+void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current);
 
 void Repair(MATRIKS *Map, ListWahana *LWahana);
 

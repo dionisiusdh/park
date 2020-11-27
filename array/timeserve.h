@@ -5,7 +5,7 @@
 
 #include "../queue/prioqueue.h"
 #include "../Jam/jam.h"
-#include "../wahana/wahana.h"
+#include "array.h"
 
 typedef struct {
     int time;  /* Waktu pelanggan turun dari wahana dalam detik */
@@ -29,11 +29,13 @@ void MakeTimeEmpty(TabTime *T);
 //Membuat sebuah TabTime baru yang Neff-nya 0
 boolean IsEmptyTime(TabTime T);
 //Mengecek apakah TabTime kosong / Neff-nya 0 atau tidak
-int GetElTime(int Current, Kata Wahana, queuetype X);
+ElArrayTime GetTime(JAM Current, Kata Wahana, queuetype X, TabInt Durasi);
 //Mendapatkan dan menyusun ElArrayTime
 void AddTime(TabTime *T, ElArrayTime X);
 //Menambah sebuah elemen ElArrayTime ke dalam array yang diurutkan berdasarkan value Elemen dari terkecil ke terbesar 
-void DellTime(TabTime *T);
+void DellTime(TabTime *T, queuetype *Q);
 //Menghapus elemen pertama dari ElArrayTime
+boolean PengunjungPulang(queuetype Q);
+//Cek apakah wahana yang ingin dikunjungi oleh pengunjung sudah habis
 
 #endif
