@@ -153,7 +153,7 @@ void MenuUpgrade(TabInt *Inventory, ListWahana CurrentDataWahana, ListWahana *LU
         di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
         Apabila bahan bangunan tidak cukup atau waktu tidak cukup atau uang tidak cukup, maka akan ditampilkan error (Memakan Waktu) */
     /* KAMUS */
-    BinTree CurrentTree, CurrentUpgradeTree, CurrentFinalUpgradeTree;
+    BinTree CurrentUpgradeTree, CurrentFinalUpgradeTree;
     POINT PosisiWahana;
     wahanatype InfoWahana;
     *Valid = true;
@@ -200,11 +200,11 @@ void MenuUpgrade(TabInt *Inventory, ListWahana CurrentDataWahana, ListWahana *LU
 
     // Cek input
     if (NomorOpsiUpgrade == 1) {
-        CurrentFinalUpgradeTree = Left(CurrentTree);
-        GetInfoWahana(Left(CurrentTree), &InfoWahana);
+        CurrentFinalUpgradeTree = Left(CurrentUpgradeTree);
+        GetInfoWahana(Left(CurrentUpgradeTree), &InfoWahana);
     } else if (NomorOpsiUpgrade == 2) {
-        CurrentFinalUpgradeTree = Right(CurrentTree);
-        GetInfoWahana(Right(CurrentTree), &InfoWahana);
+        CurrentFinalUpgradeTree = Right(CurrentUpgradeTree);
+        GetInfoWahana(Right(CurrentUpgradeTree), &InfoWahana);
     }
     
     for (i=0;i<5;i++) {
@@ -217,7 +217,7 @@ void MenuUpgrade(TabInt *Inventory, ListWahana CurrentDataWahana, ListWahana *LU
 
     if(*Valid){
         printf("Upgrade Berhasil.\n");
-        MakeWahana(&tempUpgrade, CurrentFinalUpgradeTree, PosisiWahana, historyUpgrade, false, MapWahanaUpgrade);
+        MakeWahana(&tempUpgrade, CurrentFinalUpgradeTree, PosisiWahana, historyUpgrade, true, MapWahanaUpgrade);
         InsertLastWahana(LUpgrade, tempUpgrade);
     } 
 }
@@ -290,12 +290,12 @@ void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *List
                 Upgrade(Map, Inventory, LUpgrade, LWahana);
             }
         }
-
+        
         *prep_status = false;
         *main_status = true;
 }
 
-void Main(Stack *S){
+void Main(MATRIKS *Map, Stack *S){
 /* I.S. Execute tidak dijalankan */
 /* F.S. Stack Kosong dan Memulai Main Phase */
     /* KAMUS LOKAL */
@@ -305,6 +305,7 @@ void Main(Stack *S){
     while(Top(*S) != NilStack){
         Pop(S,&X);
     }
+    UndoBuildWahana(Map);
 }
 
 void AddAksi (Stack *S, aksitype X) {

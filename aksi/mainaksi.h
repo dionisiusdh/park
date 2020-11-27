@@ -26,9 +26,11 @@ void Repair(MATRIKS *Map, ListWahana *LWahana);
 void Detail(MATRIKS *Map, ListWahana LWahana);
 
 /* ********** OFFICE ********** */
-void MenuOffice(MATRIKS *Map, ListWahana *LWahana);
+void MenuOffice(MATRIKS *Map, ListWahana *LWahana, POINT office, TabInt Inventory);
 
 void DetailsOffice(ListWahana *LWahana);
+
+void MaterialOffice (TabInt Inventory);
 
 void ReportOffice(ListWahana *LWahana);
 

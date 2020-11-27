@@ -15,7 +15,7 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, T
     //Apabila tidak ada elemen di queue yang memiliki wahana NamaWahana sebagai wahana yang ingin dinaiki
     if (lokasi != NilQueue){
         //Apabila wahana rusak
-        if (!GetStatusNamaWahana(LWahana, NamaWahana)){
+        if (GetStatusNamaWahana(LWahana, NamaWahana)){
             //Apabila kapasitas wahana penuh
             if (!KapasitasFull(*Kapasitas, NamaWahana)) { 
                 /* KERUSAKAN WAHANA SETELAH SERVE */
@@ -29,21 +29,18 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, T
                     PrintKata(NamaWahana);
                     printf(" rusak! Harap perbaiki wahana agar dapat digunakan.\n");
                     AddQueue(Q,X);
-                }
-                else{
+                } else {
                     PrioQueue(X) += 1;
                     DellPengunjung(&Pengunjung(X),NamaWahana);
                     KurangKapasitas(Kapasitas,NamaWahana);
                     AddTime(Waktu,GetTime(Current,NamaWahana,X,Durasi));
                 }
-            }
-            else{
+            } else {
                 printf("Kapasitas wahana ");
                 PrintKata(NamaWahana);
                 printf(" penuh sehingga tidak dapat digunakan.\n");
             }
-        }
-        else{
+        } else{
             printf("Wahana ");
             PrintKata(NamaWahana);
             printf(" rusak sehingga tidak dapat digunakan.\n");
@@ -64,15 +61,13 @@ void Repair(MATRIKS *Map, ListWahana *LWahana) {
         CurrentStatus = GetStatusWahana(NearWahana);
         if (CurrentStatus) {
             // Jika wahana tidak rusak
-            printf("Wahana sedang berfungsi dengan baik dan tidak rusak.");
+            printf("Wahana sedang berfungsi dengan baik dan tidak rusak.\n");
         } else {
-            // Kurangi durasi dengan durasi repair
-
             // Set status wahana menjadi berfungsi (true)
             SetStatusNamaWahana(LWahana, AkarNama(DeskripsiWahana(NearWahana)), true);
         }
     } else {
-        printf("Anda sedang tidak berada di dekat wahana");
+        printf("Anda sedang tidak berada di dekat wahana\n");
     }
 }
 
@@ -92,18 +87,18 @@ void Detail(MATRIKS *Map, ListWahana LWahana) {
 }
 
 /* ********** OFFICE ********** */
-void MenuOffice(MATRIKS *Map, ListWahana *LWahana) {
+void MenuOffice(MATRIKS *Map, ListWahana *LWahana, POINT Office, TabInt Inventory) {
     /* KAMUS */
     boolean exitOffice = false;
 
     /* ALGORITMA */
-    if (!isInOffice(getPlayer(*Map), getOffice(*Map))) {
+    if (!isInOffice(getPlayer(*Map), Office)) {
         printf("Anda sedang tidak berada di titik office!\n");
     } else {
         printf("Memasuki office mode...\n");
         
         while (!exitOffice) {
-            printf("Masukkan perintah (Details / Report / Exit): \n");
+            printf("\nMasukkan perintah (Details / Report / Material / Exit): \n");
             printf("$ ");
             STARTKATA();
 
@@ -111,6 +106,8 @@ void MenuOffice(MATRIKS *Map, ListWahana *LWahana) {
                 DetailsOffice(LWahana);
             } else if (IsEQKata(CKata, StringToKata("Report", 6))) {
                 ReportOffice(LWahana);
+            } else if (IsEQKata(CKata, StringToKata("Material", 8))) {
+                MaterialOffice(Inventory);
             } else if (IsEQKata(CKata, StringToKata("Exit", 4))) {
                 exitOffice = true;
             } else {
@@ -136,16 +133,16 @@ void DetailsOffice(ListWahana *LWahana) {
             PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
             printf("\n");
             P = NextWahana(P);
+            i++;
         }
-        printf("]");
     }
     printf("Masukkan angka wahana yang ingin anda lihat detailnya: \n");
     STARTKATA();
-    CPerintah = KataToInteger(CKata);
+    CPerintah = KataToInteger(CKata)-1;
 
     if (CPerintah <= i) {
         P = FirstWahana(*LWahana);
-        while (CPerintah != 0) {
+        while (CPerintah > 0) {
             P = NextWahana(P);
             CPerintah--;
         }
@@ -160,13 +157,19 @@ void DetailsOffice(ListWahana *LWahana) {
         printf("\nDurasi: %d", AkarDurasi(DeskripsiWahana(InfoWahana(P))));
         printf("\nStatus: ");
         if (StatusWahana(InfoWahana(P))) {
-            printf("Berfungsi");
+            printf("Berfungsi\n");
         } else {
-            printf("Rusak");
+            printf("Rusak\n");
         }
     } else {
         printf("Masukkan anda tidak valid!\n");
     }
+}
+
+void MaterialOffice (TabInt Inventory) {
+    printf("Inventory anda: ");
+    TulisIsiTab(Inventory);
+    printf("\n");
 }
 
 void ReportOffice(ListWahana *LWahana) {                            // BELOM DIIMPLEMENTASIKANNNNNNNNNNNN
@@ -178,15 +181,15 @@ void ReportOffice(ListWahana *LWahana) {                            // BELOM DII
     i = 1;
     addressWahana P = FirstWahana(*LWahana);
     if (IsEmptyListWahana(*LWahana)){
-        printf("Wahana kosong");
+        printf("Wahana kosong\n");
     } else {
         while (P != Nil){
             printf("%d. ", i);
             PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
             printf("\n");
             P = NextWahana(P);
+            i++;
         }
-        printf("]");
     }
     printf("Masukkan angka wahana yang ingin anda lihat detailnya: \n");
     STARTKATA();

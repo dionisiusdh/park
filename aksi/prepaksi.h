@@ -61,7 +61,7 @@ void Execute(MATRIKS *Map, Stack *S, int *Money, TabInt *Inventory, TabInt *List
 /* F.S. Semua perintah dijalankan satu per satu dari top hingga stack kosong, 
         kemudian fase berubah dari preparation ke main*/
 
-void Main(Stack *S);
+void Main(MATRIKS *Map, Stack *S);
 /* I.S. Execute tidak dijalankan */
 /* F.S. Stack Kosong dan Memulai Main Phase */
 

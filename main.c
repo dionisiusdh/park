@@ -120,7 +120,7 @@ int main() {
       Remaining = KurangJAM(JCurrent, JOpen);
 
       // Show description
-      printf("Preparation Phase Day %d\n",day);
+      printf("\nPreparation Phase Day %d\n",day);
       prepDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
 
       // Input perintah
@@ -143,9 +143,10 @@ int main() {
       //KAMUS TAMBAHAN
       queuetype X;
       boolean keluar_wahana = true;
-    
+
       //Cek untuk serve apakah pemain sudah turun dari wahana atau belum
       while (!IsEmptyTime(Waktu) && keluar_wahana){
+        
         if (Time(ElmtTime(Waktu,0)) <= JAMToDetik(JCurrent)){
           DellTime(&Waktu,&X);
           if (!PengunjungPulang(X)){
@@ -156,13 +157,16 @@ int main() {
           keluar_wahana = false;
         }
       }
-      
+      printf("\nDEBUG Kapasitas: ");
+      TulisIsiTab(Kapasitas);
+      printf("\n");
       // Show description
-      printf("Main Phase Day %d\n",day);
+      printf("\nMain Phase Day %d\n",day);
       mainDescription(MapActive, NamaPlayer, Money, Antrian, JCurrent, JClose, Remaining);
 
       // Input perintah
-      inputPerintah(&CurrentPerintah);
+      // inputPerintah(&CurrentPerintah);
+      printf("Masukkan Perintah\n$ ");
       CurrentPerintah = concatNama();
       Bagi2Kata(CurrentPerintah,&CurrentPerintah1,&CurrentPerintah2);
       cekPerintahMain(CurrentPerintah1, CurrentPerintah2, &TotalMainDuration, &MapActive, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana, POffice,&Antrian,&Kapasitas,&Waktu,Durasi,JCurrent);
@@ -310,11 +314,14 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
         Execute(Map1, S, Money, Inventory, ListMaterial, LWahana, LUpgrade, Wahana1, Wahana2, Wahana3, prep_status, main_status);
       }
       else if (IsEQKata(CurrentPerintah,StringToKata("main",4))){
+        Main(Map1, S);
         *prep_status = false;
         *main_status = true;
       }
       else if (IsEQKata(CurrentPerintah,StringToKata("exit",4))){
         *exit_status = true;
+      } else {
+        printf("Masukkan anda tidak valid!\n");
       }
 }
 
@@ -341,7 +348,7 @@ void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMain
       
       if (isNearGerbang(*Map1, Player)) {
         if (isAllowedToChangeMap(*Map1, *GMain, Player, *MapNameAsal, MoveCommand) && IsSrcByReqMoveExist(*GMain, *MapNameAsal, MoveCommand)) {
-          /*** berpindah ke Map lain ***/
+          /*  ** Berpindah ke Map lain ** */
           *MapNameTujuan = ReturnMapDest(GMain, *MapNameAsal, MoveCommand);
           goToOtherMap(Map1, MapList[*MapNameAsal-1], MapList[*MapNameTujuan-1], MapNameActive, &Player, *GMain, MoveCommand);
           *MapNameAsal = *MapNameActive;
@@ -402,7 +409,7 @@ void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMain
         Detail(Map1, *LWahana);
       } 
       else if (IsEQKata(CurrentPerintah,StringToKata("office",6))) {
-        MenuOffice(Map1, LWahana);
+        MenuOffice(Map1, LWahana, Office, *Inventory);
       } 
       else if (IsEQKata(CurrentPerintah,StringToKata("prepare",7))){
         *prep_status = true;
@@ -410,6 +417,8 @@ void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMain
       }
       else if (IsEQKata(CurrentPerintah,StringToKata("exit",7))){
         *exit_status = true;
+      } else {
+        printf("Masukkan anda tidak valid!\n");
       }
 }
 
@@ -488,7 +497,6 @@ void printMap (MATRIKS M) {
     printf("P = Player\n");
     printf("W = Wahana\n");
 }
-
 
 /* *************** DESCRIPTION **************** */
 void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S) {

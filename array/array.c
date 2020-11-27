@@ -410,6 +410,7 @@ TabInt InitKapasitas(ListWahana L){
         Nama(X) = AkarNama(DeskripsiWahana(InfoWahana(P)));
         Value(X) = AkarKapasitas(DeskripsiWahana(InfoWahana(P)));
         AddAsLastEl(&Kapasitas,X);
+        P = NextWahana(P);
     }
     return Kapasitas;
 }
@@ -426,6 +427,7 @@ TabInt InitDurasi(ListWahana L){
         Nama(X) = AkarNama(DeskripsiWahana(InfoWahana(P)));
         Value(X) = AkarDurasi(DeskripsiWahana(InfoWahana(P)));
         AddAsLastEl(&Durasi,X);
+        P = NextWahana(P);
     }
     return Durasi;
 }

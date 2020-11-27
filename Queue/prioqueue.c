@@ -130,7 +130,7 @@ void PrintQueue (Queue Q)
     //ALGORITMA
     printf("Antrian [%d/5]\n", NBElmtQueue(Q));
 
-    for (i= Head(Q); i<=Tail(Q); i++){
+    for (i=Head(Q); i<=Tail(Q); i++){
         TulisWahana(Pengunjung(ElmtQueue(Q,i)));
         printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
         printf(" | Customer %c\n",NamaPengunjung(ElmtQueue(Q,i)));
@@ -168,10 +168,10 @@ void initQueue (Queue *Antrian) {
   srand(time(NULL));
   jumlahOrang = 1 + rand()%4;
 
-  CreateEmptyQueue(Antrian, jumlahOrang);
-  i=1;
+  CreateEmptyQueue(Antrian, 5);
+  i=0;
   nama = 65;
-  while (i<=jumlahOrang) {
+  while (i<jumlahOrang) {
     MakePENGUNJUNG(&P, i);
     Pengunjung(ElmtQueue(*Antrian,i)) = P;
     NamaPengunjung(ElmtQueue(*Antrian,i)) = (char) nama;

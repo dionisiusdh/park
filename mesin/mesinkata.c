@@ -174,15 +174,21 @@ Kata StringToKata (char *string, int lengthString){
 Kata concatNama() {
   Kata K;
   STARTKATA();
-  int j=0; int i;
-  while (!EndKata) {
-    for (i=0; i<CKata.Length; i++) {
-      K.TabKata[i+j] = CKata.TabKata[i];
-    }
-    K.TabKata[i+j] = ' ';
-    j+=CKata.Length+1;
-    ADVKATA();
+  int i = 0;
+  while (i<CKata.Length) {
+    K.TabKata[i] = CKata.TabKata[i];
+    i++;
   }
-  K.Length = j;
+  K.TabKata[i] = ' ';
+  i++;
+  while (CC == BLANK){
+    ADV();
+  }
+  while (CC != MARK){
+    K.TabKata[i] = CC;
+    ADV();
+    i++;
+  }
+  K.Length = i;
   return K;
 }

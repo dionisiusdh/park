@@ -480,11 +480,19 @@ void PrintHistoryUpgradeWahana (Wahana W) {
 /* I.S. ListWahana L terdefinisi */
 /* F.S. Menampilkan List Wahana dalam format : <NamaWahana> -> <NamaWahana2> */
     /* KAMUS LOKAL */
+    Kata temp;
 
     /* ALGORITMA */
-
-    // BELUM DIIMPLEMENTASIKAN
-    printf("[]");
+    if (Left(DeskripsiWahana(W)) != Nil && Right(DeskripsiWahana(W)) != Nil) {
+        PrintKata(AkarNama(DeskripsiWahana(W)));
+    }
+    else {
+        temp = AkarNama(DeskripsiWahana(W));
+        temp.Length --;
+        PrintKata(temp);
+        printf(" -> ");
+        PrintKata(AkarNama(DeskripsiWahana(W)));
+    }
 }
 
 void PrintNamaUpgradeWahana (ListWahana AvailableWahanas){
@@ -494,10 +502,11 @@ void PrintNamaUpgradeWahana (ListWahana AvailableWahanas){
     int i;
 
     /* ALGORITMA */
-    printf("Wahana Apa yang Ingin Anda Upgrade?\n");
+    printf("\nWahana Apa yang Ingin Anda Upgrade?\n");
     printf("List :\n");
     P = FirstWahana(AvailableWahanas);
     i = 1;
+
     while (P != Nil) {
         // Memeriksa apakah wahana di sekitar pemain sudah diupgrade atau belum
         if (Left(DeskripsiWahana(InfoWahana(P))) != Nil && Right(DeskripsiWahana(InfoWahana(P))) != Nil) {
@@ -518,12 +527,13 @@ void PrintOpsiUpgradeWahana (BinTree UpgradeWahana)
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    printf("Upgrade Apa yang ingin Anda Lakukan?\n");
+    printf("\nUpgrade Apa yang ingin Anda Lakukan?\n");
     printf("List :\n");
     printf("  1. ");
     PrintKata(AkarNama(Left(UpgradeWahana)));
     printf("\n  2. ");
     PrintKata(AkarNama(Right(UpgradeWahana)));
+    printf("\n");
 }
 
 addressWahana GetWahanaByIndex (ListWahana L, int i)

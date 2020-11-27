@@ -708,19 +708,28 @@ Wahana GetNearWahana (MATRIKS* M, ListWahana Wahana) {
 
 void PrintInfoWahana (Wahana W) {
 /* Mencetak informasi wahana disekitar pemain sesuai dengan spek */
-    printf("Nama: ");
+    printf("\nNama: ");
     PrintKata(AkarNama(DeskripsiWahana(W)));
-    printf("Lokasi: ");
+    printf("\nLokasi: ");
     TulisPOINT(PosisiWahana(W));
-    printf("Upgrade(s): ");
-    printf("[]");                           // BELOMMMMMMMMMMMMMMMMMMMMMM
-    printf("History: ");
-    PrintHistoryUpgradeWahana(W);           // BELOMMMMMMMMMMMMMMMMMMMMMM
-    printf("Status: ");
+    printf("\nUpgrade(s): \n");
+    if (Left(DeskripsiWahana(W)) != Nil && Right(DeskripsiWahana(W)) != Nil) {
+        printf("  1. ");
+        PrintKata(AkarNama(Left(DeskripsiWahana(W))));
+        printf("\n  2. ");
+        PrintKata(AkarNama(Right(DeskripsiWahana(W))));
+        printf("\n"); 
+    }
+    else {
+        printf("    Tidak ada upgrade yang tersedia untuk wahana ini.");
+    }
+    printf("\nHistory: ");
+    PrintHistoryUpgradeWahana(W);           
+    printf("\nStatus: ");
     if (StatusWahana(W)) {
-        printf("Berfungsi");
+        printf("Berfungsi\n\n");
     } else {
-        printf("Rusak");
+        printf("Rusak\n\n");
     }
 }
 

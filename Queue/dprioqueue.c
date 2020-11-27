@@ -4,12 +4,17 @@
 #include <stdlib.h>
 #include <time.h>
 
-// gcc -std=c99 -o cek cek.c prioqueue.o ../pengunjung/pengunjung.o ../mesin/mesinkata.o ../mesin/mesinkar.o
+// gcc -std=c99 -o dprioqueue dprioqueue.c prioqueue.o ../pengunjung/pengunjung.o ../mesin/mesinkata.o ../mesin/mesinkar.o
 
 int main(){
     Queue Q;
     queuetype X,X1,X2,X3;
     initQueue(&Q);
+    PrintQueue(Q);
+    return 0;
+}
+
+/*
     PrioQueue(X) = 1;
     PrioQueue(X1) = 3;
     PrioQueue(X2) = 2;
@@ -22,6 +27,4 @@ int main(){
     MakePENGUNJUNG(&(Pengunjung(X1)), 1);
     MakePENGUNJUNG(&(Pengunjung(X2)), 2);
     MakePENGUNJUNG(&(Pengunjung(X3)), 3);
-    PrintQueue(Q);
-    return 0;
-}
+*/
