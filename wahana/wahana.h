@@ -197,7 +197,9 @@ void PrintHistoryUpgradeWahana (Wahana W);
 /* F.S. Menampilkan List Wahana dalam format : <NamaWahana> -> <NamaWahana2> */
 
 void PrintNamaUpgradeWahana (ListWahana AvailableWahanas);
-/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */
+/* I.S. ListWahana AvailableWahanas terdefinisi dan mungkin kosong*/
+/* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar apabila AvailableWahanas 
+(Wahana yang sudah terbuild dan belum terupgrade di sekitar pemain)*/
 
 void PrintOpsiUpgradeWahana (BinTree UpgradeWahana);
 /* Menampilkan List Nama Upgrade Wahana yang bisa dibangun ke Layar */

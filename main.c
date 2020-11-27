@@ -276,7 +276,7 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
             printf("Anda sedang tidak berada di dekat wahana.\n");
           }
       } else if (IsEQKata(CurrentPerintah,StringToKata("undo",4))){
-        Undo(S, &AksiTypeTrash, Map1, LWahana);
+        Undo(S, &AksiTypeTrash, Map1, LWahana, LUpgrade);
       } else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
         Execute(Map1, S, Money, Inventory, ListMaterial, LWahana, LUpgrade, Wahana1, Wahana2, Wahana3, prep_status, main_status);
       }

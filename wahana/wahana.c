@@ -499,12 +499,15 @@ void PrintNamaUpgradeWahana (ListWahana AvailableWahanas){
     P = FirstWahana(AvailableWahanas);
     i = 1;
     while (P != Nil) {
-        printf("%d. ",i);
-        PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
-        printf(" ");
-        TulisPOINT(PosisiWahana(InfoWahana(P)));
-        printf("\n");
-        i++;
+        // Memeriksa apakah wahana di sekitar pemain sudah diupgrade atau belum
+        if (Left(DeskripsiWahana(InfoWahana(P))) != Nil && Right(DeskripsiWahana(InfoWahana(P))) != Nil) {
+            printf("%d. ",i);
+            PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
+            printf(" ");
+            TulisPOINT(PosisiWahana(InfoWahana(P)));
+            printf("\n");
+            i++;
+        }
         P = NextWahana(P);
     }
 }

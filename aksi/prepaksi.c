@@ -225,28 +225,25 @@ void MenuUpgrade(TabInt *Inventory, ListWahana CurrentDataWahana, ListWahana *LU
 void Upgrade(MATRIKS *Map, TabInt *Inventory, ListWahana *LUpgrade, ListWahana *LWahana){
     /* KAMUS */
     wahanatype InfoWahanaType;
-    addressWahana P, wahanaUpgrade;
+    addressWahana wahanaUpgrade;
     int i;
 
     /* ALGORITMA */
-    // Mengambil info wahana berdasarkan current wahana yang ingin dibangun
-    P = FirstWahana(*LUpgrade);
-    while (P != Nil) {
-        DelFirstWahana(LUpgrade, &wahanaUpgrade);
-        DeleteWahanaByPosition(LWahana, PosisiWahana(InfoWahana(wahanaUpgrade)), MapWahana(InfoWahana(wahanaUpgrade)));
-        InsertLastWahana(LWahana, InfoWahana(wahanaUpgrade));
+    /* Menghapus Wahana Terakhir pada LUpgrade yang kemudian disimpan di dalam wahanaUpgrade, lalu menghapus wahana dengan 
+    posisi wahanaUpgrade tersebut pada LWahana dan kemudian memasukkan kembali wahana yang telah diupgrade ke dalam LWahana*/
+    DelLastWahana(LUpgrade, &wahanaUpgrade);
+    DeleteWahanaByPosition(LWahana, PosisiWahana(InfoWahana(wahanaUpgrade)), MapWahana(InfoWahana(wahanaUpgrade)));
+    InsertLastWahana(LWahana, InfoWahana(wahanaUpgrade));
 
-        // Mengurangkan jumlah item di inventory sesuai dengan bahan yang diperlukan dan mengurangkan jumlah uang di money sesuai yang dibutuhkan
-        
-        for (i=0;i<5;i++) {
-            Value(ElmtArray(*Inventory, i)) -= AkarMatUp(DeskripsiWahana(InfoWahana(wahanaUpgrade)), i);
-        }
-        P = NextWahana(P);
+    // Mengurangkan jumlah item di inventory sesuai dengan bahan yang diperlukan dan mengurangkan jumlah uang di money sesuai yang dibutuhkan
+    
+    for (i=0;i<5;i++) {
+        Value(ElmtArray(*Inventory, i)) -= AkarMatUp(DeskripsiWahana(InfoWahana(wahanaUpgrade)), i);
     }
 }
 
 /* ************ FUNGSI-FUNGSI PROGRAM ************ */
-void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana) {
+void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana, ListWahana *LUpgrade) {
 /* Melakukan undo dengan pop elemen dari stack */
     /* KAMUS LOKAL */
     addressWahana Trash,P;
@@ -263,6 +260,9 @@ void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana) {
             }
             setTitik(Map, PosisiWahana(InfoWahana(P)), '-'); 
             DelLastWahana(LWahana, &Trash);
+        }
+        if (IsEQKata(Aksi(*X), StringToKata("upgrade",7))) {
+            DelLastWahana(LUpgrade, &Trash);
         }
         printf("Berhasil undo.\n");
     } else {

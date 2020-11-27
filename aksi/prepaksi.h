@@ -51,7 +51,7 @@ atau waktu tidak cukup, maka akan menampilkan error ke layar pengguna. Apabila k
 maka akan memasukkan perintah eksekusi ke dalam stack (Memakan Waktu) */
 
 /* *********** UNDO AND EXECUTE ***********  */
-void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana);
+void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana, ListWahana *LUpgrade);
 /* I.S. Terdapat stack perintah sembarang, T mungkin kosong */
 /* F.S. Top stack perintah T telah di pop (Current top hilang, perintah paling atas pada stack menjadi new top),
         apabila I.S. kosong maka tidak dilakukan apa-apa (TidakMemakan Waktu) */
