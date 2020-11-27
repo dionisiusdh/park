@@ -146,9 +146,8 @@ int main() {
 
       //Cek untuk serve apakah pemain sudah turun dari wahana atau belum
       while (!IsEmptyTime(Waktu) && keluar_wahana){
-        
         if (Time(ElmtTime(Waktu,0)) <= JAMToDetik(JCurrent)){
-          DellTime(&Waktu,&X);
+          DellTime(&Waktu,&X,&Kapasitas);
           if (!PengunjungPulang(X)){
             AddQueue(&Antrian,X);
           }
@@ -157,9 +156,7 @@ int main() {
           keluar_wahana = false;
         }
       }
-      printf("\nDEBUG Kapasitas: ");
-      TulisIsiTab(Kapasitas);
-      printf("\n");
+
       // Show description
       printf("\nMain Phase Day %d\n",day);
       mainDescription(MapActive, NamaPlayer, Money, Antrian, JCurrent, JClose, Remaining);
@@ -394,7 +391,7 @@ void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMain
 
         POINT Player = getPlayer(*Map1);
         if (isNearAntrian(*Map1, Player)){
-          Serve(Antrian,LWahana,CurrentPerintah2,Kapasitas,Waktu, Durasi,JCurrent);
+          Serve(Antrian,LWahana,CurrentPerintah2,Kapasitas,Waktu, Durasi,JCurrent,Money);
         }
         else{
           printf("Anda tidak berada di dekat antrian.\n");    

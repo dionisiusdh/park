@@ -214,4 +214,7 @@ boolean BrokenRandomizer ();
 /* Menghasilkan true or false secara acak untuk membuat sebuah wahana rusak, jika true, wahana akan rusak */
 /* 20% Wahana akan rusak */
 
+void AddMoney(ListWahana L,int *Money, Kata NamaWahana);
+/*Menambahkan uang dengan biaya dari wahana*/
+
 #endif

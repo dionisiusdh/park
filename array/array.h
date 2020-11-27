@@ -161,4 +161,7 @@ void TambahKapasitas(TabInt *Kapasitas, Kata Wahana);
 void KurangKapasitas(TabInt *Kapasitas, Kata Wahana);
 /*Mengurangi kapasitas dari TabInt Kapasitas Wahana*/
 
+boolean AdaWahana(TabInt Kapasitas, Kata Wahana);
+/*Mengecek apakah wahana sudah dibangun atau belum*/
+
 #endif

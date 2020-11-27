@@ -21,6 +21,7 @@ ElArrayTime GetTime(JAM Current, Kata Wahana, queuetype X, TabInt Durasi)
     //ALGORITMA
     Time(E) = JAMToDetik(Current) + Value(ElmtArray(Durasi,SearchBArray(Durasi,Wahana)));
     Value(E) = X;
+    Wahana(E) = Wahana;
     return E;
 }
 void AddTime(TabTime *T, ElArrayTime X)
@@ -46,12 +47,13 @@ void AddTime(TabTime *T, ElArrayTime X)
         NeffTime(*T) += 1;
     }
 } 
-void DellTime(TabTime *T, queuetype *Q)
+void DellTime(TabTime *T, queuetype *Q, TabInt *Kapasitas)
 //Menghapus elemen pertama dari ElArrayTime
 {   //KAMUS
     int i;
     //ALGORITMA
     *Q = Value(ElmtTime(*T,0));
+    TambahKapasitas(Kapasitas,Wahana(ElmtTime(*T,0)));
     for (i = 1; i<NeffTime(*T); i++){
         ElmtTime(*T,i-1) = ElmtTime(*T,i);
     }

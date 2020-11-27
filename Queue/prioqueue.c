@@ -87,7 +87,8 @@ void AddQueue (Queue * Q, queuetype X)
             while (i<=Tail(*Q)){
                 temp2 = ElmtQueue(*Q,i);
                 ElmtQueue(*Q,i) = temp1;
-                temp1 = temp2; 
+                temp1 = temp2;
+                i++; 
             }
             Tail(*Q) += 1;
             ElmtQueue(*Q,Tail(*Q)) = temp1;

@@ -1,0 +1,4 @@
+1. Execute (Saldo yang ada bisa minus)
+2. Serve (Pas udah dibalikin ke antrian customernya jadi fucked up gitu, trus kesabaran lom dikurangin
+)
+3. Undo (Pas undo, material yang ada ga kembali kalo dibuild)

@@ -590,5 +590,18 @@ boolean BrokenRandomizer () {
     } else {
         return true;
     }
+}
 
+void AddMoney(ListWahana L,int *Money, Kata NamaWahana){
+    addressWahana P = FirstWahana(L);
+    boolean found = false;
+    while (P != Nil && !found) {
+        if (IsEQKata(AkarNama(DeskripsiWahana(InfoWahana(P))), NamaWahana)){
+            found = true;
+        }
+        else{
+            P = NextWahana(P);
+        }
+    }
+    *Money += AkarHarga(DeskripsiWahana(InfoWahana(P)));
 }

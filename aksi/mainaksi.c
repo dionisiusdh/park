@@ -5,46 +5,57 @@
 #include "mainaksi.h"
 
 /* ********** AKSI ********** */
-void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current) {
+void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current, int *Money) {
     /* KAMUS */
     boolean rusak;
     queuetype X;
     int lokasi = SearchQueue(*Q,NamaWahana); //Lokasi dari elemen queue dengan nama wahana di dalamnya
 
     /* ALGORITMA */
-    //Apabila tidak ada elemen di queue yang memiliki wahana NamaWahana sebagai wahana yang ingin dinaiki
-    if (lokasi != NilQueue){
-        //Apabila wahana rusak
-        if (GetStatusNamaWahana(LWahana, NamaWahana)){
-            //Apabila kapasitas wahana penuh
-            if (!KapasitasFull(*Kapasitas, NamaWahana)) { 
-                /* KERUSAKAN WAHANA SETELAH SERVE */
-                DelQueue(Q,&X,NamaWahana);
-                rusak = BrokenRandomizer();
-                if (rusak) {
-                    // Jika randomizer menghasilkan 'rusak', elemen X ditambahkan prioritasnya dan dimasukkan kembali ke dalam queue
-                    PrioQueue(X) += 1;
-                    SetStatusNamaWahana(LWahana, NamaWahana, false);
-                    printf("Wahana ");
-                    PrintKata(NamaWahana);
-                    printf(" rusak! Harap perbaiki wahana agar dapat digunakan.\n");
-                    AddQueue(Q,X);
+    if (AdaWahana(*Kapasitas,NamaWahana)){
+        //Apabila tidak ada elemen di queue yang memiliki wahana NamaWahana sebagai wahana yang ingin dinaiki
+        if (lokasi != NilQueue){
+            //Apabila wahana rusak
+            if (GetStatusNamaWahana(LWahana, NamaWahana)){
+                //Apabila kapasitas wahana penuh
+                if (!KapasitasFull(*Kapasitas, NamaWahana)) { 
+                    /* KERUSAKAN WAHANA SETELAH SERVE */
+                    DelQueue(Q,&X,NamaWahana);
+                    rusak = BrokenRandomizer();
+                    if (rusak) {
+                        // Jika randomizer menghasilkan 'rusak', elemen X ditambahkan prioritasnya dan dimasukkan kembali ke dalam queue
+                        PrioQueue(X) += 1;
+                        SetStatusNamaWahana(LWahana, NamaWahana, false);
+                        printf("Wahana ");
+                        PrintKata(NamaWahana);
+                        printf(" rusak! Harap perbaiki wahana agar dapat digunakan.\n");
+                        AddQueue(Q,X);
+                    } 
+                    else {
+                        PrioQueue(X) += 1;
+                        DellPengunjung(&Pengunjung(X),NamaWahana);
+                        KurangKapasitas(Kapasitas,NamaWahana);
+                        AddTime(Waktu,GetTime(Current,NamaWahana,X,Durasi));
+                        AddMoney(*LWahana,Money,NamaWahana);
+                    }
                 } else {
-                    PrioQueue(X) += 1;
-                    DellPengunjung(&Pengunjung(X),NamaWahana);
-                    KurangKapasitas(Kapasitas,NamaWahana);
-                    AddTime(Waktu,GetTime(Current,NamaWahana,X,Durasi));
+                    printf("Kapasitas wahana ");
+                    PrintKata(NamaWahana);
+                    printf(" penuh sehingga tidak dapat digunakan.\n");
                 }
-            } else {
-                printf("Kapasitas wahana ");
+            } 
+            else{
+                printf("Wahana ");
                 PrintKata(NamaWahana);
-                printf(" penuh sehingga tidak dapat digunakan.\n");
+                printf(" rusak sehingga tidak dapat digunakan.\n");
             }
-        } else{
-            printf("Wahana ");
-            PrintKata(NamaWahana);
-            printf(" rusak sehingga tidak dapat digunakan.\n");
         }
+        else{
+            printf("Tidak ada pengunjung di antrian yang ingin menaiki wahana tersebut\n");
+        }
+    }
+    else{
+        printf("Wahana belum dibangun\n");
     }
 }
 

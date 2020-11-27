@@ -436,7 +436,7 @@ boolean KapasitasFull(TabInt Kapasitas, Kata Wahana)
 /*Mengecek apakah wahana yang dinaiki sudah penuh atau value dari list kapasitas 0*/
 {   //KAMUS
     //ALGORITMA
-    boolean full = true;
+    boolean full = false;
     int i=0;
     boolean found = false;
     /* ALGORITMA */
@@ -468,4 +468,9 @@ void KurangKapasitas(TabInt *Kapasitas, Kata Wahana){
     int i = SearchBArray(*Kapasitas,Wahana);
     //ALGORITMA
     Value(ElmtArray(*Kapasitas, i)) -= 1;
+}
+
+boolean AdaWahana(TabInt Kapasitas, Kata Wahana){
+    //ALGORITMA
+    return(SearchBArray(Kapasitas,Wahana) != -1);
 }

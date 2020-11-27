@@ -19,7 +19,7 @@
 #include "../array/timeserve.h"
 
 /* ********** AKSI ********** */
-void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current);
+void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current, int *Money);
 
 void Repair(MATRIKS *Map, ListWahana *LWahana);
 

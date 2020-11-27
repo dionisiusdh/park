@@ -5,11 +5,13 @@
 
 #include "../queue/prioqueue.h"
 #include "../Jam/jam.h"
+#include "../mesin/mesinkata.h"
 #include "array.h"
 
 typedef struct {
     int time;  /* Waktu pelanggan turun dari wahana dalam detik */
-    queuetype value;  /* Harga material */
+    queuetype value;  /* Elemen query yang dimasukkan dan dikeluarkan */
+    Kata wahana; /*Nama dari wahana*/
 } ElArrayTime;
 
 typedef struct {
@@ -23,6 +25,7 @@ typedef struct {
 #define ElmtTime(T, i) (T).TI[(i)]
 #define Time(E) (E).time
 #define Value(E) (E).value
+#define Wahana(E) (E).wahana
 
 /* ********** KONSTRUKTOR ********** */
 void MakeTimeEmpty(TabTime *T);
@@ -33,7 +36,7 @@ ElArrayTime GetTime(JAM Current, Kata Wahana, queuetype X, TabInt Durasi);
 //Mendapatkan dan menyusun ElArrayTime
 void AddTime(TabTime *T, ElArrayTime X);
 //Menambah sebuah elemen ElArrayTime ke dalam array yang diurutkan berdasarkan value Elemen dari terkecil ke terbesar 
-void DellTime(TabTime *T, queuetype *Q);
+void DellTime(TabTime *T, queuetype *Q, TabInt *Kapasitas);
 //Menghapus elemen pertama dari ElArrayTime
 boolean PengunjungPulang(queuetype Q);
 //Cek apakah wahana yang ingin dikunjungi oleh pengunjung sudah habis
