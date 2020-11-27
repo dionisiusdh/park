@@ -122,7 +122,7 @@ int main() {
       inputPerintah(&CurrentPerintah);
       cekPerintahPrep(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana, &LUpgrade, POffice);
     }
-
+    
     while (!prep_status && main_status) {
       // Jam dan durasi
       JCurrent = TambahJAM(JOpen, TotalMainDuration);

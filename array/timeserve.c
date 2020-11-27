@@ -14,11 +14,12 @@ boolean IsEmptyTime(TabTime T)
     return (NeffTime(T) == 0);
 }
 
-ElArrayTime GetTime(int Current, Kata Wahana, queuetype X)
+ElArrayTime GetTime(int Current, Kata Wahana, queuetype X, TabInt Durasi)
 //Mendapatkan dan menyusun ElArrayTime
 {   //KAMUS
     ElArrayTime E;
     //ALGORITMA
+    Time(E) = Value(ElmtArray(Durasi,SearchBArray(Durasi,Wahana)));
     Value(E) = X;
     return E;
 }

@@ -5,7 +5,7 @@
 #include "mainaksi.h"
 
 /* ********** AKSI ********** */
-void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana,TabInt *Kapasitas) {
+void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current) {
     /* KAMUS */
     boolean rusak;
     queuetype X;
@@ -34,6 +34,7 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana,TabInt *Kapasitas) {
                     PrioQueue(X) += 1;
                     DellPengunjung(&Pengunjung(X),NamaWahana);
                     KurangKapasitas(Kapasitas,NamaWahana);
+                    AddTime(Waktu,GetTime(JAMToDetik(Current),NamaWahana,X,Durasi));
                 }
             }
             else{
