@@ -6,6 +6,7 @@
 
 #include "../boolean.h"
 #include "../mesin/mesinkata.h"
+#include "../array/array.h"
 
 #define MaxElmt 5
 /* Maksimum wahana yang ingin dikunjungi pengunjung */
@@ -29,12 +30,12 @@ typedef struct {
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
 /* *** Konstruktor membuat PENGUNJUNG *** */
-void MakePENGUNJUNG (PENGUNJUNG *P, int random);
+void MakePENGUNJUNG (PENGUNJUNG *P, int random, TabInt Kapasitas);
 /* Membuat data dengan tipe PENGUNJUNG dengan wahana yang ingin dinaiki kosong */
 /* I.S. Sembarang */
 /* F.S. PENGUNJUNG terbentuk */
 
-void GetRandomWahana (PENGUNJUNG *P, int random);
+void GetRandomWahana (PENGUNJUNG *P, int random, TabInt Kapasitas);
 /* Menghasilkan wahana random yang ingin dikunjungi pengunjung */
 
 void TulisWahana (PENGUNJUNG P);

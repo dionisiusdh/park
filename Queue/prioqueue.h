@@ -88,7 +88,7 @@ void PrintQueue (Queue Q);
 int SearchQueue (Queue Q, Kata Wahana);
 //Mencari posisi dari elemen pertama queue yang memiliki wahana di dalamnya
 
-void initQueue (Queue *Antrian);
+void initQueue (Queue *Antrian, TabInt Kapasitas);
 /* Menginisialisasikan antrian wahana */
 
 void KurangKesabaran (Queue *Q);

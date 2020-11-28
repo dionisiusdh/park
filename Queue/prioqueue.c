@@ -131,11 +131,15 @@ void PrintQueue (Queue Q)
     //ALGORITMA
     printf("Antrian [%d/5]\n", NBElmtQueue(Q));
 
-    for (i=Head(Q); i<=Tail(Q); i++){
-        TulisWahana(Pengunjung(ElmtQueue(Q,i)));
-        printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
-        printf(" | Customer %c\n",NamaPengunjung(ElmtQueue(Q,i)));
-    }  
+    if (NBElmtQueue(Q) == 0) {
+        printf("Antrian kosong");
+    } else {
+        for (i=Head(Q); i<=Tail(Q); i++){
+            TulisWahana(Pengunjung(ElmtQueue(Q,i)));
+            printf(" | Kesabaran: %d", Kesabaran(Pengunjung(ElmtQueue(Q,i))));
+            printf(" | Customer %c\n",NamaPengunjung(ElmtQueue(Q,i)));
+        }  
+    }
 }
 
 int SearchQueue (Queue Q, Kata Wahana)
@@ -160,7 +164,7 @@ int SearchQueue (Queue Q, Kata Wahana)
     }
 }
 
-void initQueue (Queue *Antrian) {
+void initQueue (Queue *Antrian, TabInt Kapasitas) {
   // KAMUS LOKAL
   int jumlahOrang, i, nama;
   PENGUNJUNG P;
@@ -173,7 +177,7 @@ void initQueue (Queue *Antrian) {
   i=0;
   nama = 65;
   while (i<jumlahOrang) {
-    MakePENGUNJUNG(&P, i);
+    MakePENGUNJUNG(&P, i, Kapasitas);
     Pengunjung(ElmtQueue(*Antrian,i)) = P;
     NamaPengunjung(ElmtQueue(*Antrian,i)) = (char) nama;
     PrioQueue(ElmtQueue(*Antrian,i)) = 0;

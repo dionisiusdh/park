@@ -27,16 +27,11 @@ void DeallocateNode (NodePointer N) {
 
 void MakeGMain(Graph* GMain) {
   /** Mengkonstruksi Graph spesifik yang akan dipakai di Game */
-  //printf("Check GMain\n");
-  //PrintGraph(*GMain);
   InitializeGraph(GMain);
-  printf("test\n\n");
   AddSrcToDest(GMain, 1, 2, 'd');
-  //PrintGraph(*GMain);
   AddSrcToDest(GMain, 1, 4, 's');
   AddSrcToDest(GMain, 2, 1, 'a');
   AddSrcToDest(GMain, 2, 3, 's');
-  //printf("test2\n\n");
   AddSrcToDest(GMain, 3, 2, 'w');
   AddSrcToDest(GMain, 3, 4, 'a');
   AddSrcToDest(GMain, 4, 1, 'w');

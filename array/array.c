@@ -197,6 +197,19 @@ TabInt CopyTab (TabInt TIn)
     }
 }
 
+void TambahTab (TabInt *T1, TabInt T2) 
+/* Menambahkan value T1 dan T2 */
+/* Prasyarat: Ukuran T1 dan T2 sama, elemen namanya identik */
+{
+    // KAMUS
+    int i;
+
+    // ALGORITMA
+    for (i=0; i<NeffArray(*T1); i++){
+        Value(ElmtArray(*T1,i)) += Value(ElmtArray(T2,i));
+    }
+}
+
 /* ********** VALUE ********** */
 void SetAllValueZero (TabInt *T)
 /* Mengganti semua value dari T menjadi 0 */
@@ -398,6 +411,7 @@ int SearchBArray(TabInt ListWahana, Kata X)
     }
 }
 
+/* *********************** KAPASITAS DAN DURASI WAHANA *********************** */
 TabInt InitKapasitas(ListWahana L){
     //KAMUS
     addressWahana P;
@@ -430,6 +444,42 @@ TabInt InitDurasi(ListWahana L){
         P = NextWahana(P);
     }
     return Durasi;
+}
+
+TabInt InitMain(ListWahana L){
+/*Menginisialisasi Jumlah di ainkandari Wahana dalam bentuk TabInt*/
+    //KAMUS
+    addressWahana P;
+    TabInt Main;
+    ElArrayType X;
+    //ALGORITMA
+    MakeEmpty(&Main);
+    P = FirstWahana(L);
+    while (P!= Nil){
+        Nama(X) = AkarNama(DeskripsiWahana(InfoWahana(P)));
+        Value(X) = 0;
+        AddAsLastEl(&Main,X);
+        P = NextWahana(P);
+    }
+    return Main;
+}
+
+TabInt InitCuan(ListWahana L){
+/*Menginisialisasi Durasi dari Wahana dalam bentuk TabInt*/
+    //KAMUS
+    addressWahana P;
+    TabInt Cuan;
+    ElArrayType X;
+    //ALGORITMA
+    MakeEmpty(&Cuan);
+    P = FirstWahana(L);
+    while (P!= Nil){
+        Nama(X) = AkarNama(DeskripsiWahana(InfoWahana(P)));
+        Value(X) = 0;
+        AddAsLastEl(&Cuan,X);
+        P = NextWahana(P);
+    }
+    return Cuan;
 }
 
 boolean KapasitasFull(TabInt Kapasitas, Kata Wahana)
@@ -473,4 +523,57 @@ void KurangKapasitas(TabInt *Kapasitas, Kata Wahana){
 boolean AdaWahana(TabInt Kapasitas, Kata Wahana){
     //ALGORITMA
     return(SearchBArray(Kapasitas,Wahana) != -1);
+}
+
+/* *********************** REPORT WAHANA *********************** */
+void TambahMain(TabInt *Main, Kata Wahana)
+/*Menambah value sebesar 1 dari TabInt Main Wahana*/
+{   //KAMUS
+    int i = SearchBArray(*Main,Wahana);
+    //ALGORITMA
+    Value(ElmtArray(*Main, i)) += 1;
+}
+
+void TambahCuan(TabInt *Cuan, Kata Wahana, ListWahana L)
+/*Menambah value dari TabInt Cuan Wahana  sebesar harga dari wahana*/
+{   //KAMUS
+    int i = SearchBArray(*Cuan,Wahana);
+    addressWahana P = FirstWahana(L);;
+    boolean found = false;
+    //ALGORITMA
+    while (P!=Nil && !found){
+        if (IsEQKata(Wahana, AkarNama(DeskripsiWahana(InfoWahana(P))))){
+            found = true;
+            Value(ElmtArray(*Cuan, i)) += AkarHarga(DeskripsiWahana(InfoWahana(P)));
+        }
+        else{
+            P = NextWahana(P);
+        }
+    }
+}
+
+ElArrayType GetMain (TabInt *Main, Kata Wahana) {
+// Mengambil total permainan Wahana
+    //KAMUS
+    int i = SearchBArray(*Main,Wahana);
+    //ALGORITMA
+    return ElmtArray(*Main, i);
+}
+
+ElArrayType GetCuan (TabInt *Cuan, Kata Wahana) {
+// Mengambil total penghasilan Wahana
+    //KAMUS
+    int i = SearchBArray(*Cuan,Wahana);
+    //ALGORITMA
+    return ElmtArray(*Cuan, i);
+}
+
+void KurangiMaterial(TabInt *Inventory, addressWahana DeleteAddress){
+    //KAMUS
+    int i;
+    
+    //ALGORITMA
+    for (i=0;i<5;i++) {
+        Value(ElmtArray(*Inventory, i)) -= AkarMatUp(DeskripsiWahana(InfoWahana(DeleteAddress)),i);
+    }
 }

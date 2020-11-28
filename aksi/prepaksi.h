@@ -29,7 +29,7 @@ void Buy(TabInt *Inventory, TabInt *ListMaterial, Kata NamaBarang, int JumlahBar
 /* Mengurangi money dengan nilai total harga material dikali JumlahBarang */
 
 /* *********** BUILD ***********  */
-void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid, ListWahana *LWahana);
+void MenuBuild(MATRIKS *Map, TabInt Inventory, TabInt *StackMaterial, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid, ListWahana *LWahana);
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan yang dibutuhkan */
 /* F.S. Menampilkan ingin membangun apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         dibangun kemudian akan menyimpan perintah bangun ke dalam stack yang akan dijalankan saat execute.
@@ -38,7 +38,7 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
 void Build(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int CurrentWahana);
 
 /* *********** UPGRADE ***********  */
-void MenuUpgrade(TabInt *Inventory, ListWahana CurrentDataWahana, ListWahana *LUpgrade, POINT Player, Map CurrentMap, boolean *Valid);
+void MenuUpgrade(TabInt Inventory, TabInt *StackMaterial, ListWahana CurrentDataWahana, ListWahana *LUpgrade, POINT Player, Map CurrentMap, boolean *Valid);
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan dan uang yang dibutuhkan*/
 /* F.S. Menampilkan ingin upgrade apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
@@ -51,7 +51,7 @@ atau waktu tidak cukup, maka akan menampilkan error ke layar pengguna. Apabila k
 maka akan memasukkan perintah eksekusi ke dalam stack (Memakan Waktu) */
 
 /* *********** UNDO AND EXECUTE ***********  */
-void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana, ListWahana *LUpgrade);
+void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana, ListWahana *LUpgrade, TabInt *StackMaterial);
 /* I.S. Terdapat stack perintah sembarang, T mungkin kosong */
 /* F.S. Top stack perintah T telah di pop (Current top hilang, perintah paling atas pada stack menjadi new top),
         apabila I.S. kosong maka tidak dilakukan apa-apa (TidakMemakan Waktu) */

@@ -120,6 +120,10 @@ void DelLastEl(TabInt *T, ElArrayType *X);
 TabInt CopyTab (TabInt TIn);
 /* Mereturn sebuah tabint hasil copy dari TIn */
 
+void TambahTab (TabInt *T1, TabInt T2);
+/* Menambahkan value T1 dan T2 */
+/* Prasyarat: Ukuran T1 dan T2 sama, elemen namanya identik */
+
 /* ********** VALUE ********** */
 void SetAllValueZero (TabInt *T);
 /* Mengganti semua value dari T menjadi 0 */
@@ -146,11 +150,19 @@ boolean SearchArray(TabInt ListWahana, Kata X);
 int SearchBArray(TabInt ListWahana, Kata X);
 /*Mencari lokasi dari elemen X pada ListWahana. Apabila tidak ada, mengembalikan -1*/
 
+/* *********************** KAPASITAS DAN DURASI WAHANA *********************** */
 TabInt InitKapasitas(ListWahana L);
 /*Menginisialisasi Kapasitas dari Wahana dalam bentuk TabInt*/
 
 TabInt InitDurasi(ListWahana L);
 /*Menginisialisasi Durasi dari Wahana dalam bentuk TabInt*/
+
+/* *********************** REPORT WAHANA *********************** */
+TabInt InitMain(ListWahana L);
+/*Menginisialisasi jumlah di ainkannyaWahana dalam bentuk TabInt*/
+
+TabInt InitCuan(ListWahana L);
+/*Menginisialisasi jumlah pendapatan dari Wahana dalam bentuk TabInt*/
 
 boolean KapasitasFull(TabInt Kapasitas, Kata Wahana);
 /*Mengecek apakah wahana yang dinaiki sudah penuh atau value dari list kapasitas 0*/
@@ -163,5 +175,20 @@ void KurangKapasitas(TabInt *Kapasitas, Kata Wahana);
 
 boolean AdaWahana(TabInt Kapasitas, Kata Wahana);
 /*Mengecek apakah wahana sudah dibangun atau belum*/
+
+void TambahMain(TabInt *Main, Kata Wahana);
+/*Menambah value sebesar 1 dari TabInt Main Wahana*/
+
+void TambahCuan(TabInt *Cuan, Kata Wahana, ListWahana L);
+/*Menambah value dari TabInt Cuan Wahana  sebesar harga dari wahana*/
+
+ElArrayType GetMain (TabInt *Main, Kata Wahana);
+// Mengambil total permainan Wahana
+
+ElArrayType GetCuan (TabInt *Cuan, Kata Wahana);
+// Mengambil total penghasilan Wahana
+
+void KurangiMaterial(TabInt *Inventory, addressWahana DeleteAddress);
+// Mengurangi Material Pada StackMaterial ketika Undo Build/Upgrade
 
 #endif

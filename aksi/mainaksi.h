@@ -19,19 +19,19 @@
 #include "../array/timeserve.h"
 
 /* ********** AKSI ********** */
-void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current, int *Money, boolean *serve_gagal);
+void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current, int *Money, boolean *serve_gagal, TabInt *MainToday, TabInt *CuanToday, TabInt *MainTotal, TabInt *CuanTotal);
 
 void Repair(MATRIKS *Map, ListWahana *LWahana);
 
 void Detail(MATRIKS *Map, ListWahana LWahana);
 
 /* ********** OFFICE ********** */
-void MenuOffice(MATRIKS *Map, ListWahana *LWahana, POINT office, TabInt Inventory);
+void MenuOffice(MATRIKS *Map, ListWahana *LWahana, POINT office, TabInt Inventory, TabInt *MainToday, TabInt *CuanToday, TabInt *MainTotal, TabInt *CuanTotal );
 
 void DetailsOffice(ListWahana *LWahana);
 
 void MaterialOffice (TabInt Inventory);
 
-void ReportOffice(ListWahana *LWahana);
+void ReportOffice(ListWahana *LWahana, TabInt *MainToday, TabInt *CuanToday, TabInt *MainTotal, TabInt *CuanTotal);
 
 #endif

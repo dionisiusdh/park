@@ -5,7 +5,7 @@
 #include "mainaksi.h"
 
 /* ********** AKSI ********** */
-void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current, int *Money, boolean *serve_gagal) {
+void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current, int *Money, boolean *serve_gagal, TabInt *MainToday, TabInt *CuanToday, TabInt *MainTotal, TabInt *CuanTotal) {
     /* KAMUS */
     boolean rusak;
     queuetype X;
@@ -24,16 +24,16 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, T
                     rusak = BrokenRandomizer();
                     if (rusak) {
                         // Jika randomizer menghasilkan 'rusak', elemen X ditambahkan prioritasnya dan dimasukkan kembali ke dalam queue
-                        PrioQueue(X) += 1;
+                        PrioQueue(X) += 2;
                         SetStatusNamaWahana(LWahana, NamaWahana, false);
                         printf("Wahana ");
                         PrintKata(NamaWahana);
                         printf(" rusak! Harap perbaiki wahana agar dapat digunakan.\n");
                         TambahPrioritas(Q);
                         AddQueue(Q,X);
-                        // KurangKesabaran(Q);
-                        // DellKesabaran0(Q);
-                        *serve_gagal = true;
+                        KurangKesabaran(Q);
+                        DellKesabaran0(Q);
+                        *serve_gagal = false;
                     } 
                     else {
                         PrioQueue(X) += 1;
@@ -44,6 +44,10 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, T
                         TambahPrioritas(Q);
                         KurangKesabaran(Q);
                         DellKesabaran0(Q);
+                        TambahMain(MainToday,NamaWahana);
+                        TambahMain(MainTotal,NamaWahana);
+                        TambahCuan(CuanToday,NamaWahana,*LWahana);
+                        TambahCuan(CuanTotal,NamaWahana,*LWahana);
                         *serve_gagal = false;
                     }
                 } else {
@@ -110,7 +114,7 @@ void Detail(MATRIKS *Map, ListWahana LWahana) {
 }
 
 /* ********** OFFICE ********** */
-void MenuOffice(MATRIKS *Map, ListWahana *LWahana, POINT Office, TabInt Inventory) {
+void MenuOffice(MATRIKS *Map, ListWahana *LWahana, POINT Office, TabInt Inventory, TabInt *MainToday, TabInt *CuanToday, TabInt *MainTotal, TabInt *CuanTotal) {
     /* KAMUS */
     boolean exitOffice = false;
 
@@ -128,7 +132,7 @@ void MenuOffice(MATRIKS *Map, ListWahana *LWahana, POINT Office, TabInt Inventor
             if (IsEQKata(CKata, StringToKata("Details", 7))) {
                 DetailsOffice(LWahana);
             } else if (IsEQKata(CKata, StringToKata("Report", 6))) {
-                ReportOffice(LWahana);
+                ReportOffice(LWahana, MainToday, CuanToday, MainTotal, CuanTotal);
             } else if (IsEQKata(CKata, StringToKata("Material", 8))) {
                 MaterialOffice(Inventory);
             } else if (IsEQKata(CKata, StringToKata("Exit", 4))) {
@@ -158,34 +162,33 @@ void DetailsOffice(ListWahana *LWahana) {
             P = NextWahana(P);
             i++;
         }
-    }
-    printf("Masukkan angka wahana yang ingin anda lihat detailnya: \n");
-    STARTKATA();
-    CPerintah = KataToInteger(CKata)-1;
 
-    if (CPerintah <= i) {
-        P = FirstWahana(*LWahana);
-        while (CPerintah > 0) {
-            P = NextWahana(P);
-            CPerintah--;
-        }
-        printf("\nNama: ");
-        PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
-        printf("\nDeskripsi: ");
-        PrintKata(AkarDeskripsi(DeskripsiWahana(InfoWahana(P))));
-        printf("\nLokasi: ");
-        TulisPOINT(PosisiWahana(InfoWahana(P)));
-        printf("\nHarga: %d", AkarHarga(DeskripsiWahana(InfoWahana(P))));
-        printf("\nKapasitas: %d", AkarKapasitas(DeskripsiWahana(InfoWahana(P))));
-        printf("\nDurasi: %d", AkarDurasi(DeskripsiWahana(InfoWahana(P))));
-        printf("\nStatus: ");
-        if (StatusWahana(InfoWahana(P))) {
-            printf("Berfungsi\n");
+        printf("Masukkan angka wahana yang ingin anda lihat detailnya: \n$ ");
+        STARTKATA();
+        CPerintah = KataToInteger(CKata)-1;
+
+        if (CPerintah <= i) {
+            P = FirstWahana(*LWahana);
+            while (CPerintah > 0) {
+                P = NextWahana(P);
+                CPerintah--;
+            }
+            printf("\nNama: ");
+            PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
+            printf("\nDeskripsi: ");
+            PrintKata(AkarDeskripsi(DeskripsiWahana(InfoWahana(P))));
+            printf("\nLokasi: ");
+            TulisPOINT(PosisiWahana(InfoWahana(P)));
+            printf("\nHarga: %d", AkarHarga(DeskripsiWahana(InfoWahana(P))));
+            printf("\nStatus: ");
+            if (StatusWahana(InfoWahana(P))) {
+                printf("Berfungsi\n");
+            } else {
+                printf("Rusak\n");
+            }
         } else {
-            printf("Rusak\n");
+            printf("Masukkan anda tidak valid!\n");
         }
-    } else {
-        printf("Masukkan anda tidak valid!\n");
     }
 }
 
@@ -195,7 +198,7 @@ void MaterialOffice (TabInt Inventory) {
     printf("\n");
 }
 
-void ReportOffice(ListWahana *LWahana) {                            // BELOM DIIMPLEMENTASIKANNNNNNNNNNNN
+void ReportOffice(ListWahana *LWahana, TabInt *MainToday, TabInt *CuanToday, TabInt *MainTotal, TabInt *CuanTotal) {                        
     /* KAMUS */
     int i, CPerintah;
     Wahana W;
@@ -213,27 +216,31 @@ void ReportOffice(ListWahana *LWahana) {                            // BELOM DII
             P = NextWahana(P);
             i++;
         }
-    }
-    printf("Masukkan angka wahana yang ingin anda lihat detailnya: \n");
-    STARTKATA();
-    CPerintah = KataToInteger(CKata);
 
-    if (CPerintah <= i) {
-        P = FirstWahana(*LWahana);
-        while (CPerintah != 0) {
-            P = NextWahana(P);
-            CPerintah--;
+        printf("Masukkan angka wahana yang ingin anda lihat laporannya: \n$ ");
+        STARTKATA();
+        CPerintah = KataToInteger(CKata);
+
+        if (CPerintah <= i) {
+            P = FirstWahana(*LWahana);
+            while (CPerintah > 1) {
+                P = NextWahana(P);
+                CPerintah--;
+            }
+            printf("\nNama: ");
+            PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
+            printf("\nDeskripsi: ");
+            PrintKata(AkarDeskripsi(DeskripsiWahana(InfoWahana(P))));
+            printf("\nLokasi: ");
+            TulisPOINT(PosisiWahana(InfoWahana(P)));
+            printf("\nHarga: %d", AkarHarga(DeskripsiWahana(InfoWahana(P))));
+            printf("\nTotal dimainkan hari ini: %d", Value(GetMain(MainToday, AkarNama(DeskripsiWahana(InfoWahana(P))))));
+            printf("\nTotal penghasilan hari ini : %d", Value(GetMain(CuanToday, AkarNama(DeskripsiWahana(InfoWahana(P))))));
+            printf("\nTotal dimainkan : %d", Value(GetMain(MainTotal, AkarNama(DeskripsiWahana(InfoWahana(P))))));
+            printf("\nTotal penghasilan : %d\n", Value(GetMain(CuanTotal, AkarNama(DeskripsiWahana(InfoWahana(P))))));
+        } else {
+            printf("Masukkan anda tidak valid!\n");
         }
-        printf("\nNama: ");
-        PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
-        printf("\nLokasi: ");
-        TulisPOINT(PosisiWahana(InfoWahana(P)));
-        printf("\nHarga: %d", AkarHarga(DeskripsiWahana(InfoWahana(P))));
-        printf("\nKapasitas: %d", AkarKapasitas(DeskripsiWahana(InfoWahana(P))));
-        printf("\nDurasi: %d", AkarDurasi(DeskripsiWahana(InfoWahana(P))));
-        printf("\nDeskripsi: ");
-        PrintKata(AkarDeskripsi(DeskripsiWahana(InfoWahana(P))));
-    } else {
-        printf("Masukkan anda tidak valid!\n");
     }
+    
 }

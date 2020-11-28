@@ -59,7 +59,7 @@ void Buy(TabInt *Inventory, TabInt *ListMaterial, Kata NamaBarang, int JumlahBar
 }
 
 /* *********** BUILD ***********  */
-void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid, ListWahana *LWahana){
+void MenuBuild(MATRIKS *Map, TabInt Inventory, TabInt *StackMaterial, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, int *CurrentWahana, boolean *Valid, ListWahana *LWahana){
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan yang dibutuhkan */
 /* F.S. Menampilkan ingin membangun apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         dibangun kemudian akan menyimpan perintah bangun ke dalam stack yang akan dijalankan saat execute.
@@ -90,14 +90,18 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
         GetInfoWahana(Wahana3, &InfoWahana);
     }
     
+    // Menambahkan material ke TabInt StackMaterial
+    for (i=0;i<5;i++) {
+        Value(ElmtArray(*StackMaterial,i)) += WahanaMatUp(InfoWahana, i);
+    }
+
     // Cek ketersediaan material
     for (i=0;i<5;i++) {
-        if (WahanaMatUp(InfoWahana, i) > Value(ElmtArray(*Inventory, i))) {
+        if (Value(ElmtArray(*StackMaterial, i)) > Value(ElmtArray(Inventory, i))) {
             *Valid = false;
             printf("Material anda tidak mencukupi.\n");
             break;
         }
-        Value(ElmtArray(*Inventory, i)) -= WahanaMatUp(InfoWahana, i);
     }
 
     if (*Valid) {
@@ -119,6 +123,12 @@ void MenuBuild(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2
             MakeWahana(&W, Wahana3, GetTitikNearRancanganWahana(*Map), Upgrade, true, MapWahana);
         } 
         InsertLastWahana(LWahana, W);
+    }
+    else{
+        // Mengembalikan StackMaterial ke awal
+        for (i=0;i<5;i++) {
+            Value(ElmtArray(*StackMaterial,i)) -= WahanaMatUp(InfoWahana, i);
+        }   
     }
 }
 
@@ -147,7 +157,7 @@ void Build(MATRIKS *Map, TabInt *Inventory, BinTree Wahana1, BinTree Wahana2, Bi
 }
 
 /* *********** UPGRADE ***********  */
-void MenuUpgrade(TabInt *Inventory, ListWahana CurrentDataWahana, ListWahana *LUpgrade, POINT Player, Map CurrentMap, boolean *Valid){
+void MenuUpgrade(TabInt Inventory, TabInt *StackMaterial, ListWahana CurrentDataWahana, ListWahana *LUpgrade, POINT Player, Map CurrentMap, boolean *Valid){
 /* I.S. Terdapat file eksternal wahana.txt yang memberi info bahan bangunan dan uang yang dibutuhkan*/
 /* F.S. Menampilkan ingin upgrade apa kemudian meminta masukan dari pemain akan wahana apa yang hendak
         di-upgrade kemudian akan menyimpan perintah upgrade ke dalam stack yang akan dijalankan saat execute.
@@ -207,10 +217,16 @@ void MenuUpgrade(TabInt *Inventory, ListWahana CurrentDataWahana, ListWahana *LU
         GetInfoWahana(Right(CurrentUpgradeTree), &InfoWahana);
     }
     
+    // Menambahkan material ke TabInt StackMaterial
     for (i=0;i<5;i++) {
-        if (WahanaMatUp(InfoWahana, i) > Value(ElmtArray(*Inventory, i))) {
+        Value(ElmtArray(*StackMaterial,i)) += WahanaMatUp(InfoWahana, i);
+    }
+
+    // Cek ketersediaan material
+    for (i=0;i<5;i++) {
+        if (Value(ElmtArray(*StackMaterial, i)) > Value(ElmtArray(Inventory, i))) {
             *Valid = false;
-            printf("Material tidak mencukupi.\n");
+            printf("Material anda tidak mencukupi.\n");
             break;
         }
     }
@@ -243,7 +259,7 @@ void Upgrade(MATRIKS *Map, TabInt *Inventory, ListWahana *LUpgrade, ListWahana *
 }
 
 /* ************ FUNGSI-FUNGSI PROGRAM ************ */
-void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana, ListWahana *LUpgrade) {
+void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana, ListWahana *LUpgrade, TabInt *StackMaterial) {
 /* Melakukan undo dengan pop elemen dari stack */
     /* KAMUS LOKAL */
     addressWahana Trash,P;
@@ -260,9 +276,11 @@ void Undo (Stack * S, aksitype *X, MATRIKS *Map, ListWahana *LWahana, ListWahana
             }
             setTitik(Map, PosisiWahana(InfoWahana(P)), '-'); 
             DelLastWahana(LWahana, &Trash);
+            KurangiMaterial(StackMaterial,Trash);
         }
-        if (IsEQKata(Aksi(*X), StringToKata("upgrade",7))) {
+        else if (IsEQKata(Aksi(*X), StringToKata("upgrade",7))) {
             DelLastWahana(LUpgrade, &Trash);
+            KurangiMaterial(StackMaterial,Trash);
         }
         printf("Berhasil undo.\n");
     } else {

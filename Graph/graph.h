@@ -5,6 +5,7 @@
 
 
 /**
+ * (Representasi Graph berdasarkan diktat kuliah halaman 182)
  * Graph G adalah array of NodeGraph dengan elemen semua Map yang ada di game.
  * Setiap NodeGraph pada G memiliki list dengan implementasi linked list.
  * NodeGraph pada G melambangkan Map asal (Src), sementara linked list melambangkan
@@ -22,7 +23,6 @@
  *  [2|'+'| ] --> [1|'a'| ] --> [3|'s'|Nil]
  *  [3|'+'| ] --> [2|'w'| ] --> [4|'a'|Nil]
  *  [4|'+'| ] --> [1|'w'| ] --> [3|'d'|Nil]
- * Node terdiri atas komponen:
  */
 
 #define NMap 4
