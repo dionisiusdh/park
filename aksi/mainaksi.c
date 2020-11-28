@@ -29,7 +29,10 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, T
                         printf("Wahana ");
                         PrintKata(NamaWahana);
                         printf(" rusak! Harap perbaiki wahana agar dapat digunakan.\n");
+                        TambahPrioritas(Q);
                         AddQueue(Q,X);
+                        // KurangKesabaran(Q);
+                        // DellKesabaran0(Q);
                         *serve_gagal = true;
                     } 
                     else {
@@ -38,6 +41,9 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, T
                         KurangKapasitas(Kapasitas,NamaWahana);
                         AddTime(Waktu,GetTime(Current,NamaWahana,X,Durasi));
                         AddMoney(*LWahana,Money,NamaWahana);
+                        TambahPrioritas(Q);
+                        KurangKesabaran(Q);
+                        DellKesabaran0(Q);
                         *serve_gagal = false;
                     }
                 } else {

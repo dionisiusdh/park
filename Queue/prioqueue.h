@@ -91,4 +91,13 @@ int SearchQueue (Queue Q, Kata Wahana);
 void initQueue (Queue *Antrian);
 /* Menginisialisasikan antrian wahana */
 
+void KurangKesabaran (Queue *Q);
+/* Mengurangkan kesabaran orang yang apabila terjadi dellqueue*/
+
+void DellKesabaran0(Queue *Q);
+/*Menghilangkan pengunjung dengan kesabaran 0 dari antrian*/
+
+void TambahPrioritas(Queue *Q);
+/* Mengurangkan kesabaran orang yang apabila terjadi dellqueue*/
+
 #endif

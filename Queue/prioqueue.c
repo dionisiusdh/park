@@ -183,3 +183,42 @@ void initQueue (Queue *Antrian) {
   Head(*Antrian) = 0;
   Tail(*Antrian) = i-1;
 }
+
+void KurangKesabaran(Queue *Q)
+/* Mengurangkan kesabaran orang yang apabila terjadi dellqueue*/
+{   //KAMUS
+    int i;
+    //ALGORITMA
+    for (i=Head(*Q); i<=Tail(*Q); i++){
+        Kesabaran(Pengunjung(ElmtQueue(*Q,i))) -= 1;
+    }
+}
+
+void DellKesabaran0(Queue *Q)
+/*Menghilangkan pengunjung dengan kesabaran 0 dari antrian*/
+{   //KAMUS
+    int i,j;
+    //ALGORITMA
+    i = Head(*Q);
+    while (i != Tail(*Q)+1){
+        if (Kesabaran(Pengunjung(ElmtQueue(*Q,i))) == 0){
+            for (j=i+1; j<=Tail(*Q); j++){
+                ElmtQueue(*Q,j-1) = ElmtQueue(*Q,j); 
+            }
+            Tail(*Q) -= 1;
+        }
+        else{
+            i++;
+        }
+    }
+}
+
+void TambahPrioritas(Queue *Q)
+/* Menambah prioritas orang yang tidak dilayani*/
+{   //KAMUS
+    int i;
+    //ALGORITMA
+    for (i=Head(*Q); i<=Tail(*Q); i++){
+        PrioQueue(ElmtQueue(*Q,i)) += 1;
+    }
+}
