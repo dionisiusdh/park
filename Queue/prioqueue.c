@@ -104,8 +104,8 @@ void DelQueue (Queue * Q, queuetype * X, Kata Wahana)
 {   //KAMUS
     int lokasi,i;
     //ALGORITMA
-    *X = ElmtQueue(*Q,lokasi);
     lokasi = SearchQueue(*Q,Wahana);
+    *X = ElmtQueue(*Q,lokasi);
     for (i=lokasi; i<Tail(*Q); i++){
         ElmtQueue(*Q,i) = ElmtQueue(*Q,i+1); 
     }

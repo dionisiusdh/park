@@ -585,10 +585,10 @@ boolean BrokenRandomizer () {
     srand(time(NULL));
     randomNumber = rand()%10;
 
-    if (randomNumber > 7) {
-        return false;
-    } else {
+    if (randomNumber == 7 || randomNumber == 2) {
         return true;
+    } else {
+        return false;
     }
 }
 

@@ -5,7 +5,7 @@
 #include "mainaksi.h"
 
 /* ********** AKSI ********** */
-void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current, int *Money) {
+void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM Current, int *Money, boolean *serve_gagal) {
     /* KAMUS */
     boolean rusak;
     queuetype X;
@@ -30,6 +30,7 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, T
                         PrintKata(NamaWahana);
                         printf(" rusak! Harap perbaiki wahana agar dapat digunakan.\n");
                         AddQueue(Q,X);
+                        *serve_gagal = true;
                     } 
                     else {
                         PrioQueue(X) += 1;
@@ -37,25 +38,30 @@ void Serve (Queue *Q, ListWahana *LWahana, Kata NamaWahana, TabInt *Kapasitas, T
                         KurangKapasitas(Kapasitas,NamaWahana);
                         AddTime(Waktu,GetTime(Current,NamaWahana,X,Durasi));
                         AddMoney(*LWahana,Money,NamaWahana);
+                        *serve_gagal = false;
                     }
                 } else {
                     printf("Kapasitas wahana ");
                     PrintKata(NamaWahana);
                     printf(" penuh sehingga tidak dapat digunakan.\n");
+                    *serve_gagal = true;
                 }
             } 
             else{
                 printf("Wahana ");
                 PrintKata(NamaWahana);
                 printf(" rusak sehingga tidak dapat digunakan.\n");
+                *serve_gagal = true;
             }
         }
         else{
             printf("Tidak ada pengunjung di antrian yang ingin menaiki wahana tersebut\n");
+            *serve_gagal = true;
         }
     }
     else{
         printf("Wahana belum dibangun\n");
+        *serve_gagal = true;
     }
 }
 

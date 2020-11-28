@@ -143,11 +143,13 @@ int main() {
       //KAMUS TAMBAHAN
       queuetype X;
       boolean keluar_wahana = true;
+      boolean serve_gagal;
 
       //Cek untuk serve apakah pemain sudah turun dari wahana atau belum
       while (!IsEmptyTime(Waktu) && keluar_wahana){
         if (Time(ElmtTime(Waktu,0)) <= JAMToDetik(JCurrent)){
           DellTime(&Waktu,&X,&Kapasitas);
+          printf("%c",NamaPengunjung(X));
           if (!PengunjungPulang(X)){
             AddQueue(&Antrian,X);
           }
@@ -166,7 +168,7 @@ int main() {
       printf("Masukkan Perintah\n$ ");
       CurrentPerintah = concatNama();
       Bagi2Kata(CurrentPerintah,&CurrentPerintah1,&CurrentPerintah2);
-      cekPerintahMain(CurrentPerintah1, CurrentPerintah2, &TotalMainDuration, &MapActive, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana, POffice,&Antrian,&Kapasitas,&Waktu,Durasi,JCurrent);
+      cekPerintahMain(CurrentPerintah1, CurrentPerintah2, &TotalMainDuration, &MapActive, &ListMaterial, &Inventory, &InventoryCopy, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana, POffice,&Antrian,&Kapasitas,&Waktu,Durasi,JCurrent,&serve_gagal);
     }
   }
 
@@ -322,7 +324,7 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
       }
 }
 
-void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office, Queue *Antrian, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM JCurrent) {
+void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office, Queue *Antrian, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM JCurrent, boolean *serve_gagal) {
     aksitype CurrentAksi;
     aksitype AksiTypeTrash;
 
@@ -387,11 +389,12 @@ void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMain
         }
       } 
       else if (IsEQKata(CurrentPerintah,StringToKata("serve",5))) {
-        *TotalMainDuration = TambahJAM(*TotalMainDuration, DetikToJAM(GetValue(ListAksi, CurrentPerintah)));
-
         POINT Player = getPlayer(*Map1);
         if (isNearAntrian(*Map1, Player)){
-          Serve(Antrian,LWahana,CurrentPerintah2,Kapasitas,Waktu, Durasi,JCurrent,Money);
+          Serve(Antrian,LWahana,CurrentPerintah2,Kapasitas,Waktu, Durasi,JCurrent,Money,serve_gagal);
+          if (!*(serve_gagal)){
+            *TotalMainDuration = TambahJAM(*TotalMainDuration, DetikToJAM(GetValue(ListAksi, CurrentPerintah)));
+          }
         }
         else{
           printf("Anda tidak berada di dekat antrian.\n");    

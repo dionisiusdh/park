@@ -41,7 +41,7 @@ void inputPerintah (Kata *Perintah);
 void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, ListWahana *LUpgrade, POINT Office);
 /* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah pada preparation phase */
 
-void cekPerintahMain(Kata CurrentPerintah,Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office, Queue *Antrian, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM JCurrent);
+void cekPerintahMain(Kata CurrentPerintah,Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *InventoryCopy, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office, Queue *Antrian, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM JCurrent, boolean *serve_gagal);
 /* Mengecek perintah dari user dalam bentuk kata apabila masukan berupa perintah pada main phase */
 
 void initMap();
