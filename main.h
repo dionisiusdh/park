@@ -75,7 +75,7 @@ void printMap (MATRIKS M);
 void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S);
 /* Mencetak Deskripsi Pemain saat preparation phase (Termasuk Mencetak Map dan Legenda) */
 
-void mainDescription (MATRIKS Map, Kata Nama, int Money, Queue Antrian, JAM JCurrent, JAM JClose, JAM Remaining);
+void mainDescription (MATRIKS Map, Kata Nama, int Money, Queue Antrian, JAM JCurrent, JAM JClose, JAM Remaining, ListWahana LWahana);
 /* Mencetak Deskripsi Pemain saat main phase (Termasuk Mencetak Map dan Legenda) */
 
 #endif

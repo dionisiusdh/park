@@ -161,7 +161,7 @@ int main() {
 
       // Show description
       printf("\nMain Phase Day %d\n",day);
-      mainDescription(MapActive, NamaPlayer, Money, Antrian, JCurrent, JClose, Remaining);
+      mainDescription(MapActive, NamaPlayer, Money, Antrian, JCurrent, JClose, Remaining,LWahana);
 
       // Input perintah
       // inputPerintah(&CurrentPerintah);
@@ -528,7 +528,7 @@ void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen
     printf("\n");
 }
 
-void mainDescription (MATRIKS Map, Kata Nama, int Money, Queue Antrian, JAM JCurrent, JAM JClose, JAM Remaining){
+void mainDescription (MATRIKS Map, Kata Nama, int Money, Queue Antrian, JAM JCurrent, JAM JClose, JAM Remaining, ListWahana LWahana){
     //KAMUS LOKAL
 
     //ALGORITMA
@@ -549,4 +549,6 @@ void mainDescription (MATRIKS Map, Kata Nama, int Money, Queue Antrian, JAM JCur
     printf("%02d Hour(s) %02d Minute(s)", Hour(Remaining), Minute(Remaining));
     printf("\n");
     PrintQueue(Antrian);
+    PrintWahanaRusak(LWahana);
+    printf("\n");
 }

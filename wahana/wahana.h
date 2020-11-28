@@ -217,4 +217,7 @@ boolean BrokenRandomizer ();
 void AddMoney(ListWahana L,int *Money, Kata NamaWahana);
 /*Menambahkan uang dengan biaya dari wahana*/
 
+void PrintWahanaRusak(ListWahana L);
+/*Mencetak wahana-wahana apa saja yang rusak*/
+
 #endif

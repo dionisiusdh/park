@@ -605,3 +605,29 @@ void AddMoney(ListWahana L,int *Money, Kata NamaWahana){
     }
     *Money += AkarHarga(DeskripsiWahana(InfoWahana(P)));
 }
+
+void PrintWahanaRusak(ListWahana L)
+/*Mencetak wahana-wahana apa saja yang rusak*/
+{   //KAMUS
+    addressWahana P = FirstWahana(L);
+    boolean first = true;
+    //ALGORITMA
+    printf("Wahana rusak : ");
+    while (P != Nil && first){
+        if (StatusWahana(InfoWahana(P)) == false){
+            first = false;
+            PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
+        }
+        P = NextWahana(P);
+    }
+    while (P != Nil){
+        if (StatusWahana(InfoWahana(P)) == false){
+            printf(", ");
+            PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
+        }
+        P = NextWahana(P);
+    }
+    if (first){
+        printf("-");
+    }
+}
