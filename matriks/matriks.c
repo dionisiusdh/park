@@ -420,7 +420,7 @@ void moveRight (MATRIKS *M, POINT Office) {
 
 boolean hitWall (MATRIKS *M, int xNew, int yNew){
 /* Cek apakah player menabrak dinding, wahana, atau objek lainnya (Kecuali office) */
-    return (Elmt(*M, xNew, yNew) == '*' || Elmt(*M, xNew, yNew) == 'W' || Elmt(*M, xNew, yNew) == 'A');
+    return (Elmt(*M, xNew, yNew) == '*' || Elmt(*M, xNew, yNew) == 'W' || Elmt(*M, xNew, yNew) == 'w' || Elmt(*M, xNew, yNew) == 'A');
 }
 
 void goToOtherMap (MATRIKS* MActive, MATRIKS* MAsal, MATRIKS* MTujuan, Map* ActiveMap, POINT* Player, Graph G, char MoveCommand) {
