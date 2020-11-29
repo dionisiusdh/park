@@ -510,7 +510,7 @@ void PrintNamaUpgradeWahana (ListWahana AvailableWahanas){
     while (P != Nil) {
         // Memeriksa apakah wahana di sekitar pemain sudah diupgrade atau belum
         if (Left(DeskripsiWahana(InfoWahana(P))) != Nil && Right(DeskripsiWahana(InfoWahana(P))) != Nil) {
-            printf("%d. ",i);
+            printf("  %d. ",i);
             PrintKata(AkarNama(DeskripsiWahana(InfoWahana(P))));
             printf(" ");
             TulisPOINT(PosisiWahana(InfoWahana(P)));

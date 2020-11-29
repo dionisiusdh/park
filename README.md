@@ -33,5 +33,6 @@ Sebuah *theme park simulation* game yang dibuat dengan mengimplementasikan berba
 2. Clone repository ini pada local computer anda
 3. Masuk ke dalam folder hasil clone repository
 4. Jalankan program ```main``` atau dengan ```./main``` pada terminal
+5. Jika ingin mencompile program, copy script yang ada dalam ```./script/compile-script.txt``` dan pastikan anda sedang berada di directory utama, kemudian jalankan
 
 ## Thank you

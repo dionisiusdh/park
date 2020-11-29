@@ -414,10 +414,13 @@ void GetInfoWahana (BinTree Wahana, wahanatype *InfoWahana){
 void PrintNamaWahana (BinTree Wahana1, BinTree Wahana2, BinTree Wahana3){
     printf("Ingin Membangun Apa?\n");
     printf("List :\n");
+    printf("  1.");
     PrintKata(AkarNama(Wahana1));
     printf("\n");
+    printf("  2.");
     PrintKata(AkarNama(Wahana2));
     printf("\n");
+    printf("  3.");
     PrintKata(AkarNama(Wahana3));
     printf("\n");
 }

@@ -20,10 +20,11 @@ void MenuBuy(TabInt *Inventory, TabInt *ListMaterial, int *Money, aksitype *Curr
     printf("List: \n");
     
     for (i=0; (i<NeffArray(*ListMaterial)); i++){
+        printf("%d. ", i+1);
         PrintKata(Nama(ElmtArray(*ListMaterial,i)));
-        printf("   Harga: %d\n", Value(ElmtArray(*ListMaterial,i)));
+        printf(" | Harga: %d\n", Value(ElmtArray(*ListMaterial,i)));
     }
-    printf("\nPetunjuk : Input Dalam Format (<Jumlah Barang> <Nama Barang>); Contoh: 1000 Wood\n");
+    printf("\nPetunjuk : Input Dalam Format (<Jumlah Barang> <Nama Barang>); Contoh: 1000 Wood\n$ ");
 
     STARTKATA();
     JumlahBarang = KataToInteger(CKata);

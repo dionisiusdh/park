@@ -123,7 +123,7 @@ int main() {
       prepDescription(MapActive, NamaPlayer, Money, JCurrent, JOpen, Remaining, S);
 
       // Input perintah
-      printf("Masukkan Perintah: \n$ ");
+      printf("\nMasukkan Perintah: \n$ ");
       inputPerintah(&CurrentPerintah);
       cekPerintahPrep(CurrentPerintah, &MapActive, &S, &ListMaterial, &Inventory, &StackMaterial, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana, &LUpgrade, POffice);
     }

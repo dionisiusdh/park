@@ -1,1 +1,0 @@
-1. Pas pengunjung balik dari antrian, error gabisa di print queue (walkwalk)
