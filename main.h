@@ -30,7 +30,7 @@
 
 /******* DEKLARASI FUNGSI-FUNGSI UTAMA *******/
 
-void initGame(Kata * Nama);
+void initGame(Kata * Nama, boolean *exit_status);
 /* Menginisiasi mulainya permainan Willy Wangky's World.
    I.S. Game belum dimulai.
    F.S. Game dimulai dengan input pilihan di main menu. */

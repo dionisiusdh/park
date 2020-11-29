@@ -4,7 +4,7 @@ Flyfly3,800,2,3600,Mari kita terbang,600,3_3_2_2_1/
 Fallfall,900,1,7200,Mari kita jatuh,200,5_2_2_0_0* 
 Fallfall2,950,1,7200,Mari kita jatuh,300,1_2_4_3_2* 
 Fallfall3,1000,1,7200,Mari kita jatuh,400,3_2_1_4_2/
-Walkwalk,1000,2,3600,Mari kita jalan,200,3_1_0_0_0*
-Walkwalk2,1000,2,3600,Mari kita jalan,400,1_3_3_2_1* 
-Walkwalk3,1000,2,3600,Mari kita jalan,350,2_1_3_2_1/
+Walkwalk,1000,2,5400,Mari kita jalan,200,3_1_0_0_0*
+Walkwalk2,1000,2,5400,Mari kita jalan,400,1_3_3_2_1* 
+Walkwalk3,1000,2,5400,Mari kita jalan,350,2_1_3_2_1/
 .

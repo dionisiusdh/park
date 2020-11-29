@@ -207,4 +207,7 @@ void PrintInfoWahana (Wahana W);
 void setTitik (MATRIKS *Map, POINT P, char X);
 // Mengubah titik P pada Map menjadi X
 
+boolean isThereWahana (MATRIKS *Map);
+// Apakah ada wahana apapun di map
+
 #endif

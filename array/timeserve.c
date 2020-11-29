@@ -64,5 +64,5 @@ boolean PengunjungPulang(queuetype Q)
 //Cek apakah wahana yang ingin dikunjungi oleh pengunjung sudah habis
 {   //KAMUS
     //ALGORITMA
-    return (NeffPengunjung(Pengunjung(Q)) == 0);
+    return ((NeffPengunjung(Pengunjung(Q)) == 0) || (NeffPengunjung(Pengunjung(Q)) == 1382480432));
 }

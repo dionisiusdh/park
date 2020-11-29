@@ -312,7 +312,6 @@ void BacaMaterial (TabInt *ListMaterial)
         i++;
       }
   }
-  printf("\n");
 }
 
 void BacaAksi (TabInt *ListAksi)

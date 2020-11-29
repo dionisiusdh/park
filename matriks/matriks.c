@@ -737,3 +737,17 @@ void setTitik (MATRIKS *Map, POINT P, char X) {
 // Mengubah titik P pada Map menjadi X
     Elmt(*Map, Absis(P), Ordinat(P)) = X;
 }
+
+boolean isThereWahana (MATRIKS *M) {
+// Apakah ada wahana apapun di map
+    int i, j;
+
+    for (i=GetFirstIdxBrs(*M); i<10; i++) {
+        for (j=GetFirstIdxKol(*M); j<20; j++) {
+            if (Elmt(*M, i, j) == 'W') {
+                return true;
+            }
+        }
+    }
+    return false;
+}

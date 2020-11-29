@@ -14,6 +14,7 @@ void MakePENGUNJUNG (PENGUNJUNG *P, int random, TabInt Kapasitas){
 /* F.S. PENGUNJUNG terbentuk */
     Kesabaran(*P) = 5;
     //Prioritas(*P) = 0;
+    NeffPengunjung(*P) = 0;
     GetRandomWahana(P, random, Kapasitas);
 }
 
@@ -70,10 +71,12 @@ void TulisWahana (PENGUNJUNG P) {
     int i;
 
     printf("(");
-    PrintKata(ElmtPengunjung(P, 0));
-    for (i=1; i<NeffPengunjung(P); i++) {
-        printf(", ");
-        PrintKata(ElmtPengunjung(P, i));
+    if (NeffPengunjung(P) != 1382480432 && NeffPengunjung(P) != 0) {
+        PrintKata(ElmtPengunjung(P, 0));
+        for (i=1; i<NeffPengunjung(P); i++) {
+            printf(", ");
+            PrintKata(ElmtPengunjung(P, i));
+        }
     }
     printf(")");
 }
@@ -99,9 +102,9 @@ void DellPengunjung(PENGUNJUNG *P, Kata Wahana){
         }
         i++;
     }
-    while (i<NeffPengunjung(*P)){
+    while (i<NeffPengunjung(*P) && NeffPengunjung(*P) != 1){
         ElmtPengunjung(*P,i-1) = ElmtPengunjung(*P,i);
         i++; 
     }
-    NeffPengunjung(*P)--; 
+    NeffPengunjung(*P) -= 1; 
 }

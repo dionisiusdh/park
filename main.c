@@ -92,12 +92,14 @@ int main() {
   boolean exit_status = false;
   int day = 0;
 
-  initGame(&NamaPlayer);
-  initJam(&JOpen,&JClose); MaxDuration = KurangJAM(JOpen,JClose);
-  initAllList(&Inventory, &ListMaterial, &ListAksi, &MainTotal, &CuanTotal);
-  initWahana(&Wahana1, &Wahana2, &Wahana3);
-  initListWahana(&LWahana, &LUpgrade);
-  initStack(&S, MaxDuration);
+  initGame(&NamaPlayer,&exit_status);
+  if (!exit_status) {
+    initJam(&JOpen,&JClose); MaxDuration = KurangJAM(JOpen,JClose);
+    initAllList(&Inventory, &ListMaterial, &ListAksi, &MainTotal, &CuanTotal);
+    initWahana(&Wahana1, &Wahana2, &Wahana3);
+    initListWahana(&LWahana, &LUpgrade);
+    initStack(&S, MaxDuration);
+  }
 
   while (!exit_status) {
     //Inisialisasi day ke-berapa
@@ -111,7 +113,7 @@ int main() {
     BacaMaterial(&StackMaterial);
     SetAllValueX(&StackMaterial, 0);
     
-    while (prep_status && !main_status) {
+    while (prep_status && !main_status && !exit_status) {
       // Jam dan durasi
       JCurrent = TambahJAM(JClose, CurrentDuration(S));
       Remaining = KurangJAM(JCurrent, JOpen);
@@ -135,7 +137,7 @@ int main() {
     initQueue(&Antrian, Kapasitas);
     MakeTimeEmpty(&Waktu);
 
-    while (!prep_status && main_status) {
+    while (!prep_status && main_status && !exit_status) {
       // Jam dan durasi
       JCurrent = TambahJAM(JOpen, TotalMainDuration);
       Remaining = KurangJAM(JCurrent, JClose);
@@ -169,17 +171,16 @@ int main() {
       cekPerintahMain(CurrentPerintah1, CurrentPerintah2, &TotalMainDuration, &MapActive, &ListMaterial, &Inventory, &StackMaterial, &Money, &prep_status, &main_status, &exit_status, &ListAksi, Wahana1, Wahana2, Wahana3, &GMain, &MapNameAsal, &MapNameTujuan, &MapNameActive, MapList, &LWahana, POffice,&Antrian,&Kapasitas,&Waktu,Durasi,JCurrent,&serve_gagal,&MainToday,&CuanToday,&MainTotal,&CuanTotal);
     }
   }
-
-  printf("\nTerima kasih telah bermain.");
+  printf("Terima kasih telah bermain.");
   return 0;
 }
 
 /******* REALISASI FUNGSI-FUNGSI UTAMA *******/
 /*********************************************/
 /******* INISIALISASI *******/
-void initGame(Kata * NamaPlayer) {
+void initGame(Kata * NamaPlayer, boolean *exit_status) {
   /**** MAIN MENU ****/
-  printf("// Welcome to Willy wangky's fun factory!!//\n// New game / load game / exit? //\n$ ");
+  printf("// Welcome to Willy Wangky's Fun Factory!!//\n// New game / load game / exit? //\n$ ");
 
   // Baca masukan 
   STARTKATA();
@@ -193,8 +194,8 @@ void initGame(Kata * NamaPlayer) {
       *NamaPlayer = concatNama();
   }
 
-    if (CKata.TabKata[0] == 'e' || CKata.TabKata[0] == 'E') {
-      printf("// Thanks for playing!!! //");
+  if (CKata.TabKata[0] == 'e' || CKata.TabKata[0] == 'E') {
+    *exit_status = true;
   }
 }
 
@@ -295,7 +296,7 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
             Aksi(CurrentAksi) = StringToKata("upgrade",7);
             Durasi(CurrentAksi) = DetikToJAM(GetValue(ListAksi, CurrentPerintah));
             Harga(CurrentAksi) = 0;
-            // BUAT DEBUG, NANTI HARUS DI GET OTOMATIS
+            
             CurrentWahana = 1;
 
             MenuUpgrade(*Inventory, StackMaterial, *LWahana, LUpgrade, getPlayer(*Map1), *MapNameAsal, &Valid);
@@ -312,9 +313,13 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
         Execute(Map1, S, Money, Inventory, ListMaterial, LWahana, LUpgrade, Wahana1, Wahana2, Wahana3, prep_status, main_status);
       }
       else if (IsEQKata(CurrentPerintah,StringToKata("main",4))){
-        Main(Map1, S);
-        *prep_status = false;
-        *main_status = true;
+        if (isThereWahana(Map1)) {
+          Main(Map1, S);
+          *prep_status = false;
+          *main_status = true;
+        } else {
+          printf("Bangun wahana terlebih dahulu!\n");
+        }
       }
       else if (IsEQKata(CurrentPerintah,StringToKata("exit",4))){
         *exit_status = true;
@@ -414,7 +419,7 @@ void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMain
         *prep_status = true;
         *main_status = false;
       }
-      else if (IsEQKata(CurrentPerintah,StringToKata("exit",4))){
+      else if (IsEQKata(CurrentPerintah,StringToKata("exit",4)) || IsEQKata(CurrentPerintah2,StringToKata("exit",4))){
         *exit_status = true;
       } else {
         printf("Masukkan anda tidak valid!\n");
