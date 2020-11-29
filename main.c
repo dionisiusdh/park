@@ -315,7 +315,11 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
       } else if (IsEQKata(CurrentPerintah,StringToKata("undo",4))){
         Undo(S, &AksiTypeTrash, Map1, LWahana, LUpgrade, StackMaterial);
       } else if (IsEQKata(CurrentPerintah,StringToKata("execute",7))){
-        Execute(Map1, S, Money, Inventory, ListMaterial, LWahana, LUpgrade, Wahana1, Wahana2, Wahana3, prep_status, main_status);
+        if (isThereWahana(Map1)) {
+          Execute(Map1, S, Money, Inventory, ListMaterial, LWahana, LUpgrade, Wahana1, Wahana2, Wahana3, prep_status, main_status);
+        } else {
+          printf("Bangun wahana terlebih dahulu!\n");
+        }
       }
       else if (IsEQKata(CurrentPerintah,StringToKata("main",4))){
         if (isThereWahana(Map1)) {
