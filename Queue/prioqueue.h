@@ -91,6 +91,10 @@ int SearchQueue (Queue Q, Kata Wahana);
 void initQueue (Queue *Antrian, TabInt Kapasitas);
 /* Menginisialisasikan antrian wahana */
 
+void AddRandomPengunjung (Queue *Antrian, TabInt Kapasitas);
+/* Menambahkan pengunjung secara random ke Antrian */
+/* Chance pengunjung baru datang 30% */
+
 void KurangKesabaran (Queue *Q);
 /* Mengurangkan kesabaran orang yang apabila terjadi dellqueue*/
 

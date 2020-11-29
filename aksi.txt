@@ -1,9 +1,9 @@
 build 3600
 upgrade 3600
-buy 900
+buy 1800
 serve 1800
 repair 3600
-w 10
-a 10
-s 10
-d 10.
+w 60
+a 60
+s 60
+d 60.

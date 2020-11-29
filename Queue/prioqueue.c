@@ -132,7 +132,7 @@ void PrintQueue (Queue Q)
     printf("Antrian [%d/5]\n", NBElmtQueue(Q));
 
     if (NBElmtQueue(Q) == 0) {
-        printf("Antrian kosong");
+        printf("Antrian kosong\n");
     } else {
         for (i=Head(Q); i<=Tail(Q); i++){
             TulisWahana(Pengunjung(ElmtQueue(Q,i)));
@@ -187,6 +187,33 @@ void initQueue (Queue *Antrian, TabInt Kapasitas) {
   Head(*Antrian) = 0;
   Tail(*Antrian) = i-1;
 }
+
+void AddRandomPengunjung (Queue *Antrian, TabInt Kapasitas) {
+/* Menambahkan pengunjung secara random ke Antrian */
+/* Chance pengunjung baru datang 20% */
+    // KAMUS LOKAL
+    int jumlahOrang, i, nama, chance, randomForName;
+    PENGUNJUNG P;
+    queuetype NewQElem;
+
+    // ALGORITMA
+    srand(time(NULL));
+    chance = 1 + rand()%10;
+    i = NBElmtQueue(*Antrian);
+
+    if (!IsFullQueue(*Antrian)) {
+        if (chance>8) {
+            randomForName = 5 + rand()%20;
+            nama = randomForName + i + 60;
+            MakePENGUNJUNG(&P, i, Kapasitas);
+            Pengunjung(NewQElem) = P;
+            NamaPengunjung(NewQElem) = (char) nama;
+            PrioQueue(NewQElem) = 0;
+            AddQueue(Antrian, NewQElem);
+        }
+    }
+}
+
 
 void KurangKesabaran(Queue *Q)
 /* Mengurangkan kesabaran orang yang apabila terjadi dellqueue*/

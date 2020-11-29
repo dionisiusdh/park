@@ -1,0 +1,19 @@
+new
+asdasd
+buy
+10 Wood
+buy
+10 Steel
+buy
+10 Plastic
+buy
+10 Paint
+buy
+10 Screw
+build
+Flyfly
+execute
+prepare
+build
+Walkwalk
+execute

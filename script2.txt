@@ -1,7 +1,0 @@
-new
-asdasd
-buy
-10 Wood
-build
-Flyfly
-execute

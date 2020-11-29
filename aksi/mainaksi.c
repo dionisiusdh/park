@@ -92,6 +92,7 @@ void Repair(MATRIKS *Map, ListWahana *LWahana) {
         } else {
             // Set status wahana menjadi berfungsi (true)
             SetStatusNamaWahana(LWahana, AkarNama(DeskripsiWahana(NearWahana)), true);
+            printf("Wahana berhasil diperbaiki.\n");
         }
     } else {
         printf("Anda sedang tidak berada di dekat wahana\n");
@@ -241,6 +242,5 @@ void ReportOffice(ListWahana *LWahana, TabInt *MainToday, TabInt *CuanToday, Tab
         } else {
             printf("Masukkan anda tidak valid!\n");
         }
-    }
-    
+    }   
 }

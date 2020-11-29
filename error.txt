@@ -1,1 +1,1 @@
-1. Undo (Pas undo, material yang ada ga kembali kalo dibuild)
+1. Pas pengunjung balik dari antrian, error gabisa di print queue (walkwalk)
