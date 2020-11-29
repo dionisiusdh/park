@@ -13,9 +13,9 @@
 void MakeEmpty(TabInt *T){ //, int maxel){
 /* I.S. T sembarang, maxel > 0 */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas maxel */
-    /*KAMUS LOKAL*/
+    /* KAMUS LOKAL */
 
-    /*ALGORITMA*/
+    /* ALGORITMA */
     //TI(*T) = (ElArrayType *) malloc (maxel*sizeof(ElArrayType));
     NeffArray(*T) = 0;
     //MaxElArray(*T) = maxel;
@@ -24,8 +24,10 @@ void MakeEmpty(TabInt *T){ //, int maxel){
 void Dealokasi(TabInt *T){
 /* I.S. T terdefinisi; */
 /* F.S. TI(T) dikembalikan ke system, MaxElArray(T)=0; NeffArray(T)=0 */
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
     free(TI(*T));
-    //MaxElArray(*T) = 0;
     NeffArray(*T) = 0;
 }
 
@@ -35,16 +37,16 @@ int NbElmtArray(TabInt T){
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
 /* *** Daya tampung container *** */
-    /*KAMUS LOKAL*/
-    
-    /*ALGORITMA*/
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
     return NeffArray(T);
 }
 int MaxElement(TabInt T){
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
-    /*KAMUS LOKAL*/
-    
-    /*ALGORITMA*/
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
     return 0;
     //return MaxElArray(T);
 }
@@ -52,17 +54,17 @@ int MaxElement(TabInt T){
 IdxType GetFirstIdx(TabInt T){
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T pertama */
-    /*KAMUS LOKAL*/
-    
-    /*ALGORITMA*/
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
     return IdxMin;
 }
 IdxType GetLastIdx(TabInt T){
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
-    /*KAMUS LOKAL*/
-    
-    /*ALGORITMA*/
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
     return (NbElmtArray(T)-1);
 }
 
@@ -70,17 +72,17 @@ IdxType GetLastIdx(TabInt T){
 /* *** Test tabel kosong *** */
 boolean IsEmpty(TabInt T){
 /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
-    /*KAMUS LOKAL*/
-    
-    /*ALGORITMA*/
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
     return (NeffArray(T) == 0);
 }
 /* *** Test tabel penuh *** */
 boolean IsFull(TabInt T){
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
-    /*KAMUS LOKAL*/
-    
-    /*ALGORITMA*/
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
     return (NbElmtArray(T) == MaxElement(T));
 }
 
@@ -96,11 +98,11 @@ void BacaIsi(TabInt *T){
 /* 2. Jika 0 < N <= MaxElement(T); Lakukan N kali: Baca elemen mulai dari indeks
       IdxMin satu per satu diakhiri enter */
 /*    Jika N = 0; hanya terbentuk T kosong */
-    /*KAMUS LOKAL*/
+    /* KAMUS LOKAL */
     int N;
     IdxType i;
 
-    /*ALGORITMA*/
+    /* ALGORITMA */
     do {
         scanf("%d",&N);
     } while ((N<0) || (N > (MaxElement(*T))));
@@ -119,40 +121,40 @@ void TulisIsiTab(TabInt T){
 /* F.S. Jika T tidak kosong: [e1,e2,...,en] */
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika tabel kosong : menulis [] */
-    /*KAMUS LOKAL*/
-   IdxType i;
+    /* KAMUS LOKAL */
+    IdxType i;
 
-   /*ALGORITMA*/
-   if(IsEmpty(T)){
-      printf("[]");
-   } else {
-      printf("[");
-      for(i=IdxMin; i<=GetLastIdx(T);i++){
-         if (i == GetLastIdx(T)){
-            printf("(");         
-            PrintKata(Nama(ElmtArray(T,i)));
-            printf(", %d", Value(ElmtArray(T,i)));
-            printf(")");
-         } else {
-            printf("(");  
-            PrintKata(Nama(ElmtArray(T,i)));
-            printf(", %d", Value(ElmtArray(T,i)));
-            printf("),");  
-         }
-      }
-      printf("]");
-   }
+    /* ALGORITMA */
+    if(IsEmpty(T)){
+        printf("[]");
+    } else {
+        printf("[");
+        for(i=IdxMin; i<=GetLastIdx(T);i++){
+            if (i == GetLastIdx(T)){
+                printf("(");         
+                PrintKata(Nama(ElmtArray(T,i)));
+                printf(", %d", Value(ElmtArray(T,i)));
+                printf(")");
+            } else {
+                printf("(");  
+                PrintKata(Nama(ElmtArray(T,i)));
+                printf(", %d", Value(ElmtArray(T,i)));
+                printf("),");  
+            }
+        }
+        printf("]");
+    }
 }
 
 /* ********** OPERASI LAIN ********** */
 int SumTab(TabInt T){
 /* Menghasilkan hasil penjumlahan semua elemen T */
 /* Jika T kosong menghasilkan 0 */
-    /*KAMUS LOKAL*/
+    /* KAMUS LOKAL */
     IdxType i;
-    int sum=0;
+    int sum = 0;
 
-    /*ALGORITMA*/
+    /* ALGORITMA */
     for(i=IdxMin; i<=GetLastIdx(T); i++){
         sum += Value(ElmtArray(T,i));
     }
@@ -160,36 +162,38 @@ int SumTab(TabInt T){
     return sum;
 }
 /* *** Menambahkan elemen terakhir *** */
-void AddAsLastEl(TabInt *T, ElArrayType X){
+void AddAsLastEl(TabInt *T, ElArrayType X) {
 /* Proses: Menambahkan X sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
-    /*ALGORITMA*/
-   ElmtArray(*T, NeffArray(*T)) = X;
-   NeffArray(*T) += 1;
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
+    ElmtArray(*T, NeffArray(*T)) = X;
+    NeffArray(*T) += 1;
 }
 /* ********** MENGHAPUS ELEMEN ********** */
-void DelLastEl(TabInt *T, ElArrayType *X){
+void DelLastEl(TabInt *T, ElArrayType *X) {
 /* Proses : Menghapus elemen terakhir tabel */
 /* I.S. Tabel tidak kosong */
 /* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */
 /*      Banyaknya elemen tabel berkurang satu */
 /*      Tabel T mungkin menjadi kosong */
-    /*KAMUS LOKAL*/
-   
-   /*ALGORITMA*/
-   *X = ElmtArray(*T, GetLastIdx(*T));
-   NeffArray(*T) -= 1;
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
+    *X = ElmtArray(*T, GetLastIdx(*T));
+    NeffArray(*T) -= 1;
 }
 
 /* ********** COPY ********** */
-TabInt CopyTab (TabInt TIn)
+TabInt CopyTab (TabInt TIn) {
 /* Mereturn sebuah tabint hasil copy dari TIn */
-{   //KAMUS
+    /* KAMUS LOKAL */
     TabInt Tout;
     int i;
     
-    //ALGORITMA
+    /* ALGORITMA */
     MakeEmpty(&Tout);
     NeffArray(Tout) = NeffArray(TIn);
     for (i=0; i<NeffArray(Tout); i++){
@@ -201,20 +205,19 @@ void TambahTab (TabInt *T1, TabInt T2)
 /* Menambahkan value T1 dan T2 */
 /* Prasyarat: Ukuran T1 dan T2 sama, elemen namanya identik */
 {
-    // KAMUS
+    /* KAMUS LOKAL */
     int i;
 
-    // ALGORITMA
+    /* ALGORITMA */
     for (i=0; i<NeffArray(*T1); i++){
         Value(ElmtArray(*T1,i)) += Value(ElmtArray(T2,i));
     }
 }
 
 /* ********** VALUE ********** */
-void SetAllValueZero (TabInt *T)
+void SetAllValueZero (TabInt *T) {
 /* Mengganti semua value dari T menjadi 0 */
-{
-    /* KAMUS */
+    /* KAMUS LOKAL */
     int i;
     
     /* ALGORITMA */
@@ -223,10 +226,9 @@ void SetAllValueZero (TabInt *T)
     }
 }
 
-void SetAllValueX (TabInt *T, int X)
+void SetAllValueX (TabInt *T, int X) { 
 /* Mengganti semua value dari T menjadi X */
-{
-    /* KAMUS */
+    /* KAMUS LOKAL */
     int i;
     
     /* ALGORITMA */
@@ -237,7 +239,7 @@ void SetAllValueX (TabInt *T, int X)
 
 void ChangeValue (TabInt *TInventory, Kata NamaBarang, int NewValue){
 /* Mengganti value dari NamaBarang menjadi NewValue */
-    /* KAMUS */
+    /* KAMUS LOKAL */
     int i;
     
     /* ALGORITMA */
@@ -250,7 +252,7 @@ void ChangeValue (TabInt *TInventory, Kata NamaBarang, int NewValue){
 }
 
 int GetValue (TabInt *TInventory, Kata NamaBarang) {
-    /* KAMUS */
+    /* KAMUS LOKAL */
     int i;
     
     /* ALGORITMA */
@@ -262,117 +264,115 @@ int GetValue (TabInt *TInventory, Kata NamaBarang) {
 }
 
 /* ********** PEMBACAAN FILE EKSTERNAL ********** */
-void BacaMaterial (TabInt *ListMaterial)
+void BacaMaterial (TabInt *ListMaterial) {
 /* Membaca material dan harga material dari file material.txt */
-{
-  /* KAMUS */
-  FILE *PFile;
-  int i,j,k,l;
-  char val;
-  Kata tempnama;
-  Kata tempharga;
-  ElArrayType element;
+    /* KAMUS LOKAL */
+    FILE *PFile;
+    int i,j,k,l;
+    char val;
+    Kata tempnama;
+    Kata tempharga;
+    ElArrayType element;
 
-  /* ALGORITMA */
-  PFile = fopen("./material.txt", "r");
+    /* ALGORITMA */
+    PFile = fopen("./material.txt", "r");
 
-  if (PFile != NULL){
-      val = fgetc(PFile);
-      i = 0;
-      while(val != '.'){
-        j = 0;
-        tempnama.Length = 0;
-        while (val != BLANK && val != '.') {
-          tempnama.TabKata[j] = val;
-          tempnama.Length ++;
-          j++;
-          val = fgetc(PFile);
-        }
-        
-        // Prevent bug
-        if (i != 0) {
-            for (l=0;l<tempnama.Length-1;l++) {
-                tempnama.TabKata[l] = tempnama.TabKata[l+1];
-            }
-            tempnama.Length--;
-        }
-
-        k = 0;
+    if (PFile != NULL){
         val = fgetc(PFile);
-        tempharga.Length = 0;
-        while (val != MARK && val != '.') {
-          tempharga.TabKata[k] = val;
-          tempharga.Length ++;
-          k++;
-          val = fgetc(PFile);
+        i = 0;
+        while(val != '.'){
+            j = 0;
+            tempnama.Length = 0;
+            while (val != BLANK && val != '.') {
+            tempnama.TabKata[j] = val;
+            tempnama.Length ++;
+            j++;
+            val = fgetc(PFile);
+            }
+            
+            // Prevent bug
+            if (i != 0) {
+                for (l=0;l<tempnama.Length-1;l++) {
+                    tempnama.TabKata[l] = tempnama.TabKata[l+1];
+                }
+                tempnama.Length--;
+            }
+
+            k = 0;
+            val = fgetc(PFile);
+            tempharga.Length = 0;
+            while (val != MARK && val != '.') {
+            tempharga.TabKata[k] = val;
+            tempharga.Length ++;
+            k++;
+            val = fgetc(PFile);
+            }
+            Nama(element) = tempnama;
+            Value(element) = KataToInteger(tempharga);
+            AddAsLastEl(ListMaterial, element);
+            i++;
         }
-        Nama(element) = tempnama;
-        Value(element) = KataToInteger(tempharga);
-        AddAsLastEl(ListMaterial, element);
-        i++;
-      }
-  }
+    }
 }
 
-void BacaAksi (TabInt *ListAksi)
+void BacaAksi (TabInt *ListAksi) {
 /* Membaca aksi dan durasi material dari file aksi.txt */
-{
-  /* KAMUS */
-  FILE *PFile;
-  int i,j,k,l;
+    /* KAMUS LOKAL */
+    FILE *PFile;
+    int i,j,k,l;
 
-  long harga;
-  char val;
-  Kata tempaksi;
-  Kata tempwaktu;
-  ElArrayType element;
+    long harga;
+    char val;
+    Kata tempaksi;
+    Kata tempwaktu;
+    ElArrayType element;
 
-  /* ALGORITMA */
-  PFile = fopen("./aksi.txt", "r");
+    /* ALGORITMA */
+    PFile = fopen("./aksi.txt", "r");
 
-  if (PFile != NULL){
-      val = fgetc(PFile);
-      i = 0;
-      while(val != '.'){
-        j = 0;
-        tempaksi.Length = 0;
-        while (val != BLANK && val != '.') {
-          tempaksi.TabKata[j] = val;
-          tempaksi.Length ++;
-          j++;
-          val = fgetc(PFile);
-        }
-        
-        // Prevent bug
-        if (i != 0) {
-            for (l=0;l<tempaksi.Length-1;l++) {
-                tempaksi.TabKata[l] = tempaksi.TabKata[l+1];
-            }
-            tempaksi.Length--;
-        }
-
-        k = 0;
+    if (PFile != NULL){
         val = fgetc(PFile);
-        tempwaktu.Length = 0;
-        while (val != MARK && val != '.') {
-          tempwaktu.TabKata[k] = val;
-          tempwaktu.Length ++;
-          k++;
-          val = fgetc(PFile);
+        i = 0;
+        while(val != '.'){
+            j = 0;
+            tempaksi.Length = 0;
+            while (val != BLANK && val != '.') {
+            tempaksi.TabKata[j] = val;
+            tempaksi.Length ++;
+            j++;
+            val = fgetc(PFile);
+            }
+            
+            // Prevent bug
+            if (i != 0) {
+                for (l=0;l<tempaksi.Length-1;l++) {
+                    tempaksi.TabKata[l] = tempaksi.TabKata[l+1];
+                }
+                tempaksi.Length--;
+            }
+
+            k = 0;
+            val = fgetc(PFile);
+            tempwaktu.Length = 0;
+            while (val != MARK && val != '.') {
+            tempwaktu.TabKata[k] = val;
+            tempwaktu.Length ++;
+            k++;
+            val = fgetc(PFile);
+            }
+            Nama(element) = tempaksi;
+            Value(element) = KataToInteger(tempwaktu);
+            AddAsLastEl(ListAksi, element);
+            i++;
         }
-        Nama(element) = tempaksi;
-        Value(element) = KataToInteger(tempwaktu);
-        AddAsLastEl(ListAksi, element);
-        i++;
-      }
-  }
-  printf("\n");
+    }
+    printf("\n");
 }
 
-boolean SearchArray(TabInt ListWahana, Kata X)
-/*Mencari apakah ada elemen X pada ListWahana*/{
-    /* KAMUS */
-    int i=0;
+boolean SearchArray(TabInt ListWahana, Kata X) {
+/*Mencari apakah ada elemen X pada ListWahana*/
+    /* KAMUS LOKAL */
+    int i = 0;
     boolean found = false;
     
     /* ALGORITMA */
@@ -387,9 +387,9 @@ boolean SearchArray(TabInt ListWahana, Kata X)
     return found;
 }
 
-int SearchBArray(TabInt ListWahana, Kata X)
+int SearchBArray(TabInt ListWahana, Kata X) {
 /*Mencari lokasi dari elemen X pada ListWahana. Apabila tidak ada, mengembalikan -1*/
-{   /* KAMUS */
+    /* KAMUS LOKAL */
     int i=0;
     boolean found = false;
     
@@ -411,12 +411,13 @@ int SearchBArray(TabInt ListWahana, Kata X)
 }
 
 /* *********************** KAPASITAS DAN DURASI WAHANA *********************** */
-TabInt InitKapasitas(ListWahana L){
-    //KAMUS
+TabInt InitKapasitas(ListWahana L) {
+    /* KAMUS LOKAL */
     addressWahana P;
     TabInt Kapasitas;
     ElArrayType X;
-    //ALGORITMA
+
+    /* ALGORITMA */
     MakeEmpty(&Kapasitas);
     P = FirstWahana(L);
     while (P!= Nil){
@@ -428,12 +429,13 @@ TabInt InitKapasitas(ListWahana L){
     return Kapasitas;
 }
 
-TabInt InitDurasi(ListWahana L){
-    //KAMUS
+TabInt InitDurasi(ListWahana L) {
+    /* KAMUS LOKAL */
     addressWahana P;
     TabInt Durasi;
     ElArrayType X;
-    //ALGORITMA
+
+    /* ALGORITMA */
     MakeEmpty(&Durasi);
     P = FirstWahana(L);
     while (P!= Nil){
@@ -445,13 +447,14 @@ TabInt InitDurasi(ListWahana L){
     return Durasi;
 }
 
-TabInt InitMain(ListWahana L){
+TabInt InitMain(ListWahana L) {
 /*Menginisialisasi Jumlah di ainkandari Wahana dalam bentuk TabInt*/
-    //KAMUS
+    /* KAMUS LOKAL */
     addressWahana P;
     TabInt Main;
     ElArrayType X;
-    //ALGORITMA
+
+    /* ALGORITMA */
     MakeEmpty(&Main);
     P = FirstWahana(L);
     while (P!= Nil){
@@ -465,11 +468,12 @@ TabInt InitMain(ListWahana L){
 
 TabInt InitCuan(ListWahana L){
 /*Menginisialisasi Durasi dari Wahana dalam bentuk TabInt*/
-    //KAMUS
+    /* KAMUS LOKAL */
     addressWahana P;
     TabInt Cuan;
     ElArrayType X;
-    //ALGORITMA
+
+    /* ALGORITMA */
     MakeEmpty(&Cuan);
     P = FirstWahana(L);
     while (P!= Nil){
@@ -481,13 +485,13 @@ TabInt InitCuan(ListWahana L){
     return Cuan;
 }
 
-boolean KapasitasFull(TabInt Kapasitas, Kata Wahana)
+boolean KapasitasFull(TabInt Kapasitas, Kata Wahana) {
 /*Mengecek apakah wahana yang dinaiki sudah penuh atau value dari list kapasitas 0*/
-{   //KAMUS
-    //ALGORITMA
+    /* KAMUS LOKAL */
     boolean full = false;
-    int i=0;
+    int i = 0;
     boolean found = false;
+
     /* ALGORITMA */
     if (SearchArray(Kapasitas,Wahana)){
         while (i<NeffArray(Kapasitas) && !found){
@@ -505,41 +509,47 @@ boolean KapasitasFull(TabInt Kapasitas, Kata Wahana)
     return full;
 }
 
-void TambahKapasitas(TabInt *Kapasitas, Kata Wahana){
-    //KAMUS
+void TambahKapasitas(TabInt *Kapasitas, Kata Wahana) {
+    /* KAMUS LOKAL */
     int i = SearchBArray(*Kapasitas,Wahana);
-    //ALGORITMA
+
+    /* ALGORITMA */
     Value(ElmtArray(*Kapasitas, i)) += 1;
 }
 
 void KurangKapasitas(TabInt *Kapasitas, Kata Wahana){
-    //KAMUS
+    /* KAMUS LOKAL */
     int i = SearchBArray(*Kapasitas,Wahana);
-    //ALGORITMA
+
+    /* ALGORITMA */
     Value(ElmtArray(*Kapasitas, i)) -= 1;
 }
 
 boolean AdaWahana(TabInt Kapasitas, Kata Wahana){
-    //ALGORITMA
+    /* KAMUS LOKAL */
+
+    /* ALGORITMA */
     return(SearchBArray(Kapasitas,Wahana) != -1);
 }
 
 /* *********************** REPORT WAHANA *********************** */
-void TambahMain(TabInt *Main, Kata Wahana)
+void TambahMain(TabInt *Main, Kata Wahana) {
 /*Menambah value sebesar 1 dari TabInt Main Wahana*/
-{   //KAMUS
+    /* KAMUS LOKAL */
     int i = SearchBArray(*Main,Wahana);
-    //ALGORITMA
+
+    /* ALGORITMA */
     Value(ElmtArray(*Main, i)) += 1;
 }
 
-void TambahCuan(TabInt *Cuan, Kata Wahana, ListWahana L)
+void TambahCuan(TabInt *Cuan, Kata Wahana, ListWahana L) {
 /*Menambah value dari TabInt Cuan Wahana  sebesar harga dari wahana*/
-{   //KAMUS
+    /* KAMUS LOKAL */
     int i = SearchBArray(*Cuan,Wahana);
     addressWahana P = FirstWahana(L);;
     boolean found = false;
-    //ALGORITMA
+
+    /* ALGORITMA */
     while (P!=Nil && !found){
         if (IsEQKata(Wahana, AkarNama(DeskripsiWahana(InfoWahana(P))))){
             found = true;
@@ -553,25 +563,27 @@ void TambahCuan(TabInt *Cuan, Kata Wahana, ListWahana L)
 
 ElArrayType GetMain (TabInt *Main, Kata Wahana) {
 // Mengambil total permainan Wahana
-    //KAMUS
+    /* KAMUS LOKAL */
     int i = SearchBArray(*Main,Wahana);
-    //ALGORITMA
+
+    /* ALGORITMA */
     return ElmtArray(*Main, i);
 }
 
 ElArrayType GetCuan (TabInt *Cuan, Kata Wahana) {
 // Mengambil total penghasilan Wahana
-    //KAMUS
+    /* KAMUS LOKAL */
     int i = SearchBArray(*Cuan,Wahana);
-    //ALGORITMA
+
+    /* ALGORITMA */
     return ElmtArray(*Cuan, i);
 }
 
 void KurangiMaterial(TabInt *Inventory, addressWahana DeleteAddress){
-    //KAMUS
+    /* KAMUS LOKAL */
     int i;
     
-    //ALGORITMA
+    /* ALGORITMA */
     for (i=0;i<5;i++) {
         Value(ElmtArray(*Inventory, i)) -= AkarMatUp(DeskripsiWahana(InfoWahana(DeleteAddress)),i);
     }

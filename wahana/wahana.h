@@ -23,16 +23,16 @@
 typedef int IdxType; /* type indeks */
 
 typedef struct {
-    BinTree datawahana;  /* Berisi datawahana berjenis wahanatype dari bintree.h */
-    POINT posisiwahana;  /* Berisi posisi wahana dalam bentuk (X,Y) dari point.h */
-    List historyupgrade; /* Digunakan untuk melakukan tracking terhadap status upgrade wahana. Menggunakan list linier */
-    boolean statuswahana; /* Status wahana apakah sedang rusak (false) atau tidak (true) */
-    int mapwahana;           /* Wahana berada di map berapa */
+    BinTree datawahana;         /* Berisi datawahana berjenis wahanatype dari bintree.h */
+    POINT posisiwahana;         /* Berisi posisi wahana dalam bentuk (X,Y) dari point.h */
+    List historyupgrade;        /* Digunakan untuk melakukan tracking terhadap status upgrade wahana. Menggunakan list linier */
+    boolean statuswahana;       /* Status wahana apakah sedang rusak (false) atau tidak (true) */
+    int mapwahana;              /* Wahana berada di map berapa */
 } Wahana;
 
 typedef struct tElmtlistWahana *addressWahana;
 typedef struct tElmtlistWahana { 
-	Wahana infoWahana;
+	Wahana infoWahana; 
 	addressWahana nextWahana;
 } ElmtListWahana;
 

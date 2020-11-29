@@ -25,7 +25,7 @@ int NBElmtQueue (Queue Q)
         return 0;
     }
     else{
-        return Tail(Q)-Head(Q)+1;
+        return Tail(Q) - Head(Q) + 1;
     }
 }
 /* *** Kreator *** */
@@ -36,7 +36,7 @@ void CreateEmptyQueue (Queue * Q, int Max)
 /* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 {   (*Q).T = (queuetype*) malloc ((Max)*sizeof(queuetype));
-    if((*Q).T!=NULL){
+    if((*Q).T != NULL){
         MaxElQueue(*Q) = Max;
         Head(*Q) = NilQueue;
         Tail(*Q) = NilQueue;

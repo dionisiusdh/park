@@ -11,8 +11,6 @@
 #include "../matriks/matriks.h"
 #include "../point/point.h"
 
-// gcc -std=c99 -o dprep dprep.c prepaksi.o ../array/array.o ../mesin/mesinkata.o ../mesin/mesinkar.o ../stack/stack.o ../jam/jam.o
-// gcc -std=c99 -o dprep dprep.c ./prepaksi.o ../mesin/mesinkata.o ../array/array.o ../mesin/mesinkar.o ../Tree/bintree.o ../stack/ stack.o ../jam/jam.o ../matriks/matriks.o ../point/point.o ../Graph/graph.o
 int main() {
     TabInt Inven;
     aksitype CurrentAksi;
@@ -46,11 +44,5 @@ int main() {
     InsertLastWahana(&LWahana,WahanaBuilt);
     printf("Wahana: \n");
     PrintListWahana(LWahana);
-    printf("\n");
-    MenuUpgrade(&Inven,LWahana,&LUpgrade,posisi2,1,&valid);
-    printf("\n");
-    PrintListWahana(LUpgrade);
     return 0;
 }
-
-// gcc -std=c99 -o dprep dprep.c ./prepaksi.o ../mesin/mesinkata.o ../array/array.o ../mesin/mesinkar.o ../Tree/bintree.o ../stack/stack.o ../jam/jam.o ../matriks/matriks.o ../point/point.o ../Graph/graph.o ../wahana/wahana.o ../list-linier/listlinier.o

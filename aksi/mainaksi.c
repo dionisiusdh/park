@@ -146,7 +146,7 @@ void MenuOffice(MATRIKS *Map, ListWahana *LWahana, POINT Office, TabInt Inventor
 }
 
 void DetailsOffice(ListWahana *LWahana) {
-/* KAMUS */
+    /* KAMUS */
     int i, CPerintah;
     Wahana W;
 
@@ -194,6 +194,9 @@ void DetailsOffice(ListWahana *LWahana) {
 }
 
 void MaterialOffice (TabInt Inventory) {
+    /* KAMUS */
+
+    /* ALGORITMA */
     printf("Inventory anda: ");
     TulisIsiTab(Inventory);
     printf("\n");

@@ -5,23 +5,13 @@
 #include "../point/point.h"
 
 int main() {
+    // KAMUS
     MATRIKS M;
     POINT P;
 
+    // ALGORITMA
     BacaMATRIKSTxt(&M, 10, 20, "../map1.txt");
     TulisMATRIKS(M);
-
-    moveLeft(&M);
-    moveLeft(&M);
-    moveLeft(&M);
-    moveLeft(&M);
-    moveLeft(&M);
-    moveLeft(&M);
-    moveLeft(&M);
-    moveLeft(&M);
-    moveLeft(&M);
-    moveLeft(&M);
-    moveLeft(&M);
     printf("\n");
     TulisMATRIKS(M);
 

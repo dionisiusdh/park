@@ -39,9 +39,12 @@ void GetRandomWahana (PENGUNJUNG *P, int random, TabInt Kapasitas);
 /* Menghasilkan wahana random yang ingin dikunjungi pengunjung */
 
 void TulisWahana (PENGUNJUNG P);
+/* Menuliskan isi wahana yang ingin dinaiki pengunjung */
 
 boolean SearchPengunjung(PENGUNJUNG P, Kata Wahana);
+/* Search Wahana pada pengunjung P */
 
 void DellPengunjung(PENGUNJUNG *P, Kata Wahana);
+/* Delete wahana dari list pengunjung */
 
 #endif

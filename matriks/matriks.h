@@ -171,7 +171,6 @@ boolean isAllowedToChangeMap (MATRIKS M, Graph G, POINT P, Map Src, char MoveCom
    Cek berdasarkan input Move apakah Player menuju Gerbang
    Fungsi mengecek pada graph, apakah Player dapat berpindah Map*/
 
-// boolean isInOffice (POINT PPlayer, POINT POffice);
 /* Cek apakah player sedang berada di titik office */
 
 void PlaceRancanganWahana (MATRIKS* M, POINT Player);

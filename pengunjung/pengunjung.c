@@ -38,36 +38,11 @@ void GetRandomWahana (PENGUNJUNG *P, int random, TabInt Kapasitas) { // Butuh in
     for (i=0; i<NeffPengunjung(*P); i++) {
         ElmtPengunjung(*P, i) = Nama(ElmtArray(Kapasitas, i));
     }
-    /*
-    if (NeffPengunjung(*P) == 3) {
-        ElmtPengunjung(*P, 0) = StringToKata("Flyfly", 6);
-        ElmtPengunjung(*P, 1) = StringToKata("Fallfall", 8);
-        ElmtPengunjung(*P, 2) = StringToKata("Walkwalk", 8);
-    } else if (NeffPengunjung(*P) == 2) {
-        randomNumber2 = rand() % 3;
-        if (randomNumber == 0) {
-            ElmtPengunjung(*P, 0) = StringToKata("Flyfly", 6);
-            ElmtPengunjung(*P, 1) = StringToKata("Fallfall", 8);
-        } else if (randomNumber == 1) {
-            ElmtPengunjung(*P, 0) = StringToKata("Fallfall", 8);
-            ElmtPengunjung(*P, 1) = StringToKata("Walkwalk", 8);
-        } else if (randomNumber == 2) {
-            ElmtPengunjung(*P, 0) = StringToKata("Flyfly", 6);
-            ElmtPengunjung(*P, 1) = StringToKata("Walkwalk", 8);
-        }
-    } else {
-        randomNumber2 = rand() % 3;
-        if (randomNumber == 0) {
-            ElmtPengunjung(*P, 0) = StringToKata("Flyfly", 6);
-        } else if (randomNumber == 1) {
-            ElmtPengunjung(*P, 0) = StringToKata("Fallfall", 8);
-        } else if (randomNumber == 2) {
-            ElmtPengunjung(*P, 0) = StringToKata("Walkwalk", 8);
-        }
-    }*/
 }
 
-void TulisWahana (PENGUNJUNG P) {
+void TulisWahana (PENGUNJUNG P) 
+/* Menuliskan isi wahana yang ingin dinaiki pengunjung */
+{
     int i;
 
     printf("(");
@@ -81,7 +56,9 @@ void TulisWahana (PENGUNJUNG P) {
     printf(")");
 }
 
-boolean SearchPengunjung(PENGUNJUNG P, Kata Wahana){
+boolean SearchPengunjung(PENGUNJUNG P, Kata Wahana)
+/* Search Wahana pada pengunjung P */
+{
     int i=0;
     boolean found = false;
     while (i<NeffPengunjung(P) && !found){
@@ -93,7 +70,9 @@ boolean SearchPengunjung(PENGUNJUNG P, Kata Wahana){
     return found;
 }
 
-void DellPengunjung(PENGUNJUNG *P, Kata Wahana){
+void DellPengunjung(PENGUNJUNG *P, Kata Wahana)
+/* Delete wahana dari list pengunjung */
+{
     int i=0;
     boolean found = false;
     while (i<NeffPengunjung(*P) && !found){

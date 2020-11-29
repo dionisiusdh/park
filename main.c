@@ -85,7 +85,7 @@ int main() {
   Queue Antrian;
 
   /* *********** ALGORITMA UTAMA ********** */
-  //Inisialisasi
+  /* *********** Inisiasi seluruh variabel ********** */
   int Money = 10000;
   boolean prep_status = true;
   boolean main_status = false;
@@ -179,6 +179,7 @@ int main() {
 /*********************************************/
 /******* INISIALISASI *******/
 void initGame(Kata * NamaPlayer, boolean *exit_status) {
+/* Inisialisasi game awal */
   /**** MAIN MENU ****/
   printf("// Welcome to Willy Wangky's Fun Factory!!//\n// New game / load game / exit? //\n$ ");
 
@@ -201,6 +202,7 @@ void initGame(Kata * NamaPlayer, boolean *exit_status) {
 
 /******* MENANGANI PERINTAH *******/
 void inputPerintah(Kata *Perintah){
+/* Membaca input masukan dari user */
   // Baca masukan 
   STARTKATA();
   while (!EndKata) {
@@ -210,6 +212,8 @@ void inputPerintah(Kata *Perintah){
 }
 
 void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *ListMaterial, TabInt *Inventory, TabInt *StackMaterial, int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, ListWahana *LUpgrade, POINT Office) {
+/* Cek perintah yang dilakukan user pada preparation phase dan menindaklanjutinya */    
+    /* KAMUS */
     aksitype CurrentAksi;
     aksitype AksiTypeTrash;
     boolean Valid = true;
@@ -218,6 +222,7 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
     int CurrentUpgrade;
     char MoveCommand;
 
+    /* ALGORITMA */
     if (IsEQKata(CurrentPerintah,StringToKata("w",1)) || IsEQKata(CurrentPerintah,StringToKata("a",1)) || IsEQKata(CurrentPerintah,StringToKata("s",1)) || IsEQKata(CurrentPerintah,StringToKata("d",1))) {
       Durasi(CurrentAksi) = DetikToJAM(GetValue(ListAksi, CurrentPerintah));
       
@@ -329,11 +334,14 @@ void cekPerintahPrep(Kata CurrentPerintah, MATRIKS *Map1, Stack *S, TabInt *List
 }
 
 void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMainDuration, MATRIKS *Map1, TabInt *ListMaterial, TabInt *Inventory, TabInt *StackMaterial,int *Money, boolean *prep_status, boolean *main_status, boolean *exit_status, TabInt *ListAksi, BinTree Wahana1, BinTree Wahana2, BinTree Wahana3, Graph *GMain, Map *MapNameAsal, Map *MapNameTujuan, Map *MapNameActive, MATRIKS *MapList[4], ListWahana *LWahana, POINT Office, Queue *Antrian, TabInt *Kapasitas, TabTime *Waktu, TabInt Durasi, JAM JCurrent, boolean *serve_gagal, TabInt *MainToday, TabInt *CuanToday, TabInt *MainTotal, TabInt *CuanTotal) {
+/* Cek perintah yang dilakukan user pada main phase dan menindaklanjutinya */       
+    /* KAMUS */
     aksitype CurrentAksi;
     aksitype AksiTypeTrash;
 
     char MoveCommand;
 
+    /* ALGORITMA */
     if (IsEQKata(CurrentPerintah,StringToKata("w",1)) || IsEQKata(CurrentPerintah,StringToKata("a",1)) || IsEQKata(CurrentPerintah,StringToKata("s",1)) || IsEQKata(CurrentPerintah,StringToKata("d",1))) {
       *TotalMainDuration = TambahJAM(*TotalMainDuration, DetikToJAM(GetValue(ListAksi, CurrentPerintah)));
       
@@ -428,22 +436,26 @@ void cekPerintahMain(Kata CurrentPerintah, Kata CurrentPerintah2, JAM *TotalMain
 
 /******* INISIALISASI *******/
 void initMap1(MATRIKS *Map) {
+/* Inisiasi map */
   BacaMATRIKSTxt(Map, 10, 20, "./map1.txt");
 }
 
 void initPosisi (MATRIKS *MAP, POINT *PPlayer, POINT *POffice, POINT *PAntrian) {
+/* Inisiasi semua posisi */
   *PPlayer = getPlayer(*MAP);
   *POffice = getOffice(*MAP);
   *PAntrian = getAntrian(*MAP);
 }
 
 void initJam (JAM *JOpen, JAM *JClose) {
+/* Inisiasi semua jam */
   /* ALGORITMA */
   *JOpen = MakeJAM(10, 00, 00);
   *JClose = MakeJAM(22, 00, 00);
 }
 
 void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi, TabInt *MainTotal, TabInt *CuanTotal) {
+/* Inisiasi semua list */
   /* ALGORITMA */
   MakeEmpty(ListMaterial);
   MakeEmpty(Inventory);
@@ -460,30 +472,14 @@ void initAllList (TabInt *Inventory, TabInt *ListMaterial, TabInt *ListAksi, Tab
 }
 
 void initWahana (BinTree *Wahana1, BinTree *Wahana2, BinTree *Wahana3) {
+/* Inisiasi semua data tree wahana */
   BacaWahana(Wahana1, Wahana2, Wahana3);
 }
 
 void initListWahana (ListWahana *LWahana, ListWahana *LUpgrade) {
 /* Inisiasi ListWahana berisi semua daftar wahana yang ada */
-
     CreateEmptyListWahana(LWahana);
     CreateEmptyListWahana(LUpgrade);
-    /*
-    Wahana W1,W2;
-    BinTree Wahana1,Wahana2,Wahana3;
-    POINT Posisi = MakePOINT(2,3);
-    POINT Posisi1 = MakePOINT(4,5);
-    List Upgrade,Upgrade1;
-    ListWahana L;
-    CreateEmptyListLinier(&Upgrade);
-    BacaWahana(&Wahana1,&Wahana2,&Wahana3);
-    MakeWahana(&W1,Wahana1,Posisi,Upgrade,true);
-    MakeWahana(&W2,Wahana2,Posisi1,Upgrade1,true);
-    TulisPOINT(GetPosisiWahana(W1));
-    CreateEmptyListWahana(&L);
-    InsertFirstWahana(&L,W1);
-    InsertLastWahana(&L,W2);
-    InsertLastWahana(&L,W2);*/
 }
 
 void initStack (Stack *S, JAM MaxDuration) {
@@ -507,6 +503,7 @@ void printMap (MATRIKS M) {
 
 /* *************** DESCRIPTION **************** */
 void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen, JAM Remaining, Stack S) {
+/* Mencetak Deskripsi Pemain saat preparation phase (Termasuk Mencetak Map dan Legenda) */
     //KAMUS LOKAL
 
     //ALGORITMA
@@ -536,6 +533,7 @@ void prepDescription (MATRIKS Map, Kata Nama, int Money, JAM JCurrent, JAM JOpen
 }
 
 void mainDescription (MATRIKS Map, Kata Nama, int Money, Queue Antrian, JAM JCurrent, JAM JClose, JAM Remaining, ListWahana LWahana){
+/* Mencetak Deskripsi Pemain saat main phase (Termasuk Mencetak Map dan Legenda) */
     //KAMUS LOKAL
 
     //ALGORITMA

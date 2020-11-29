@@ -14,23 +14,23 @@
 /* Nil adalah stack dengan elemen kosong . */
 
 typedef struct {
-    Kata aksi;  /* Aksi yang akan dilakukan build/upgrade/buy/undo/dll. */
-    Kata info_nama_aksi;  /* Wahana yang ingin dibangun/diupgrade, Bahan yang ingin dibeli */
-    int info_jumlah_aksi; /* Jumlah untuk apapun */
-    int harga; /* Harga dari aksi yang akan dilakukan */
-    JAM durasi; /* Durasi aksi */
+    Kata aksi;              /* Aksi yang akan dilakukan build/upgrade/buy/undo/dll. */
+    Kata info_nama_aksi;    /* Wahana yang ingin dibangun/diupgrade, Bahan yang ingin dibeli */
+    int info_jumlah_aksi;   /* Jumlah untuk apapun */
+    int harga;              /* Harga dari aksi yang akan dilakukan */
+    JAM durasi;             /* Durasi aksi */
 } aksitype;
 typedef int addressStack;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct { 
-  aksitype T[MaxEl]; /* tabel penyimpan elemen */
-  addressStack TOP;  /* alamat TOP: elemen puncak */
-  int TotalAksi; /* Total jumlah semua aksi dalam stack */
-  int TotalBiaya; /* Total seluruh biaya aksi dalam stack */
-  JAM CurrentDuration; /* Total durasi aksi-aksi yang ada pada kondisi sekarang */
-  JAM MaxDuration; /* Durasi maksimum aksi-aksi yang dapat ditampung stack */
+  aksitype T[MaxEl];        /* tabel penyimpan elemen */
+  addressStack TOP;         /* alamat TOP: elemen puncak */
+  int TotalAksi;            /* Total jumlah semua aksi dalam stack */
+  int TotalBiaya;           /* Total seluruh biaya aksi dalam stack */
+  JAM CurrentDuration;      /* Total durasi aksi-aksi yang ada pada kondisi sekarang */
+  JAM MaxDuration;          /* Durasi maksimum aksi-aksi yang dapat ditampung stack */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai Stack T[0]..T[MaxEl-1] */

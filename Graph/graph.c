@@ -22,6 +22,7 @@ NodePointer CreateNode (Map Map) {
 }
 
 void DeallocateNode (NodePointer N) {
+  /* Dealokasi node */
   free(N);
 }
 
@@ -296,62 +297,3 @@ void PrintGraph (Graph G) {
     }
   }
 }
-
-
-
-
-
-/*
-char IntToChar (int I) {
-  //convert single digit int to char based on ASCII
-  return ((char) (48+I));
-}
-
-int CharToInt (char C) {
-  //convert number digit char to int based on ASCII
-  return (((int) C) - 48);
-}
-*/
-
-/*
-void CreateEdge (Edge_Graph* E, char MapA, char MapB) {
-  while (MapA != MapB) {
-    printf("Masukkan Map yang berbeda!");
-    printf("Map asal = "); scanf("%c", &MapA);
-    printf("Map tujuan = "); scanf("%c", &MapB);
-  }
-  E->SrcMap = MapA;
-  E->DestMap = MapB;
-}
-
-boolean IsEdgeListEmpty (Edge_Graph* EdgeList) {
-  return (EdgeList == Nil);
-}
-
-void InitializeEdges (Edge_Graph* EdgeList) { //  array of edges
-  EdgeList = Nil;
-}
-void InsertEdge (Edge_Graph* EdgeList, Edge_Graph NewEdge) {       //  array of edges
-  if (IsEdgeListEmpty(EdgeList)) {
-    EdgeList[0] = NewEdge;
-  }
-  else {
-    int i = 0;
-    char check;
-    boolean foundExistingEdge = false;
-    do {
-      if (EdgeList[i].SrcMap == NewEdge.SrcMap) {
-        if (EdgeList[i].DestMap == NewEdge.DestMap) {
-          foundExistingEdge = true;
-        }
-      }
-      i++;
-    } while (!foundExistingEdge && i < NMap);
-
-    if (!foundExistingEdge) {
-
-    }
-  }
-}
-void DeleteEdge (Edge_Graph* EdgeList, Edge_Graph DeleteEdge);
-*/

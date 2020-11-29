@@ -4,6 +4,7 @@
 int main()
 {   /* KAMUS */
     JAM J1, J2;
+    
     /* ALGORITMA */
     BacaJAM(&J1);
     printf("Jam sekarang: ");

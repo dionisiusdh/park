@@ -74,27 +74,32 @@ JAM DetikToJAM (long N)
 
 /* *** Kelompok Operator Relational *** */
 boolean JEQ (JAM J1, JAM J2)
+/* Mengirimkan true jika J1=J2, false jika tidak */
 {
     return (JAMToDetik(J1)==JAMToDetik(J2));
 }
 
 boolean JNEQ (JAM J1, JAM J2)
+/* Mengirimkan true jika J1 tidak sama dengan J2 */
 {
     return (JAMToDetik(J1)!=JAMToDetik(J2));
 }
 
 boolean JLT (JAM J1, JAM J2)
+/* Mengirimkan true jika J1<J2, false jika tidak */
 {
     return (JAMToDetik(J1)<JAMToDetik(J2));
 }
 
 boolean JGT (JAM J1, JAM J2)
+/* Mengirimkan true jika J1>J2, false jika tidak */
 {
     return (JAMToDetik(J1)>JAMToDetik(J2));
 }
 
 /* *** Operator aritmatika JAM *** */
 JAM TambahJAM (JAM J1, JAM J2)
+/* Menambahkan jam J1 dan jam J2 */
 {
     /* KAMUS */
     long D1, D2, DHasil;

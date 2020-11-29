@@ -10,13 +10,13 @@
 int main() {
     BinTree Wahana1, Wahana2, Wahana3;
     BacaWahana(&Wahana1, &Wahana2, &Wahana3);
-    // printf("%d", AkarHarga(Wahana1));
-    // int i;
-    // printf("\n");
-    // for (i=0; i<5; i++) {
-    //     printf("\nElemen: %d\n", MatUp(Akar(Wahana1),i));
-    // }
-    // printf("asdasd");
+    printf("%d", AkarHarga(Wahana1));
+    int i;
+    printf("\n");
+    for (i=0; i<5; i++) {
+        printf("\nElemen: %d\n", MatUp(Akar(Wahana1),i));
+    }
+    printf("asdasd");
     PrintNamaWahana(Wahana1, Wahana2, Wahana3);
     return 0;
 }

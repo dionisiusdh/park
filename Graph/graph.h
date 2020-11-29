@@ -32,23 +32,14 @@ typedef int Map;
 typedef struct node_graph_struct* NodePointer;
 
 typedef struct node_graph_struct {
-  Map MapName;
-  char ReqMove;
-  NodePointer Next;
+  Map MapName;                 /* Nama peta */
+  char ReqMove;               /* Requirement untuk move */
+  NodePointer Next;           /* Pointer ke next */
 } NodeGraph;
 
 typedef struct graph_struct {
-  NodeGraph MapList[NMap];
+  NodeGraph MapList[NMap];    /* List of available maps */
 } Graph;
-
-
-/*
-typedef struct edge_graph_struct {
-  char SrcMap;
-  char DestMap;
-} Edge_Graph;
-*/
-
 
 /*** Selektor ***/
 #define NodeMapName(PNode)          (PNode)->MapName
@@ -69,7 +60,6 @@ void DeallocateNode (NodePointer N);
 void MakeGMain(Graph* GMain);
   /** Mengkonstruksi Graph spesifik yang akan dipakai di Game */
 
-
 /*** PREDIKAT ***/
 boolean IsMapNameValid (Map MapName);
   /* true jika MapName pada interval 1..NMap */
@@ -85,7 +75,6 @@ boolean IsGraphNodeHasNoList (Graph* G, int i);
 
 boolean IsNodeLast (NodePointer N);
   /* true jika N menunjuk ke Nil */
-
 
 /*** Searching ***/
 int SearchIndexSrc (Graph G, Map Src);
@@ -119,7 +108,6 @@ Map ReturnMapDest (Graph* G, Map Src, char MoveCommand);
   /* Mengembalikan Map tujuan berdasarkan Map asal dan command yang diberikan
     Mengembalikan -1 jika tidak terdapat Map hubungan antara Map asal ke tujuan dengan command MoveCommand */
 
-
 /*** OUTPUT ***/
 // for debugging
 void PrintGraph (Graph G);
@@ -129,23 +117,3 @@ void PrintGraph (Graph G);
    * ...
    * [4|'+'| ] --> [2|'s'|Nil]
   */
-
-
-
-/* 
-char IntToChar (int I);
-  //convert single digit int to char based on ASCII
-
-int CharToInt (char C);
-  //convert number digit char to int based on ASCII
-*/
-
-/* Edge */
-/*
-void CreateEdge (Edge_Graph* E, char MapA, char MapB);
-
-boolean IsEdgeListEmpty (Edge_Graph* EdgeList);
-void InitializeEdges (Edge_Graph* EdgeList);  //  array of edges
-void InsertEdge (Edge_Graph* EdgeList, Edge_Graph NewEdge);       //  array of edges
-void DeleteEdge (Edge_Graph* EdgeList, Edge_Graph DeleteEdge);
-*/
