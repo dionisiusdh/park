@@ -10,7 +10,9 @@
 |James Chandra   |
 |Jordan Daniel J.  |
 |Gregorius Dimas B. |
-         
+
+![](https://www.jackrouse.com/wp-content/uploads/Theme-Park-Planning.jpg)
+
 ## Table of contents
 * [General info](#general-info)
 * [Screenshots](#screenshots)
@@ -24,7 +26,7 @@ A theme park simulation game made with C, implementing various abstract data typ
 ![](./img/pic1.png)
 
 ## Technologies
-* C ver. 99
+* C v.99
 
 ## Setup
 1. Make sure that ```C``` is installed in your computer
