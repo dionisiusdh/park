@@ -1,17 +1,15 @@
-# Tugas Besar IF2110 - Algoritma dan Struktur Data
+# Park
 ![](https://img.shields.io/badge/C-v.99-blue)
 
-# Willy Wangky's World
 > Theme park simulation implemented with various ADT in C
 
-### Kelompok 3 - Kelas 2
-| Anggota | NIM |
-| --- | --- |
-|Rexy Gamaliel R. | 13519010 |
-|Dionisius Darryl H. | 13519058 |	
-|James Chandra  | 13519078 |
-|Jordan Daniel J. | 13519098 |
-|Gregorius Dimas B. | 13519190 |
+|Made by|
+| ---|
+|Rexy Gamaliel R.  |
+|Dionisius Darryl H.  |	
+|James Chandra   |
+|Jordan Daniel J.  |
+|Gregorius Dimas B. |
          
 ## Table of contents
 * [General info](#general-info)
@@ -20,7 +18,7 @@
 * [Setup](#setup)
 
 ## General info
-Sebuah *theme park simulation* game yang dibuat dengan mengimplementasikan berbagai *abstract data types* (ADT) dalam bahasa C.
+A theme park simulation game made with C, implementing various abstract data types (ADT)
 
 ## Screenshots
 ![](./img/pic1.png)
@@ -29,10 +27,9 @@ Sebuah *theme park simulation* game yang dibuat dengan mengimplementasikan berba
 * C ver. 99
 
 ## Setup
-1. Pastikan bahasa pemrograman ```C``` telah terinstall
-2. Clone repository ini pada local computer anda
-3. Masuk ke dalam folder hasil clone repository
-4. Jalankan program ```main``` atau dengan ```./main``` pada terminal
-5. Jika ingin mencompile program, copy script yang ada dalam ```./script/compile-script.txt``` dan pastikan anda sedang berada di directory utama, kemudian jalankan
+1. Make sure that ```C``` is installed in your computer
+2. Clone this repository in your local computer
+3. Execute ```main.exe``` or type ```./main``` in your terminal
+4. To compile the program, make sure that you're in the main directory and simply run the script inside ```./script/compile-script.txt```
 
 ## Thank you
