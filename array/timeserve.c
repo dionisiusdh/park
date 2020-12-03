@@ -70,5 +70,5 @@ boolean PengunjungPulang(queuetype Q) {
     /* KAMUS LOKAL */
 
     /* ALGORITMA */
-    return ((NeffPengunjung(Pengunjung(Q)) == 0) || (NeffPengunjung(Pengunjung(Q)) == 1382480432));
+    return ((NeffPengunjung(Pengunjung(Q)) == 0) || (NeffPengunjung(Pengunjung(Q)) > 20) || (NeffPengunjung(Pengunjung(Q)) < 0));
 }

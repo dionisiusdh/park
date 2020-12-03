@@ -46,7 +46,7 @@ void TulisWahana (PENGUNJUNG P)
     int i;
 
     printf("(");
-    if (NeffPengunjung(P) != 1382480432 && NeffPengunjung(P) != 0) {
+    if (NeffPengunjung(P) < 10 && NeffPengunjung(P) > 0 && NeffPengunjung(P) != 0) {
         PrintKata(ElmtPengunjung(P, 0));
         for (i=1; i<NeffPengunjung(P); i++) {
             printf(", ");
